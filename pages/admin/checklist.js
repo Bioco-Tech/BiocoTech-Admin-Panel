@@ -11,32 +11,36 @@ import { TbCheckbox } from 'react-icons/tb'
 import { ImLink } from 'react-icons/im'
 import { CiLogout } from 'react-icons/ci'
 import { useRouter } from 'next/router'
-import lists from '../../Components/Lists'
+
 import { CiEdit } from 'react-icons/ci'
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { useRef } from 'react'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { useAuth } from '../../context/AuthContext'
-import Button from 'react-bootstrap/Button';
-// import Modal from 'react-bootstrap/Modal';
-import Addlist from '../../Components/Addlist'
+
+
 import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import axios from 'axios'
-import { list } from 'postcss';
 
 
-
+let usama2;
+let usama3;
 
 
 
 function checklist() {
-  const [items, setItems] =useState([])
-  const [isUpdate,setIsUpdate] = useState()
+  const [items, setItems] = useState([])
+  const [data,setData] = useState([])
+  
+
+
+ 
+  
   const [text, setText] = useState('')
 
-  const [disable, setDisable] = useState(false)
   
+
   const router = useRouter()
   if (router.isFallback) {
     return (
@@ -50,58 +54,71 @@ function checklist() {
 
   const fetchList = async () => {
     await axios.get("http://localhost:5000/api/checklists").then((res) => {
-        setItems(res.data.reverse());
+      setItems(res.data.reverse());
+      // setChange(res.data.reverse())
+      
     });
-};
+  };
 
-const deleteList = (id) =>{
-  axios.delete(`http://localhost:5000/api/checklists/${id}`).then((res)=>{
-    fetchList()
+
+  const deleteList = (id) => {
+    axios.delete(`http://localhost:5000/api/checklists/${id}`).then((res) => {
+      fetchList()
       //setItems(res.data);
       console.log('-- res.data --', res.data)
-  })
-  
-}
-
-const updateList = (id)=>{
-  
-  
-    axios.put(`http://localhost:5000/api/checklists/${id}`)
-    .then(res => console.log(res.data));
-}
-
-
-useEffect(() => {
-  fetchList();
-  console.log("fetchList activate")
-}, []);
-
-
-const handleSubmit = event => {
-  event.preventDefault();
-
-  
-
-  axios.post(`http://localhost:5000/api/checklists`, { text })
-    .then(res => {
-      fetchList()
-      console.log(res);
-      console.log(res.data);
     })
-    
 
-   
-   
-}
+  }
 
-
-  
-
-  
+  const updateList = (id) => {
+    //const text = e.target.value
 
 
-  
-    {/*async function deleteList(id){
+    // axios.put(`http://localhost:5000/api/checklists/${id}`,  {"text": change} )
+    //   .then(res => console.log({"text": change})).catch((err)=>{console.log(err)});
+
+
+    axios({
+      method: "put",
+      url: `http://localhost:5000/api/checklists/${id._id}`,
+     
+    })
+    fetchList()
+  }
+
+
+  useEffect(() => {
+    fetchList();
+    console.log("fetchList activate");
+
+  }, []);
+
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+
+
+    axios.post(`http://localhost:5000/api/checklists`, { text })
+      .then(res => {
+        fetchList()
+        console.log(res);
+        console.log(res.data);
+      })
+
+
+
+
+  }
+
+
+
+
+
+
+
+
+  {/*async function deleteList(id){
       const res = await fetch(`http://localhost:5000/api/checklists/${id}`,{
         method: "DELETE"
       })
@@ -111,24 +128,25 @@ const handleSubmit = event => {
      
     }*/}
 
-   
-
-  
-
-  
-    
-    
-   
-   
-
-  
 
 
 
 
 
-  
+
+
+
+
+
+
+
+
+
+
+
+
   const [openModal, setOpenModal] = useState(false)
+  const [open, setOpen] = useState(false)
 
   function toogleSideBar() {
     sideBarRef.current.classList.toggle('-translate-x-full')
@@ -138,9 +156,13 @@ const handleSubmit = event => {
     setOpenModal(false)
   }
 
- 
+  function close(){
+    setOpen(false)
+  }
 
-  
+
+
+
 
   async function signOut() {
     try {
@@ -162,21 +184,21 @@ const handleSubmit = event => {
     draggable: true,
     progress: undefined,
     theme: "colored",
-    
-    });
 
-    const added = () => toast.success('checklist added!', {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      });
-  
-  
+  });
+
+  const added = () => toast.success('checklist added!', {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+
+
 
 
 
@@ -191,6 +213,7 @@ const handleSubmit = event => {
     }
 
   }
+
   return (
     <>
       <div className="max-h-screen md:sticky md:top-0 z-50 text-white">
@@ -285,61 +308,122 @@ const handleSubmit = event => {
 
 
       <Modal show={openModal} onHide={closemodal}>
-      < Modal.Body closeModal>
-                <div className="flex  flex-col justify-center md:px-56 md:text-center md:py-24 py-12 sm:px-6 lg:px-8">
+        < Modal.Body closeModal>
+          <div className="flex  flex-col justify-center md:px-56 md:text-center md:py-24 py-12 sm:px-6 lg:px-8">
 
 
-                    <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                             <button className='float-right -mt-8' onClick={() => closemodal(false)}>x</button> 
-                            <form className="space-y-6" onSubmit={(e)=>handleSubmit(e)}>
-                             
-                                <div>
+            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+              <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                <button className='float-right -mt-8' onClick={() => closemodal(false)}>x</button>
+                <form className="space-y-6" onSubmit={(e) => handleSubmit(e)}>
 
-                                    <div className="mt-1">
-                                        <input
-                                           
-                                            name="text"
-                                            type="text"
-                                            value={text}
-                                           
-                                            placeholder='add checklist...'
-                                            className="block w-full appearance-none rounded-md border border-gray-300 px-8 py-2 placeholder-gray-400 shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-cyan-500 sm:text-sm"
-                                            onChange={(e)=>setText(e.target.value)}
-                                        />
-                                    </div>
-                                </div>
+                  <div>
 
+                    <div className="mt-1">
+                      <input
 
+                        name="text"
+                        type="text"
+                        value={text}
 
-
-
-
-
-
-                                <div>
-                                  
-                                      <button
-                                      type="submit"
-                                      className="flex w-full justify-center rounded-md border border-transparent bg-cyan-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
-                                     onClick={closemodal}
-                                      
-                                  >
-                                      Add
-                                  </button>
-                                   
-                                  
-                                     
-                                  
-                                  
-                                </div>
-                            </form>
-
-
-                        </div>
+                        placeholder='add checklist...'
+                        className="block w-full appearance-none rounded-md border border-gray-300 px-8 py-2 placeholder-gray-400 shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-cyan-500 sm:text-sm"
+                        onChange={(e) => setText(e.target.value)}
+                      />
                     </div>
-                </div>
-            </Modal.Body>
+                  </div>
+
+
+
+
+
+
+
+
+                  <div>
+
+
+                    <button
+                      type="submit"
+                      className="flex w-full justify-center rounded-md border border-transparent bg-cyan-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                      onClick={closemodal}
+
+                    >
+                      Add
+                    </button>
+
+
+
+
+
+                  </div>
+                </form>
+
+
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+      {/*update*/}
+
+      <Modal show={open} onHide={close}>
+        < Modal.Body close>
+          <div className="flex  flex-col justify-center md:px-56 md:text-center md:py-24 py-12 sm:px-6 lg:px-8">
+
+
+            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+              <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                <button className='float-right -mt-8' onClick={() => close(false)}>x</button>
+                <form className="space-y-6" onSubmit={(e) => updateList(e)}>
+
+                  <div>
+
+                    <div className="mt-1">
+                      <input
+
+                        name="text"
+                        type="text"
+                        value={data}
+
+                        placeholder='add checklist...'
+                        className="block w-full appearance-none rounded-md border border-gray-300 px-8 py-2 placeholder-gray-400 shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-cyan-500 sm:text-sm"
+                        onChange={(e) => setData(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+
+
+
+
+
+
+
+                  <div>
+
+
+                    <button
+                      type="submit"
+                      className="flex w-full justify-center rounded-md border border-transparent bg-cyan-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                      onClick={close}
+
+                    >
+                     Update
+                    </button>
+
+
+
+
+
+                  </div>
+                </form>
+
+
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
       </Modal>
 
       <div className="flex flex-1 flex-col md:pl-64">
@@ -396,16 +480,35 @@ const handleSubmit = event => {
                           {items.map((list) => (
 
                             <tr key={list.text}>
-                              <td contentEditable={true} className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6 contentEditable:outline-none">
+                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6 contentEditable:outline-none">
                                 {list.text}
+
+                               {
+                                /*
+                               } <input type="text" value={list.text} onChange={(e) => {
+                                  setChange(e.target.value)
+                               } />*/ }
                               </td>
 
                               <td className=" flex relative whitespace-nowrap py-7  pl-4 pr-3 text-black  text-sm font-thin sm:pr-6">
-                                {<CiEdit onClick={()=>{updateList(list._id)}} />}{<RiDeleteBin5Line className='ml-2 ' onClick={() =>{deleteList(list._id),notify()} } />}
-                                <ToastContainer />
-                               
-                              </td>
+                                {/*<CiEdit className='cursor-pointer' onClick={() => {
+                                  updateList(list._id);
+                                  // items.target.value = "";
 
+                                }} />*/}
+                               {
+                                <Link href={`/update`}>
+                                <CiEdit onClick={()=>{
+                                  usama2 = list._id;
+                                  usama3 = list.text;
+                                }} />
+                                </Link>
+                               }
+                                {<RiDeleteBin5Line className='ml-2 cursor-pointer' onClick={() => { deleteList(list._id), notify() }} />}
+                                <ToastContainer />
+
+                              </td>
+                              {console.log(list._id)}
                             </tr>
 
 
@@ -429,14 +532,15 @@ const handleSubmit = event => {
 
 
 
-
+      
 
 
     </>
   )
 }
 
-export default checklist 
+export { usama2, usama3 };
+export default checklist
 
 
 

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { TbCheckbox } from 'react-icons/tb'
 import { ImLink } from 'react-icons/im'
@@ -12,22 +12,55 @@ import { PaperClipIcon } from '@heroicons/react/20/solid'
 import { useRef } from 'react'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { useAuth } from '../../context/AuthContext'
+import axios from 'axios'
 
 function links() {
   const router = useRouter()
   const sideBarRef = useRef()
-  const {logout} = useAuth()
+  const { logout } = useAuth()
+  const [terms, setTerms] = useState('')
+  const [policy, setPolicy] = useState('')
+  const [faq, setFaq] = useState('')
+  const [term, setTerm] = useState('')
+  const [privacy, setPrivacy] = useState('')
+  const [fa, setFa] = useState('')
+  console.log(terms, term, policy, privacy, fa)
+
+  if (router.isFallback) {
+    return (
+      <h3>Loading...</h3>
+    )
+
+
+  }
+
+  {/*axios.post(`http://localhost:5000//api/company-policy`, { })
+    .then(res => {
+      fetchList()
+      console.log(res);
+      console.log(res.data);
+    })*/}
+
+    const deleteList = () => {
+      axios.delete(`http://localhost:5000/api/checklists/{id}`).then((res) => {
+        fetchList()
+        //setItems(res.data);
+        console.log('-- res.data --', res.data)
+      })
+  
+    }
+
 
   function toogleSideBar() {
     sideBarRef.current.classList.toggle('-translate-x-full')
   }
 
-  async function signOut(){
-    try{
+  async function signOut() {
+    try {
       await logout()
       router.push('/login')
     }
-    catch{
+    catch {
       console.log("error occured")
     }
 
@@ -115,17 +148,17 @@ function links() {
               </nav>
 
               <div className="flex flex-shrink-0 border-t border-lime-500 p-4">
-               
-                  <div className="flex items-center">
-                    <div className='bg-lime-500 h-9 w-9 rounded-full'>
-                    <button onClick={signOut}><CiLogout className=" ml-2 mt-3 text-white " /></button> 
-                    </div>
-                    <div className="ml-3">
-                      <p className="text-sm font-medium text-white group-hover:text-white " >Log Out</p>
-                      {/*<p className="text-xs font-medium text-white group-hover:text-gray-700">(you will be loged out of your account)</p>*/}
-                    </div>
+
+                <div className="flex items-center">
+                  <div className='bg-lime-500 h-9 w-9 rounded-full'>
+                    <button onClick={signOut}><CiLogout className=" ml-2 mt-3 text-white " /></button>
                   </div>
-               
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-white group-hover:text-white " >Log Out</p>
+                    {/*<p className="text-xs font-medium text-white group-hover:text-gray-700">(you will be loged out of your account)</p>*/}
+                  </div>
+                </div>
+
               </div>
             </div>
 
@@ -247,8 +280,7 @@ function links() {
                   <ul role="list" className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white">
                     <li className="flex items-center justify-between p-2 text-sm">
                       <div className="flex w-0 flex-1 items-center">
-                        {/*<PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                    <span className="ml-2 w-0 flex-1 truncate">resume_back_end_developer.pdf</span>*/}
+                        <input className='px-5 outline-none ' value={policy} onChange={(e) => setPolicy(e.target.value)} />
                       </div>
                       <div className="ml-4 flex-shrink-0">
                         <button
@@ -274,8 +306,8 @@ function links() {
                   <ul role="list" className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white">
                     <li className="flex items-center justify-between p-2 text-sm">
                       <div className="flex w-0 flex-1 items-center">
-                        {/*<PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                    <span className="ml-2 w-0 flex-1 truncate">resume_back_end_developer.pdf</span>*/}
+                        <input className='px-5 outline-none' value={terms} onChange={(e) => setTerms(e.target.value)} />
+
                       </div>
                       <div className="ml-4 flex-shrink-0">
                         <button
@@ -301,8 +333,7 @@ function links() {
                   <ul role="list" className="divide-y  divide-white mt-2 p-0 rounded-md border bg-white border-white">
                     <li className="flex items-center justify-between p-2 text-sm">
                       <div className="flex w-0 flex-1 items-center">
-                        {/*<PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                    <span className="ml-2 w-0 flex-1 truncate">resume_back_end_developer.pdf</span>*/}
+                        <input className='px-5 outline-none' value={faq} onChange={(e) => setFaq(e.target.value)} />
                       </div>
                       <div className="ml-4 flex-shrink-0">
                         <button
@@ -347,8 +378,7 @@ function links() {
                   <ul role="list" className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white">
                     <li className="flex items-center justify-between p-2 text-sm">
                       <div className="flex w-0 flex-1 items-center">
-                        {/*<PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                         <span className="ml-2 w-0 flex-1 truncate">resume_back_end_developer.pdf</span>*/}
+                        <input className='px-5 outline-none' value={privacy} onChange={(e) => setPrivacy(e.target.value)} />
                       </div>
                       <div className="ml-4 flex-shrink-0">
                         <button
@@ -374,8 +404,7 @@ function links() {
                   <ul role="list" className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white">
                     <li className="flex items-center justify-between p-2 text-sm">
                       <div className="flex w-0 flex-1 items-center">
-                        {/*<PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                        <span className="ml-2 w-0 flex-1 truncate">resume_back_end_developer.pdf</span>*/}
+                        <input className='px-5 outline-none' value={term} onChange={(e) => setTerm(e.target.value)} />
                       </div>
                       <div className="ml-4 flex-shrink-0">
                         <button
@@ -401,8 +430,7 @@ function links() {
                   <ul role="list" className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white">
                     <li className="flex items-center justify-between p-2 text-sm">
                       <div className="flex w-0 flex-1 items-center">
-                        {/*<PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-          <span className="ml-2 w-0 flex-1 truncate">resume_back_end_developer.pdf</span>*/}
+                        <input className='px-5 outline-none' value={fa} onChange={(e) => setFa(e.target.value)} />
                       </div>
                       <div className="ml-4 flex-shrink-0">
                         <button

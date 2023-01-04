@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 
 /* eslint-disable @next/next/no-img-element */
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import Link from 'next/link'
 import { TbCheckbox } from 'react-icons/tb'
 import { ImLink } from 'react-icons/im'
@@ -17,6 +17,7 @@ import Stats from './Stats'
 import { useRef } from 'react'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { useAuth } from '../context/AuthContext'
+import axios from 'axios'
 
 
 export default function SideBars() {
@@ -24,6 +25,8 @@ export default function SideBars() {
   const router = useRouter()
   const sideBarRef = useRef()
   const {logout} = useAuth()
+  const [company,setCompany] = useState([])
+  const [staff,setStaff] = useState([])
 
   function toogleSideBar() {
     sideBarRef.current.classList.toggle('-translate-x-full')
@@ -50,6 +53,36 @@ export default function SideBars() {
     }
 
   }
+
+  const fetchCompany = async () => {
+    await axios.get("http://localhost:5000/api/companies").then((res) => {
+      setCompany(res.data.reverse());
+      // setChange(res.data.reverse())
+      
+    });
+  };
+
+  useEffect(() => {
+    fetchCompany();
+    console.log("fetchList activate");
+
+  }, []);
+
+  {/*const fetchStaff = async () => {
+    await axios.get("http://localhost:5000/api/companies/staff").then((res) => {
+      setStaff(res.data.reverse());
+      // setChange(res.data.reverse())
+      
+    });
+  };*/}
+
+  useEffect(() => {
+    fetchCompany();
+    //fetchStaff();
+    console.log("fetchList activate");
+
+  }, []);
+
 
   return (
     <>
@@ -190,13 +223,13 @@ export default function SideBars() {
                               </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200 bg-lime-50">
-                              {people.map((person) => (
+                              {company.map((person) => (
 
                                 <tr key={person.member}>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6">
                                     {person.member}
                                   </td>
-                                  <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-500">{person.company}</td>
+                                  <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-500">{person.name}</td>
                                   <td className="whitespace-nowrap px-3 py-4 text-sm font-normal w-[560] h-[55] text-gray-900">{person.points}</td>
                                   <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-cyan-600 text-right text-sm font-thin sm:pr-6">
                                     {person.action}

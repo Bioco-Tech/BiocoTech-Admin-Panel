@@ -14,22 +14,13 @@
   }
   ```
 */
-import { Fragment, useState } from 'react'
+import {  useState, useEffect } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import company from '../../Components/Company'
-import {
-  Bars3BottomLeftIcon,
-  BellIcon,
-  CalendarIcon,
-  ChartBarIcon,
-  FolderIcon,
-  HomeIcon,
-  InboxIcon,
-  UsersIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline'
+import axios from 'axios'
+
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { MdHome } from 'react-icons/md'
 import { HiBuildingOffice2 } from 'react-icons/hi2'
@@ -40,20 +31,55 @@ import { useRouter } from 'next/router'
 import { useRef } from 'react'
 import { useAuth } from '../../context/AuthContext'
 
-
+const staffMembers = [20, 40, 60, 80]
+const units = [2000, 2500, 3000, 3500]
 
 
 
 
 function companies() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [company, setCompany] = useState([])
+  const [query, setQuery] = useState('')
+  console.log(query)
+  
   const router = useRouter()
   const sideBarRef = useRef()
   const {logout} = useAuth()
+  
+    if (router.isFallback) {
+      return (
+        <h3>Loading...</h3>
+      )
+  
+  
+    }
 
   function toogleSideBar() {
     sideBarRef.current.classList.toggle('-translate-x-full')
   }
+
+  const fetchCompany = async () => {
+    await axios.get(`http://localhost:5000/api/companies`).then((res) => {
+      setCompany(res.data.reverse());
+      // setChange(res.data.reverse())
+      
+    });
+  };
+
+  {/*const fetchStaff = async () => {
+    await axios.get("http://localhost:5000/api/companies/staff").then((res) => {
+      setStaff(res.data.reverse());
+      // setChange(res.data.reverse())
+      
+    });
+  };*/}
+
+  useEffect(() => {
+    fetchCompany();
+    //fetchStaff();
+    console.log("fetchList activate");
+
+  }, []);
 
   async function signOut(){
     try{
@@ -76,11 +102,13 @@ function companies() {
 
   }
 
+  console.log(company)
+
 
 
   return (
     <>
-      <div className="max-h-screen md:sticky md:top-0 z-50 text-white">
+      <div className="max-h-screen sticky top-0 md:sticky md:top-0 z-50 text-white">
         {/* MOBILE SIDEBAR */}
         <div className="bg-cyan-600 md:hidden flex justify-between p-2 items-center sticky top-0 z-30">
           <img className="h-8 w-auto" src="/logo.png" alt="Your Company" />
@@ -193,6 +221,7 @@ function companies() {
                             </div>
                             <input
                               id="search-field"
+                              onChange={(e)=>setQuery(e.target.value)}
                               className="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm"
                               placeholder="Search Company"
                               type="search"
@@ -207,7 +236,7 @@ function companies() {
                         type="button"
                         className="inline-flex items-center rounded-md border border-transparent bg-cyan-600 px-1 py-2  text-xs font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                       >
-                        <Link href={'/admin/addStaff'}>Add New Company</Link>
+                        <Link href={'/admin/addCompany'}>Add New Company</Link>
                       </button>
 
                       {/* Profile dropdown */}
@@ -261,16 +290,16 @@ function companies() {
                                       </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200 bg-lime-50">
-                                      {company.map((person) => (
+                                      {company.filter((user)=>user.name.toLowerCase().includes(query)).map((person) => (
 
-                                        <tr key={person.company}>
+                                        <tr key={person.name}>
                                           <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6">
-                                            {person.company}
+                                           {person.name}
                                           </td>
                                           <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-500">{person.member}</td>
                                           <td className="whitespace-nowrap px-3 py-4 text-sm font-normal w-[560] h-[55] text-gray-900">{person.units}</td>
                                           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-cyan-600 text-right text-sm font-thin sm:pr-6">
-                                            {person.action}
+                                            <Link href={`/companies/${person._id}`}>Go to details</Link>
                                           </td>
 
                                         </tr>
@@ -302,3 +331,4 @@ function companies() {
 }
 
 export default companies
+

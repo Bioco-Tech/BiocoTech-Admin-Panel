@@ -1,11 +1,63 @@
-import React from 'react'
+/* eslint-disable react-hooks/rules-of-hooks */
+import React,{useState} from 'react'
 import { IoIosArrowBack } from 'react-icons/io';
 import Link from 'next/link'
+import axios  from 'axios';
+import { useRouter } from 'next/router';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function addCompany() {
-  /*function back(){
+
+
+
+ const [name,setName] = useState('')
+  const [id,setId] = useState('')
+  const [pin,setPin] = useState('')
+  const [website,setWebsite] = useState('')
+const [about,setAbout] = useState('')
+
+  const router = useRouter()
+    if (router.isFallback) {
+      return (
+        <h3>Loading...</h3>
+      )
+  
+  
+    }
+    
+  const notify = () => toast.success('checklist deleted!', {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+
+  });
+  
+  const handleSubmit = event => {
+    event.preventDefault();
+    
    
-  }*/
+
+
+    axios.post(`http://localhost:5000/api/companies`, {name,id,pin,website,about})
+      .then(res => {
+        
+       
+        console.log(res.data);
+      })
+
+      router.push('/admin/companies')
+      
+
+
+
+
+  }
   return (
     <>
       <button className="text-lg ml-5 mt-5 font-medium leading-6 text-gray-900" ><span className=' text-md'> <Link className='flex justify-center flex-row items-center' href='/admin/companies'><IoIosArrowBack />Back</Link></span></button>
@@ -33,6 +85,8 @@ function addCompany() {
                       <input
                         type="text"
                         name="email-address"
+                        value={name}
+                        onChange={(e)=>setName(e.target.value)}
                         id="email-address"
                         autoComplete="email"
                         className="mt-1 block border w-full p-2 rounded-md border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
@@ -48,6 +102,8 @@ function addCompany() {
                       <input
                         type="text"
                         name="email-address"
+                        value={id}
+                        onChange={(e)=>setId(e.target.value)}
                         id="email-address"
                         autoComplete="email"
                         className="mt-1 block border w-full p-2 rounded-md border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
@@ -62,6 +118,8 @@ function addCompany() {
                       <input
                         type="text"
                         name="email-address"
+                        value={pin}
+                        onChange={(e)=>setPin(e.target.value)}
                         id="email-address"
                         autoComplete="email"
                         className="mt-1 block w-full rounded-md p-2   border border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
@@ -76,6 +134,8 @@ function addCompany() {
                       <input
                         type="text"
                         name="email-address"
+                        value={website}
+                        onChange={(e)=>setWebsite(e.target.value)}
                         id="email-address"
                         autoComplete="email"
                         className="mt-1 block w-full rounded-md   p-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2   sm:text-sm"
@@ -89,10 +149,12 @@ function addCompany() {
                       <textarea
                         rows={4}
                         name="comment"
+                        value={about}
+                        onChange={(e)=>setAbout(e.target.value)}
                         id="comment"
                         placeholder='  Add new unit...'
                         className="block w-full rounded-md border  p-2 border-gray-300 shadow-sm  sm:text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 "
-                        defaultValue={''}
+                       
                       />
                     </div>
 
@@ -111,6 +173,7 @@ function addCompany() {
                     <div className="col-span-6 sm:col-span-4">
                       <button
                         type="button"
+                        onClick={(e)=>handleSubmit(e)}
                         className='flex w-full ml-2 p-2 justify-center border rounded-lg border-gray-300 bg-cyan-600 text-sm font-medium text-white shadow-sm hover:bg-cyan-500 
                       focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2'
 

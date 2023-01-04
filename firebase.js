@@ -1,17 +1,17 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from 'firebase/auth'
+import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_APIKEY,
-  authDomain: process.env.NEXT_PUBLIC_AUTHDOMAIN,
-  projectId: process.env.NEXT_PUBLIC_PROJECTID,
-  storageBucket: process.env.NEXT_PUBLIC_STORAGEBUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGINGSENDERID,
-  appId: process.env.NEXT_PUBLIC_APPID
+  apiKey: "AIzaSyDyKjed-7DhX31gIXIzyJETQSmdA5u-NTo",
+  authDomain: "bioco-tech-b0193.firebaseapp.com",
+  projectId: "bioco-tech-b0193",
+  storageBucket: "bioco-tech-b0193.appspot.com",
+  messagingSenderId: "147536987176",
+  appId: "1:147536987176:web:d1f4db52a34040917f211d"
 };
 
 // Initialize Firebase
