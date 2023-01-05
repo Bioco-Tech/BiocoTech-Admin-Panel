@@ -26,7 +26,7 @@ const [about,setAbout] = useState('')
   
     }
     
-  const notify = () => toast.success('checklist deleted!', {
+  const notify = () => toast.success('add company!', {
     position: "top-right",
     autoClose: 2000,
     hideProgressBar: false,
@@ -40,6 +40,7 @@ const [about,setAbout] = useState('')
   
   const handleSubmit = event => {
     event.preventDefault();
+    
     
    
 
@@ -69,8 +70,8 @@ const [about,setAbout] = useState('')
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="">
               <div className="px-4 ml-5 sm:px-0">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">New Company</h3>
-                <p className="mt-1 text-sm text-gray-600">Add the information of new company</p>
+                <h3 className="text-lg font-medium leading-6 text-gray-900 font-abc">New Company</h3>
+                <p className="mt-1 text-sm text-gray-600 font-abc">Add the information of new company</p>
               </div>
             </div>
             <div className="mt-2  md:mt-0">
@@ -173,13 +174,14 @@ const [about,setAbout] = useState('')
                     <div className="col-span-6 sm:col-span-4">
                       <button
                         type="button"
-                        onClick={(e)=>handleSubmit(e)}
+                        onClick={(e)=>{handleSubmit(e),notify()}}
+                        
                         className='flex w-full ml-2 p-2 justify-center border rounded-lg border-gray-300 bg-cyan-600 text-sm font-medium text-white shadow-sm hover:bg-cyan-500 
                       focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2'
 
                       >
                         Create and Save
-                      </button>
+                      </button><ToastContainer/>
                     </div>
 
 

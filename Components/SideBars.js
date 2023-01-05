@@ -86,7 +86,7 @@ export default function SideBars() {
 
   return (
     <>
-      <div className="max-h-screen md:sticky  md:top-0 z-50 text-white">
+      <div className="max-h-screen md:sticky  md:top-0 z-50 text-white ">
         {/* MOBILE SIDEBAR */}
         <div className="bg-cyan-600 md:hidden flex justify-between p-2 items-center sticky top-0 z-30">
           <img className="h-8 w-auto" src="/logo.png" alt="Your Company" />
@@ -123,28 +123,28 @@ export default function SideBars() {
                 <div className={` ${isActive('/admin/dashboard')} bg-lime-500 hover:bg-lime-500 group flex items-center px-2 py-2 text-sm font-medium rounded-md `}>
 
                   <MdHome className='mr-1 text-white' />
-                  <h3 className="text-base text-white group-hover:text-white ">
+                  <h3 className="text-base text-white group-hover:text-white font-abc">
                     <Link href='/admin/dashboard'>
                       Dashboard
                     </Link>
                   </h3>
                 </div>
                 <Link href='/admin/companies' legacyBehavior>
-                  <a className="text-white  hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white font-abc hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
-                    <HiBuildingOffice2 className='mr-1 text-white' />
+                    <HiBuildingOffice2 className='mr-1 text-white ' />
                     Companies
                   </a>
                 </Link>
                 <Link href='/admin/checklist' legacyBehavior>
-                  <a className="text-white  hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white font-abc hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
                     <TbCheckbox className='mr-1 text-white' />
                     Check list
                   </a>
                 </Link>
                 <Link href='/admin/links' legacyBehavior>
-                  <a className="text-white  hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white  hover:text-white group font-abc flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
                     <ImLink className='mr-1 text-white' />
                     Links
@@ -160,7 +160,7 @@ export default function SideBars() {
               
                   <div className="flex items-center">
                     <div className='bg-lime-500 h-9 w-9 rounded-full'>
-                     <button onClick={signOut}><CiLogout className=" ml-2 mt-3 text-white " /></button> 
+                     <button onClick={signOut}><CiLogout className=" ml-2 mt-3 text-white font-abc " /></button> 
                     </div>
                     <div className="ml-3">
                       <p className="text-sm font-medium text-white group-hover:text-white " >Log Out</p>
@@ -193,7 +193,7 @@ export default function SideBars() {
                 <div className="px-4 sm:px-6 py-4 sm:py-6 mt-5 lg:px-8 lg:py-8 rounded-lg bg-gray-100">
                   <div className="sm:flex sm:items-center  ">
                     <div className="sm:flex-auto ">
-                      <h1 className="text-xl font-semibold text-gray-900">Redeem Points</h1>
+                      <h1 className="text-xl font-semibold text-gray-900 font-abc">Redeem Points</h1>
                       <p className="mt-2 text-sm text-gray-700">
                         These are the staff people who have hightest redeem points
                       </p>
@@ -207,17 +207,17 @@ export default function SideBars() {
                           <table className="min-w-full divide-y divide-gray-300">
                             <thead className="bg-lime-500">
                               <tr>
-                                <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold  text-white sm:pl-6">
+                                <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold  text-white sm:pl-6 font-abc">
                                   Staff Member
                                 </th>
-                                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
+                                <th scope="col" className="px-3 py-3.5 font-abc text-left text-sm font-semibold text-white">
                                   Company
                                 </th>
-                                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
+                                <th scope="col" className="px-3 py-3.5 font-abc text-left text-sm font-semibold text-white">
                                   Redeem Points
                                 </th>
 
-                                <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6 text-right text-white">
+                                <th scope="col" className="relative font-abc py-3.5 pl-3 pr-4 sm:pr-6 text-right text-white">
                                   Action
                                 </th>
                               </tr>

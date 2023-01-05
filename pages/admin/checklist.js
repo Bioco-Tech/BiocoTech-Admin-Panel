@@ -250,14 +250,14 @@ function checklist() {
                  
                 </Link></div>*/}
                 <Link href='/' legacyBehavior>
-                  <a className="text-white  hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white font-abc hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
                     <MdHome className='mr-1 text-white' />
                     Dashboard
                   </a>
                 </Link>
                 <Link href='/admin/companies' legacyBehavior>
-                  <a className="text-white  hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white font-abc hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
                     <HiBuildingOffice2 className='mr-1 text-white' />
                     Companies
@@ -266,7 +266,7 @@ function checklist() {
                 <div className={` ${isActive('/admin/checklist')} bg-lime-500 hover:bg-lime-500 group flex items-center px-2 py-2 text-sm font-medium rounded-md `}>
 
                   <TbCheckbox className='mr-1 text-white' />
-                  <h3 className="text-base text-white group-hover:text-white ">
+                  <h3 className="text-base text-white font-abc group-hover:text-white ">
                     <Link href='/admin/checklist'>
                       Check list
                     </Link>
@@ -275,7 +275,7 @@ function checklist() {
 
 
                 <Link href='/admin/links' legacyBehavior>
-                  <a className="text-white  hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white  hover:text-white font-abc group flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
                     <ImLink className='mr-1 text-white' />
                     Links
@@ -291,7 +291,7 @@ function checklist() {
 
                 <div className="flex items-center">
                   <div className='bg-lime-500 h-9 w-9 rounded-full'>
-                    <button onClick={signOut}><CiLogout className=" ml-2 mt-3 text-white " /></button>
+                    <button onClick={signOut}><CiLogout className=" ml-2 mt-3 font-abc text-white " /></button>
                   </div>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-white group-hover:text-white " >Log Out</p>
@@ -345,7 +345,7 @@ function checklist() {
 
                     <button
                       type="submit"
-                      className="flex w-full justify-center rounded-md border border-transparent bg-cyan-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                      className="flex w-full justify-center rounded-md font-abc border border-transparent bg-cyan-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                       onClick={closemodal}
 
                     >
@@ -442,16 +442,16 @@ function checklist() {
               {!openModal && <div className="px-4 sm:px-6 py-4 sm:py-6 lg:px-8 lg:py-8 rounded-lg bg-gray-100">
                 <div className="sm:flex sm:items-center  ">
                   <div className="sm:flex-auto ">
-                    <h1 className="text-xl font-semibold text-gray-900">List of all the companies</h1>
+                    <h1 className="text-xl font-semibold text-gray-900 font-abc">List of all the companies</h1>
                     <p className="mt-2 text-sm text-gray-700">
                       These are the list of all the companies listed with BIOCo Tech
                     </p>
                   </div>
-                  <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                  <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none font-abc">
                     <button
                       type="button"
                       onClick={() => { setOpenModal(true) }}
-                      className="inline-flex items-center justify-center rounded-md border border-transparent bg-cyan-600 text-white hover:bg-cyan-700 px-4 py-2 text-xs font-medium  shadow-sm  focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2  sm:w-auto"
+                      className="inline-flex items-center justify-center font-abc rounded-md border border-transparent bg-cyan-600 text-white hover:bg-cyan-700 px-4 py-2 text-xs font-medium  shadow-sm  focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2  sm:w-auto"
                     >
                       Add new daily checklist item
                     </button>
@@ -466,12 +466,12 @@ function checklist() {
                       <table className="min-w-full divide-y divide-gray-300">
                         <thead className="bg-lime-500">
                           <tr>
-                            <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold  text-white sm:pl-6">
+                            <th scope="col" className="py-3.5 font-abc pl-4 pr-3 text-left text-sm font-semibold  text-white sm:pl-6">
                               List of Checklists
                             </th>
 
 
-                            <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6 text-left text-white">
+                            <th scope="col" className="relative font-abc py-3.5 pl-3 pr-4 sm:pr-6 text-left text-white">
                               Action
                             </th>
                           </tr>

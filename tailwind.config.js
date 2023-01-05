@@ -6,6 +6,10 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      abc:['COCOGOOSE', "sans-serif"],
+    },
+
   },
   plugins: [],
 }

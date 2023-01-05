@@ -1,6 +1,5 @@
 import React from 'react'
-import stats from './StatsData'
-import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
+
 import {TbPlant} from 'react-icons/tb'
 import {MdLandscape} from 'react-icons/md'
 import {MdRecycling} from 'react-icons/md'
@@ -11,7 +10,7 @@ import {MdRecycling} from 'react-icons/md'
 function Stats() {
 return (
   <div>
-  <h2 className="text-sm font-medium text-gray-500">Waste managed</h2>
+  <h2 className="text-sm font-medium text-gray-500 font-abc">Waste managed</h2>
   <ul role="list" className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
     
       <li  className="col-span-1   flex rounded-md shadow-sm">

@@ -142,13 +142,13 @@ function companies() {
                  
                 </Link></div>*/}
                 <Link href='/' legacyBehavior>
-                  <a className="text-white  hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white font-abc hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
                     <MdHome className='mr-1 text-white' />
                     Dashboard
                   </a>
                 </Link>
-                <div className={` ${isActive('/admin/companies')} bg-lime-500 hover:bg-lime-500 group flex items-center px-2 py-2 text-sm font-medium rounded-md `}>
+                <div className={` ${isActive('/admin/companies')} bg-lime-500 font-abc hover:bg-lime-500 group flex items-center px-2 py-2 text-sm font-medium rounded-md `}>
 
                   <HiBuildingOffice2 className='mr-1 text-white' />
                   <h3 className="text-base text-white group-hover:text-white ">
@@ -159,14 +159,14 @@ function companies() {
                 </div>
 
                 <Link href='/admin/checklist' legacyBehavior>
-                  <a className="text-white  hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white  hover:text-white font-abc group flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
                     <TbCheckbox className='mr-1 text-white' />
                     Check list
                   </a>
                 </Link>
                 <Link href='/admin/links' legacyBehavior>
-                  <a className="text-white  hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white  hover:text-white font-abc group flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
                     <ImLink className='mr-1 text-white' />
                     Links
@@ -182,7 +182,7 @@ function companies() {
                
                   <div className="flex items-center">
                     <div className='bg-lime-500 h-9 w-9 rounded-full'>
-                    <button onClick={signOut}><CiLogout className=" ml-2 mt-3 text-white " /></button> 
+                    <button onClick={signOut}><CiLogout className=" ml-2 mt-3 font-abc text-white " /></button> 
                     </div>
                     <div className="ml-3">
                       <p className="text-sm font-medium text-white group-hover:text-white " >Log Out</p>
@@ -212,7 +212,7 @@ function companies() {
                     <div className="flex flex-1 justify-between px-4 md:px-0">
                       <div className="flex flex-1">
                         <form className="flex w-full md:ml-0" action="#" method="GET">
-                          <label htmlFor="search-field" className="sr-only text-cyan-400">
+                          <label htmlFor="search-field" className="sr-only font-abc text-cyan-400">
                             Search Company
                           </label>
                           <div className="relative w-full text-cyan-400 focus-within:text-cyan-600">
@@ -234,7 +234,7 @@ function companies() {
                     <div className="ml-4 flex items-center  md:ml-6">
                       <button
                         type="button"
-                        className="inline-flex items-center rounded-md border border-transparent bg-cyan-600 px-1 py-2  text-xs font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                        className="inline-flex items-center rounded-md border border-transparent bg-cyan-600 px-1 py-2  text-xs font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 font-abc"
                       >
                         <Link href={'/admin/addCompany'}>Add New Company</Link>
                       </button>
@@ -260,8 +260,8 @@ function companies() {
                         <div className="px-4 sm:px-6 py-4 sm:py-6 lg:px-8 lg:py-8 rounded-lg bg-gray-100">
                           <div className="sm:flex sm:items-center  ">
                             <div className="sm:flex-auto ">
-                              <h1 className="text-xl font-semibold text-gray-900">List of all the Companies</h1>
-                              <p className="mt-2 text-sm text-gray-700">
+                              <h1 className="text-xl font-semibold text-gray-900 font-abc">List of all the Companies</h1>
+                              <p className="mt-2 text-sm text-gray-700 font-abc">
                                 These are the list of all the companies listed with BIOCo Tech
                               </p>
                             </div>
@@ -274,17 +274,17 @@ function companies() {
                                   <table className="min-w-full divide-y divide-gray-300 ">
                                     <thead className="bg-lime-500">
                                       <tr>
-                                        <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold  text-white sm:pl-6">
+                                        <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold  text-white sm:pl-6 font-abc">
                                           Company 
                                         </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
+                                        <th scope="col" className="px-3 py-3.5 font-abc text-left text-sm font-semibold text-white">
                                           Staff Member 
                                         </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
+                                        <th scope="col" className="px-3 py-3.5 font-abc text-left text-sm font-semibold text-white">
                                           Total Units 
                                         </th>
 
-                                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6 text-right text-white">
+                                        <th scope="col" className="relative py-3.5 font-abc pl-3 pr-4 sm:pr-6 text-right text-white">
                                           Action
                                         </th>
                                       </tr>
@@ -298,7 +298,7 @@ function companies() {
                                           </td>
                                           <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-500">{person.member}</td>
                                           <td className="whitespace-nowrap px-3 py-4 text-sm font-normal w-[560] h-[55] text-gray-900">{person.units}</td>
-                                          <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-cyan-600 text-right text-sm font-thin sm:pr-6">
+                                          <td className="relative whitespace-nowrap py-4 font-abc pl-3 pr-4 text-cyan-600 text-right text-sm font-thin sm:pr-6">
                                             <Link href={`/companies/${person._id}`}>Go to details</Link>
                                           </td>
 

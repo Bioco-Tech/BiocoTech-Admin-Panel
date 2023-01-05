@@ -273,7 +273,7 @@ function links() {
 
 
               <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                <dt className="text-sm font-medium text-black">Companies</dt>
+                <dt className="text-sm font-medium text-black font-abc">Companies</dt>
 
                 <dd className="mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0">
                   <label className='flex '>Privacy Policy</label>
@@ -306,7 +306,7 @@ function links() {
                   <ul role="list" className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white">
                     <li className="flex items-center justify-between p-2 text-sm">
                       <div className="flex w-0 flex-1 items-center">
-                        <input className='px-5 outline-none' value={terms} onChange={(e) => setTerms(e.target.value)} />
+                       <input className='px-5 outline-none' value={terms} onChange={(e) => setTerms(e.target.value)} />
 
                       </div>
                       <div className="ml-4 flex-shrink-0">
