@@ -275,13 +275,13 @@ function companies() {
                                     <thead className="bg-lime-500">
                                       <tr>
                                         <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold  text-white sm:pl-6">
-                                          Company (4)
+                                          Company 
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
-                                          Staff Member (129)
+                                          Staff Member 
                                         </th>
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
-                                          Total Units (53)
+                                          Total Units 
                                         </th>
 
                                         <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6 text-right text-white">

@@ -15,7 +15,7 @@ return (
           className={
             
           
-            `flex-shrink-0 flex items-center justify-center w-16 ${project.bgColor}  text-white text-sm font-medium rounded-l-md`
+            `flex-shrink-0 flex items-center justify-center w-16   text-white text-sm font-medium rounded-l-md`
           }
         >
         {project.icon}

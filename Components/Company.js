@@ -1,4 +1,4 @@
-const company =[
+const comp =[
     {
         company:'Pizza hut',
         member:'12',
@@ -26,4 +26,4 @@ const company =[
    
 ]
 
-export default company
+export default comp
