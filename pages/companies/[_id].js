@@ -35,7 +35,7 @@ function Singlecompany({ company, units }) {
   const [id, setId] = useState("");
   const [unit_details, setUnit_details] = useState("");
   const [name, setName] = useState("");
-  const [openMenu, setOpenMenu] = useState('hidden')
+  const [openMenu, setOpenMenu] = useState("hidden");
   const router = useRouter();
 
   //////--->useStates
@@ -49,10 +49,10 @@ function Singlecompany({ company, units }) {
   const [editVpin, setEditVpin] = useState(company.pin);
   const [editVabout, setEditVabout] = useState(company.about);
   const [editVattach, setEditVattach] = useState("");
-  const [edituid, setEditUid] = useState(false)
-  const [editud, setEditud] = useState(false)
-  const [editVuid, setEditVUid] = useState(units.id)
-  const [editVud, setEditVUd] = useState(units.unit_details)
+  const [edituid, setEditUid] = useState(false);
+  const [editud, setEditud] = useState(false);
+  const [editVuid, setEditVUid] = useState(units.id);
+  const [editVud, setEditVUd] = useState(units.unit_details);
   /////--->useRefs
   const inputElement_0 = useRef();
   const inputElement_1 = useRef();
@@ -127,7 +127,6 @@ function Singlecompany({ company, units }) {
       });
     }
   };
- 
 
   useEffect(() => {
     console.log("in useEffect");
@@ -136,7 +135,6 @@ function Singlecompany({ company, units }) {
 
   ////////////////////////////////////////////////////////////////////
 
-  
   const notify = () =>
     toast.success("checklist deleted!", {
       position: "top-right",
@@ -148,11 +146,6 @@ function Singlecompany({ company, units }) {
       progress: undefined,
       theme: "colored",
     });
-
-  
-
-
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -168,10 +161,6 @@ function Singlecompany({ company, units }) {
 
   return (
     <>
-
-  
-
-
       <div>
         <button className="text-lg ml-5 mt-5 font-medium leading-6 text-gray-900">
           <span className=" text-md">
@@ -427,116 +416,118 @@ function Singlecompany({ company, units }) {
                 </div>
 
                 <div className="py-4 sm:grid sm:grid-cols-3 border-b border-gray-200 sm:gap-4 sm:py-5">
-                  {" "}{units.map((unit) => (
+                  {" "}
+                  {units.map((unit) => (
                     <>
                       <dt className="text-sm font-medium text-gray-500 font-abc ">
                         Unit
                       </dt>
                       <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         <span className="flex-grow font-abc ">
-                          {openMenu ? <Menu
-                            as="div"
-                            className="relative inline-block text-left"
-                          >
-                            <div>
-                              <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-                                M1
-
-                              </Menu.Button>
-                            </div>
-
-
-                          </Menu> : <Menu as="div" className="relative inline-block text-left">
-                            <div>
-                              <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 focus:ring-offset-gray-100 font-abc ">
-                                Select unit
-                                <ChevronDownIcon
-                                  className="-mr-1 ml-2 h-5 w-5"
-                                  aria-hidden="true"
-                                />
-                              </Menu.Button>
-                            </div>
-
-                            <Transition
-                              as={Fragment}
-                              enter="transition ease-out duration-100"
-                              enterFrom="transform opacity-0 scale-95"
-                              enterTo="transform opacity-100 scale-100"
-                              leave="transition ease-in duration-75"
-                              leaveFrom="transform opacity-100 scale-100"
-                              leaveTo="transform opacity-0 scale-95"
+                          {openMenu ? (
+                            <Menu
+                              as="div"
+                              className="relative inline-block text-left"
                             >
-                              <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                <div className="py-1">
-                                  <Menu.Item>
-                                    {({ active }) => (
-                                      <a
-                                        href="#"
-                                        className={classNames(
-                                          active
-                                            ? "bg-gray-100 text-gray-900"
-                                            : "text-gray-700",
-                                          "block px-4 font-abc  py-2 text-sm"
-                                        )}
-                                      >
-                                        M1
-                                      </a>
-                                    )}
-                                  </Menu.Item>
-                                  <Menu.Item>
-                                    {({ active }) => (
-                                      <a
-                                        href="#"
-                                        className={classNames(
-                                          active
-                                            ? "bg-gray-100 text-gray-900"
-                                            : "text-gray-700",
-                                          "block px-4 py-2 font-abc  text-sm"
-                                        )}
-                                      >
-                                        M6
-                                      </a>
-                                    )}
-                                  </Menu.Item>
-                                  <Menu.Item>
-                                    {({ active }) => (
-                                      <a
-                                        href="#"
-                                        className={classNames(
-                                          active
-                                            ? "bg-gray-100 text-gray-900"
-                                            : "text-gray-700",
-                                          "block font-abc  px-4 py-2 text-sm"
-                                        )}
-                                      >
-                                        M2
-                                      </a>
-                                    )}
-                                  </Menu.Item>
-                                  <form method="POST" action="#">
+                              <div>
+                                <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+                                  M1
+                                </Menu.Button>
+                              </div>
+                            </Menu>
+                          ) : (
+                            <Menu
+                              as="div"
+                              className="relative inline-block text-left"
+                            >
+                              <div>
+                                <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 focus:ring-offset-gray-100 font-abc ">
+                                  Select unit
+                                  <ChevronDownIcon
+                                    className="-mr-1 ml-2 h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                </Menu.Button>
+                              </div>
+
+                              <Transition
+                                as={Fragment}
+                                enter="transition ease-out duration-100"
+                                enterFrom="transform opacity-0 scale-95"
+                                enterTo="transform opacity-100 scale-100"
+                                leave="transition ease-in duration-75"
+                                leaveFrom="transform opacity-100 scale-100"
+                                leaveTo="transform opacity-0 scale-95"
+                              >
+                                <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                  <div className="py-1">
                                     <Menu.Item>
                                       {({ active }) => (
-                                        <button
-                                          type="submit"
+                                        <a
+                                          href="#"
                                           className={classNames(
                                             active
                                               ? "bg-gray-100 text-gray-900"
                                               : "text-gray-700",
-                                            "block w-full px-4 py-2 font-abc  text-left text-sm"
+                                            "block px-4 font-abc  py-2 text-sm"
                                           )}
                                         >
-                                          M8
-                                        </button>
+                                          M1
+                                        </a>
                                       )}
                                     </Menu.Item>
-                                  </form>
-                                </div>
-                              </Menu.Items>
-                            </Transition>
-                          </Menu>}
-
-
-
+                                    <Menu.Item>
+                                      {({ active }) => (
+                                        <a
+                                          href="#"
+                                          className={classNames(
+                                            active
+                                              ? "bg-gray-100 text-gray-900"
+                                              : "text-gray-700",
+                                            "block px-4 py-2 font-abc  text-sm"
+                                          )}
+                                        >
+                                          M6
+                                        </a>
+                                      )}
+                                    </Menu.Item>
+                                    <Menu.Item>
+                                      {({ active }) => (
+                                        <a
+                                          href="#"
+                                          className={classNames(
+                                            active
+                                              ? "bg-gray-100 text-gray-900"
+                                              : "text-gray-700",
+                                            "block font-abc  px-4 py-2 text-sm"
+                                          )}
+                                        >
+                                          M2
+                                        </a>
+                                      )}
+                                    </Menu.Item>
+                                    <form method="POST" action="#">
+                                      <Menu.Item>
+                                        {({ active }) => (
+                                          <button
+                                            type="submit"
+                                            className={classNames(
+                                              active
+                                                ? "bg-gray-100 text-gray-900"
+                                                : "text-gray-700",
+                                              "block w-full px-4 py-2 font-abc  text-left text-sm"
+                                            )}
+                                          >
+                                            M8
+                                          </button>
+                                        )}
+                                      </Menu.Item>
+                                    </form>
+                                  </div>
+                                </Menu.Items>
+                              </Transition>
+                            </Menu>
+                          )}
                         </span>
                         <span className="  flex flex-shrink-0 space-x-4">
                           <button
@@ -548,19 +539,16 @@ function Singlecompany({ company, units }) {
 
                               setEditud(!editud);
                               focusUd();
-
-
-
-
                             }}
                             type="button"
                             className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
                           >
-                              <div>{edituid == false ? "Edit" : "Update"}</div>
-
-                          
+                            <div>{edituid == false ? "Edit" : "Update"}</div>
                           </button>
-                          <span className="text-gray-300 mt-2" aria-hidden="true">
+                          <span
+                            className="text-gray-300 mt-2"
+                            aria-hidden="true"
+                          >
                             |
                           </span>
                           <button
@@ -584,7 +572,6 @@ function Singlecompany({ company, units }) {
                             setEditVUid(e.target.value);
                           }}
                         />
-
                       </dd>
                       <dt className="text-sm font-medium text-gray-500 font-abc ">
                         Unit Details
@@ -598,12 +585,11 @@ function Singlecompany({ company, units }) {
                             setEditVUd(e.target.value);
                           }}
                         />
-                        { }
+                        {}
                       </dd>
                     </>
                   ))}
                 </div>
-
 
                 <div>
                   <button
@@ -623,11 +609,7 @@ function Singlecompany({ company, units }) {
             <div className=" z-10 flex h-16 flex-shrink-0  mb-5 border-b border-cyan-400 bg-white">
               <div className="flex flex-1 border border-transparent  justify-between mt-0 sm:px-2 px-4 md:px-0">
                 <div className="flex flex-1">
-                  <form
-                    className="flex w-full md:ml-0"
-                    action="#"
-                    method="GET"
-                  >
+                  <form className="flex w-full md:ml-0" action="#" method="GET">
                     <label
                       htmlFor="search-field"
                       className="sr-only text-cyan-400 font-abc "
@@ -725,11 +707,10 @@ function Singlecompany({ company, units }) {
                   </div>
                 </div>
               </div>
-            </div>{" "}
+            </div>
           </div>
         </div>
       </div>
-
     </>
   );
 }
