@@ -1,40 +1,27 @@
-import React from "react";
 import { useRouter } from "next/router";
+import React from "react";
+import { useAuth } from "./AuthContext";
 
-const AuthContext = React.createContext();
-const { Provider } = AuthContext;
+export function withPublic(Component){
+  return function WithPublic(props){
+    const auth = useAuth();
+    const router = useRouter();
 
-const AuthProvider = ({ children }) => {
-  const [authState, setAuthState] = React.useState({
-   token: "",
-  });
-
-  const setUserAuthInfo = ({ data }) => {
-   const token = localStorage.setItem("token", data.data);
-
-   setAuthState({
-    token,
-   });
- };
-
- // checks if the user is authenticated or not
- const isUserAuthenticated = () => {
-  if (!authState.token) {
-    return false;
+    if(auth.currentUser){
+      router.replace("/");
+      <h1>Loading...</h1> }
+      return <Component auth={auth} {...props}/>
+   
   }
- };
-
- return (
-   <Provider
-     value={{
-      authState,
-      setAuthState: (userAuthInfo) => setUserAuthInfo(userAuthInfo),
-      isUserAuthenticated,
-    }}
-   >
-    {children}
-   </Provider>
- );
-};
-
-export { AuthContext, AuthProvider };
+}
+  export function withProtected(Component){
+    return function WithProtected(props){
+    const auth = useAuth();
+    const router = useRouter();
+    if(!auth.currentUser){
+      router.replace("/login");
+      <h1>Loading...</h1>
+    }
+    return <Component auth={auth} {...props}/>
+    }
+  }

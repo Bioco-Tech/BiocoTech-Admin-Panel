@@ -18,13 +18,14 @@ import { useRef } from 'react'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { useAuth } from '../context/AuthContext'
 import axios from 'axios'
+import { withProtected } from '../context/Route'
 
 
-export default function SideBars() {
+ function SideBars({auth}) {
 
   const router = useRouter()
   const sideBarRef = useRef()
-  const {logout} = useAuth()
+  const {logout} = auth
   const [company,setCompany] = useState([])
   const [staff,setStaff] = useState([])
 
@@ -159,11 +160,11 @@ export default function SideBars() {
               <div className="flex flex-shrink-0 border-t border-lime-500 p-4">
               
                   <div className="flex items-center">
-                    <div className='bg-lime-500 h-9 w-9 rounded-full'>
+                    <div className='bg-lime-500 h-9 w-9 font-abc  rounded-full'>
                      <button onClick={signOut}><CiLogout className=" ml-2 mt-3 text-white font-abc " /></button> 
                     </div>
                     <div className="ml-3">
-                      <p className="text-sm font-medium text-white group-hover:text-white " >Log Out</p>
+                      <p className="text-sm font-medium font-abc  text-white group-hover:text-white " >Log Out</p>
                       {/*<p className="text-xs font-medium text-white group-hover:text-gray-700">(you will be loged out of your account)</p>*/}
                     </div>
                   </div>
@@ -194,7 +195,7 @@ export default function SideBars() {
                   <div className="sm:flex sm:items-center  ">
                     <div className="sm:flex-auto ">
                       <h1 className="text-xl font-semibold text-gray-900 font-abc">Redeem Points</h1>
-                      <p className="mt-2 text-sm text-gray-700">
+                      <p className="mt-2 text-sm text-gray-700 font-abc ">
                         These are the staff people who have hightest redeem points
                       </p>
                     </div>
@@ -226,12 +227,12 @@ export default function SideBars() {
                               {company.map((person) => (
 
                                 <tr key={person.member}>
-                                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6">
+                                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-light font-abc  text-gray-500 sm:pl-6">
                                     {person.member}
                                   </td>
-                                  <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-500">{person.name}</td>
-                                  <td className="whitespace-nowrap px-3 py-4 text-sm font-normal w-[560] h-[55] text-gray-900">{person.points}</td>
-                                  <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-cyan-600 text-right text-sm font-thin sm:pr-6">
+                                  <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-500 font-abc ">{person.name}</td>
+                                  <td className="whitespace-nowrap px-3 py-4 text-sm font-normal w-[560] h-[55] text-gray-900 font-abc ">{person.points}</td>
+                                  <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-cyan-600 text-right text-sm font-thin sm:pr-6 font-abc ">
                                     {person.action}
                                   </td>
 
@@ -255,3 +256,4 @@ export default function SideBars() {
       </div></>
   )
 }
+export default withProtected(SideBars)

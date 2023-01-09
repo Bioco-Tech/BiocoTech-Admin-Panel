@@ -41,7 +41,7 @@ function ForgotPassword() {
       </div>
         </div>
         <button className='flex w-64 p-2 justify-center  rounded-lg  bg-lime-600  text-sm font-medium text-white shadow-sm hover:bg-lime-500 
-            focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2' onClick={submitHandler}>Submit</button>
+            focus:outline-none focus:ring-2 focus:ring-lime-500 font-abc focus:ring-offset-2' onClick={submitHandler}>Submit</button>
       </div>
     </div>
   )

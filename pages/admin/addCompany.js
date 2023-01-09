@@ -61,7 +61,7 @@ const [about,setAbout] = useState('')
   }
   return (
     <>
-      <button className="text-lg ml-5 mt-5 font-medium leading-6 text-gray-900" ><span className=' text-md'> <Link className='flex justify-center flex-row items-center' href='/admin/companies'><IoIosArrowBack />Back</Link></span></button>
+      <button className="text-lg ml-5 mt-5 font-medium leading-6 text-gray-900" ><span className=' text-md'> <Link className='flex justify-center flex-row font-abc items-center' href='/admin/companies'><IoIosArrowBack />Back</Link></span></button>
       <div className='bg-gray-200 mt-2 ml-6 mr-6 mb-6 px-2 sm:px-6 py-4 sm:py-6 lg:px-4 lg:py-4 rounded-lg'>
 
 
@@ -80,7 +80,7 @@ const [about,setAbout] = useState('')
                 <div className=" px-4 py-5 sm:p-6">
                   <div className="grid grid-cols-6 -mt-3 gap-6">
                     <div className="col-span-6 sm:col-span-4">
-                      <label htmlFor="first-name" className="block text-sm mb-2 font-medium text-gray-700">
+                      <label htmlFor="first-name" className="block font-abc text-sm mb-2 font-medium text-gray-700">
                         Company Name
                       </label>
                       <input
@@ -97,7 +97,7 @@ const [about,setAbout] = useState('')
 
 
                     <div className="col-span-6 sm:col-span-4">
-                      <label htmlFor="email-address" className="block text-sm mb-2 font-medium text-gray-700">
+                      <label htmlFor="email-address" className="block font-abc text-sm mb-2 font-medium text-gray-700">
                         Company ID
                       </label>
                       <input
@@ -113,7 +113,7 @@ const [about,setAbout] = useState('')
 
 
                     <div className="col-span-6 sm:col-span-4">
-                      <label htmlFor="email-address" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label htmlFor="email-address" className="block font-abc mb-2 text-sm font-medium text-gray-700">
                         Company PIN
                       </label>
                       <input
@@ -129,7 +129,7 @@ const [about,setAbout] = useState('')
 
 
                     <div className="col-span-6 sm:col-span-4">
-                      <label htmlFor="email-address" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label htmlFor="email-address" className="block font-abc mb-2 text-sm font-medium text-gray-700">
                         Website/Other link(optional)
                       </label>
                       <input
@@ -144,7 +144,7 @@ const [about,setAbout] = useState('')
                     </div>
 
                     <div className="col-span-6 sm:col-span-4">
-                      <label htmlFor="email-address" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label htmlFor="email-address" className="block font-abc mb-2 text-sm font-medium text-gray-700">
                         About/Other details(optional)
                       </label>
                       <textarea
@@ -160,14 +160,14 @@ const [about,setAbout] = useState('')
                     </div>
 
                     <div className="col-span-6">
-                      <label htmlFor="street-address" className="block mb-2 text-sm font-medium text-gray-700">
+                      <label htmlFor="street-address" className="block font-abc mb-2 text-sm font-medium text-gray-700">
                         Attachments(optional)
                       </label>
                       <div className='flex '>
                         <button className='flex w-32 p-1 justify-center rounded-lg border border-gray-300 bg-white  text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 
-                         focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2' >Upload</button>
+                         focus:outline-none focus:ring-2 font-abc focus:ring-gray-300 focus:ring-offset-2' >Upload</button>
                         <button className='flex w-32 ml-2 p-1 justify-center border rounded-lg border-gray-300 bg-white  text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 
-                         focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2' >Upload</button>
+                         focus:outline-none focus:ring-2 font-abc focus:ring-gray-300 focus:ring-offset-2' >Upload</button>
 
                       </div>
                     </div>
@@ -177,7 +177,7 @@ const [about,setAbout] = useState('')
                         onClick={(e)=>{handleSubmit(e),notify()}}
                         
                         className='flex w-full ml-2 p-2 justify-center border rounded-lg border-gray-300 bg-cyan-600 text-sm font-medium text-white shadow-sm hover:bg-cyan-500 
-                      focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2'
+                      focus:outline-none focus:ring-2 font-abc focus:ring-cyan-500 focus:ring-offset-2'
 
                       >
                         Create and Save

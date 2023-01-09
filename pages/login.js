@@ -7,12 +7,13 @@ import { FiKey } from 'react-icons/fi'
 import Link from 'next/link'
 import { useAuth } from '../context/AuthContext'
 import { useRouter } from 'next/router'
+import { withPublic } from '../context/Route'
 
 
 
 
 
-function Login() {
+function Login({auth}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
@@ -26,7 +27,7 @@ function Login() {
 
 
 
-  const { login, currentUser,  } = useAuth()
+  const { login, currentUser,  } = auth
 
   async function submitHandler() {
     try {
@@ -101,7 +102,8 @@ function Login() {
 
             <button className='flex w-64 p-2 justify-center  rounded-lg  bg-lime-600  text-sm font-medium text-white shadow-sm hover:bg-lime-500 
             focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2'onClick={submitHandler} >LogIn</button>
-            <div className="text-xs text-right">
+            <h1>{currentUser?.uid}</h1>
+            <div className="text-xs text-right font-abc ">
              <Link href='/forgotPassword' >Forgot Password</Link>
             </div>
 
@@ -122,4 +124,4 @@ function Login() {
   )
 }
 
-export default Login
+export default withPublic(Login) 

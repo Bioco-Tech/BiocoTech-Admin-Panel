@@ -24,6 +24,7 @@ function links() {
   const [term, setTerm] = useState('')
   const [privacy, setPrivacy] = useState('')
   const [fa, setFa] = useState('')
+  const [items,setItems] = useState([])
   console.log(terms, term, policy, privacy, fa)
 
   if (router.isFallback) {
@@ -41,9 +42,9 @@ function links() {
       console.log(res.data);
     })*/}
 
-    const deleteList = () => {
-      axios.delete(`http://localhost:5000/api/checklists/{id}`).then((res) => {
-        fetchList()
+    const deleteList = (id) => {
+      axios.delete(`http://localhost:5000/api/company-policy/${id}`).then((res) => {
+        
         //setItems(res.data);
         console.log('-- res.data --', res.data)
       })
@@ -110,14 +111,14 @@ function links() {
                  
                 </Link></div>*/}
                 <Link href='/' legacyBehavior>
-                  <a className="text-white  hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white font-abc  hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
                     <MdHome className='mr-1 text-white' />
                     Dashboard
                   </a>
                 </Link>
                 <Link href='/admin/companies' legacyBehavior>
-                  <a className="text-white  hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white font-abc hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
                     <HiBuildingOffice2 className='mr-1 text-white' />
                     Companies
@@ -127,14 +128,14 @@ function links() {
 
 
                 <Link href='/admin/checklist' legacyBehavior>
-                  <a className="text-white  hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white font-abc  hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
                     <TbCheckbox className='mr-1 text-white' />
                     Check list
                   </a>
                 </Link>
 
-                <div className={` ${isActive('/admin/links')} bg-lime-500 hover:bg-lime-500 group flex items-center px-2 py-2 text-sm font-medium rounded-md `}>
+                <div className={` ${isActive('/admin/links')} bg-lime-500 hover:bg-lime-500 group flex items-center px-2 py-2 text-sm font-abc font-medium rounded-md `}>
 
                   <ImLink className='mr-1 text-white' />
                   <h3 className="text-base text-white group-hover:text-white ">
@@ -150,11 +151,11 @@ function links() {
               <div className="flex flex-shrink-0 border-t border-lime-500 p-4">
 
                 <div className="flex items-center">
-                  <div className='bg-lime-500 h-9 w-9 rounded-full'>
+                  <div className='bg-lime-500 h-9 w-9 font-abc rounded-full'>
                     <button onClick={signOut}><CiLogout className=" ml-2 mt-3 text-white " /></button>
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm font-medium text-white group-hover:text-white " >Log Out</p>
+                    <p className="text-sm font-abc font-medium text-white group-hover:text-white " >Log Out</p>
                     {/*<p className="text-xs font-medium text-white group-hover:text-gray-700">(you will be loged out of your account)</p>*/}
                   </div>
                 </div>
@@ -276,7 +277,10 @@ function links() {
                 <dt className="text-sm font-medium text-black font-abc">Companies</dt>
 
                 <dd className="mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0">
-                  <label className='flex '>Privacy Policy</label>
+                  {items.map(()=>{
+                    
+                  })}
+                  <label className='flex font-abc '>Privacy Policy</label>
                   <ul role="list" className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white">
                     <li className="flex items-center justify-between p-2 text-sm">
                       <div className="flex w-0 flex-1 items-center">
@@ -285,16 +289,17 @@ function links() {
                       <div className="ml-4 flex-shrink-0">
                         <button
                           type="button"
-                          className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                          className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none font-abc focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                         >
                           Update
                         </button>
-                        <span className="text-gray-300 ml-1" aria-hidden="true">
+                        <span className="text-gray-300 ml-1 font-abc" aria-hidden="true">
                           |
                         </span>
                         <button
+                        onClick={() => { deleteList(list_id)}}
                           type="button"
-                          className="rounded-md bg-white ml-1 font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                          className="rounded-md bg-white ml-1 font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 font-abc focus:ring-offset-2"
                         >
                           Remove
                         </button>
@@ -302,7 +307,7 @@ function links() {
                     </li>
                   </ul>
 
-                  <label className='flex mt-4'>Terms & Conditions</label>
+                  <label className='flex mt-4 font-abc'>Terms & Conditions</label>
                   <ul role="list" className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white">
                     <li className="flex items-center justify-between p-2 text-sm">
                       <div className="flex w-0 flex-1 items-center">
@@ -312,16 +317,16 @@ function links() {
                       <div className="ml-4 flex-shrink-0">
                         <button
                           type="button"
-                          className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                          className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 font-abc focus:ring-offset-2"
                         >
                           Update
                         </button>
-                        <span className="text-gray-300 ml-1" aria-hidden="true">
+                        <span className="text-gray-300 ml-1 font-abc" aria-hidden="true">
                           |
                         </span>
                         <button
                           type="button"
-                          className="rounded-md bg-white ml-1 font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                          className="rounded-md bg-white ml-1 font-abc font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                         >
                           Remove
                         </button>
@@ -329,7 +334,7 @@ function links() {
                     </li>
                   </ul>
 
-                  <label className='flex mt-4'>FAQs</label>
+                  <label className='flex mt-4 font-abc'>FAQs</label>
                   <ul role="list" className="divide-y  divide-white mt-2 p-0 rounded-md border bg-white border-white">
                     <li className="flex items-center justify-between p-2 text-sm">
                       <div className="flex w-0 flex-1 items-center">
@@ -338,7 +343,7 @@ function links() {
                       <div className="ml-4 flex-shrink-0">
                         <button
                           type="button"
-                          className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                          className="rounded-md bg-white font-thin font-abc text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                         >
                           Update
                         </button>
@@ -347,7 +352,7 @@ function links() {
                         </span>
                         <button
                           type="button"
-                          className="rounded-md bg-white ml-1 font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                          className="rounded-md bg-white ml-1 font-abc font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                         >
                           Remove
                         </button>
@@ -372,9 +377,9 @@ function links() {
 
 
               <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                <dt className="text-sm font-medium text-black">Staff</dt>
+                <dt className="text-sm font-medium text-black font-abc">Staff</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0">
-                  <label className='flex '>Privacy Policy</label>
+                  <label className='flex font-abc '>Privacy Policy</label>
                   <ul role="list" className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white">
                     <li className="flex items-center justify-between p-2 text-sm">
                       <div className="flex w-0 flex-1 items-center">
@@ -383,7 +388,7 @@ function links() {
                       <div className="ml-4 flex-shrink-0">
                         <button
                           type="button"
-                          className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                          className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 font-abc"
                         >
                           Update
                         </button>
@@ -392,7 +397,7 @@ function links() {
                         </span>
                         <button
                           type="button"
-                          className="rounded-md bg-white ml-1 font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                          className="rounded-md bg-white ml-1 font-abc font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                         >
                           Remove
                         </button>
@@ -400,7 +405,7 @@ function links() {
                     </li>
                   </ul>
 
-                  <label className='flex mt-4'>Terms & Conditions</label>
+                  <label className='flex mt-4 font-abc'>Terms & Conditions</label>
                   <ul role="list" className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white">
                     <li className="flex items-center justify-between p-2 text-sm">
                       <div className="flex w-0 flex-1 items-center">
@@ -409,7 +414,7 @@ function links() {
                       <div className="ml-4 flex-shrink-0">
                         <button
                           type="button"
-                          className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                          className="rounded-md bg-white font-abc font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none "
                         >
                           Update
                         </button>
@@ -418,7 +423,7 @@ function links() {
                         </span>
                         <button
                           type="button"
-                          className="rounded-md bg-white ml-1 font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                          className="rounded-md font-abc bg-white ml-1 font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none "
                         >
                           Remove
                         </button>
@@ -426,7 +431,7 @@ function links() {
                     </li>
                   </ul>
 
-                  <label className='flex mt-4'>FAQs</label>
+                  <label className='flex mt-4 font-abc'>FAQs</label>
                   <ul role="list" className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white">
                     <li className="flex items-center justify-between p-2 text-sm">
                       <div className="flex w-0 flex-1 items-center">
@@ -435,7 +440,7 @@ function links() {
                       <div className="ml-4 flex-shrink-0">
                         <button
                           type="button"
-                          className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                          className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 font-abc"
                         >
                           Update
                         </button>
@@ -444,7 +449,7 @@ function links() {
                         </span>
                         <button
                           type="button"
-                          className="rounded-md bg-white ml-1 font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                          className="rounded-md bg-white font-abc ml-1 font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                         >
                           Remove
                         </button>

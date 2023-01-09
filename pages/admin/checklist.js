@@ -17,7 +17,7 @@ import { RiDeleteBin5Line } from 'react-icons/ri'
 import { useRef } from 'react'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { useAuth } from '../../context/AuthContext'
-
+import { withProtected } from '../../context/Route'
 
 import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
@@ -30,16 +30,30 @@ let usama3;
 
 
 function checklist() {
+  console.log()
   const [items, setItems] = useState([])
-  const [data,setData] = useState([])
-  
-
-
- 
-  
+  const [data, setData] = useState([])
+  const [edit, setEdit] = useState(false)
+  const [editValue, setEditValue] = useState('')
   const [text, setText] = useState('')
+  const inputElement_0 = useRef()
 
-  
+
+  const focusInput = () => {
+    if (edit == false)
+      inputElement_0.current.focus()
+
+
+
+  }
+  const sendPostRequest = (id) => {
+    // console.log(saveOrEdit)
+    if (edit == true) {
+      console.log("hello1")
+      axios.put(`http://localhost:5000/api/checklists/${id}`, { text: editValue })
+      fetchList()
+    }
+  }
 
   const router = useRouter()
   if (router.isFallback) {
@@ -56,7 +70,7 @@ function checklist() {
     await axios.get("http://localhost:5000/api/checklists").then((res) => {
       setItems(res.data.reverse());
       // setChange(res.data.reverse())
-      
+
     });
   };
 
@@ -70,7 +84,7 @@ function checklist() {
 
   }
 
-  const updateList = (id) => {
+  {/*const updateList = (id) => {
     //const text = e.target.value
 
 
@@ -81,10 +95,10 @@ function checklist() {
     axios({
       method: "put",
       url: `http://localhost:5000/api/checklists/${id._id}`,
-     
+
     })
     fetchList()
-  }
+  }*/}
 
 
   useEffect(() => {
@@ -156,7 +170,7 @@ function checklist() {
     setOpenModal(false)
   }
 
-  function close(){
+  function close() {
     setOpen(false)
   }
 
@@ -294,7 +308,7 @@ function checklist() {
                     <button onClick={signOut}><CiLogout className=" ml-2 mt-3 font-abc text-white " /></button>
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm font-medium text-white group-hover:text-white " >Log Out</p>
+                    <p className="text-sm font-medium font-abc text-white group-hover:text-white " >Log Out</p>
                     {/*<p className="text-xs font-medium text-white group-hover:text-gray-700">(you will be loged out of your account)</p>*/}
                   </div>
                 </div>
@@ -345,7 +359,7 @@ function checklist() {
 
                     <button
                       type="submit"
-                      className="flex w-full justify-center rounded-md font-abc border border-transparent bg-cyan-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                      className="flex w-full justify-center rounded-md font-abc border border-transparent bg-cyan-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 "
                       onClick={closemodal}
 
                     >
@@ -409,7 +423,7 @@ function checklist() {
                       onClick={close}
 
                     >
-                     Update
+                      Update
                     </button>
 
 
@@ -443,7 +457,7 @@ function checklist() {
                 <div className="sm:flex sm:items-center  ">
                   <div className="sm:flex-auto ">
                     <h1 className="text-xl font-semibold text-gray-900 font-abc">List of all the companies</h1>
-                    <p className="mt-2 text-sm text-gray-700">
+                    <p className="mt-2 text-sm font-abc text-gray-700">
                       These are the list of all the companies listed with BIOCo Tech
                     </p>
                   </div>
@@ -451,7 +465,7 @@ function checklist() {
                     <button
                       type="button"
                       onClick={() => { setOpenModal(true) }}
-                      className="inline-flex items-center justify-center font-abc rounded-md border border-transparent bg-cyan-600 text-white hover:bg-cyan-700 px-4 py-2 text-xs font-medium  shadow-sm  focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2  sm:w-auto"
+                      className="inline-flex items-center justify-center font-abc rounded-md border border-transparent bg-cyan-600 text-white hover:bg-cyan-700 px-4 py-2 text-xs font-medium  shadow-sm  focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2   sm:w-auto"
                     >
                       Add new daily checklist item
                     </button>
@@ -480,33 +494,42 @@ function checklist() {
                           {items.map((list) => (
 
                             <tr key={list.text}>
-                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6 contentEditable:outline-none">
-                                {list.text}
+                              <td className="whitespace-nowrap font-abc py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6 contentEditable:outline-none">
+                              <input ref={inputElement_0} value={edit ? editValue : list.text} onChange={(e) => { setEditValue(e.target.value) }} />
 
-                               {
+                                {
                                 /*
                                } <input type="text" value={list.text} onChange={(e) => {
                                   setChange(e.target.value)
                                } />*/ }
                               </td>
 
-                              <td className=" flex relative whitespace-nowrap py-7  pl-4 pr-3 text-black  text-sm font-thin sm:pr-6">
+                              <td className=" flex relative font-abc whitespace-nowrap py-7  pl-4 pr-3 text-black  text-sm font-thin sm:pr-6">
                                 {/*<CiEdit className='cursor-pointer' onClick={() => {
                                   updateList(list._id);
                                   // items.target.value = "";
 
                                 }} />*/}
-                               {
+                                {/*
                                 <Link href={`/update`}>
                                 <CiEdit onClick={()=>{
                                   usama2 = list._id;
                                   usama3 = list.text;
                                 }} />
                                 </Link>
-                               }
-                                {<RiDeleteBin5Line className='ml-2 cursor-pointer' onClick={() => { deleteList(list._id), notify() }} />}
-                                <ToastContainer />
+                              */}
+                               
+                                <button
+                                  type='button'
+                                  onClick={() => { setEdit(!edit); focusInput(); sendPostRequest(list._id) }}
+                                >
+                                  
+                                    {edit == false ? <CiEdit className=' cursor-pointer' /> : "Update"}
+                                 </button>
 
+                                  {<RiDeleteBin5Line className='ml-2 cursor-pointer' onClick={() => { deleteList(list._id), notify() }} />}
+                                  <ToastContainer />
+                                
                               </td>
                               {console.log(list._id)}
                             </tr>
@@ -532,7 +555,7 @@ function checklist() {
 
 
 
-      
+
 
 
     </>
@@ -540,7 +563,7 @@ function checklist() {
 }
 
 export { usama2, usama3 };
-export default checklist
+export default withProtected(checklist)
 
 
 

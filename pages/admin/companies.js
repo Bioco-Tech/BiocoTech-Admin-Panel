@@ -30,6 +30,7 @@ import { CiLogout } from 'react-icons/ci'
 import { useRouter } from 'next/router'
 import { useRef } from 'react'
 import { useAuth } from '../../context/AuthContext'
+import { withProtected } from '../../context/Route'
 
 const staffMembers = [20, 40, 60, 80]
 const units = [2000, 2500, 3000, 3500]
@@ -180,7 +181,7 @@ function companies() {
 
               <div className="flex flex-shrink-0 border-t border-lime-500 p-4">
                
-                  <div className="flex items-center">
+                  <div className="flex items-center font-abc">
                     <div className='bg-lime-500 h-9 w-9 rounded-full'>
                     <button onClick={signOut}><CiLogout className=" ml-2 mt-3 font-abc text-white " /></button> 
                     </div>
@@ -222,7 +223,7 @@ function companies() {
                             <input
                               id="search-field"
                               onChange={(e)=>setQuery(e.target.value)}
-                              className="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm"
+                              className="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 placeholder-gray-500 font-abc focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm"
                               placeholder="Search Company"
                               type="search"
                               name="search"
@@ -234,7 +235,7 @@ function companies() {
                     <div className="ml-4 flex items-center  md:ml-6">
                       <button
                         type="button"
-                        className="inline-flex items-center rounded-md border border-transparent bg-cyan-600 px-1 py-2  text-xs font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 font-abc"
+                        className="inline-flex items-center rounded-md border border-transparent bg-cyan-600 px-1 py-2   text-xs font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 font-abc"
                       >
                         <Link href={'/admin/addCompany'}>Add New Company</Link>
                       </button>
@@ -260,7 +261,7 @@ function companies() {
                         <div className="px-4 sm:px-6 py-4 sm:py-6 lg:px-8 lg:py-8 rounded-lg bg-gray-100">
                           <div className="sm:flex sm:items-center  ">
                             <div className="sm:flex-auto ">
-                              <h1 className="text-xl font-semibold text-gray-900 font-abc">List of all the Companies</h1>
+                              <h1 className="text-xl  font-semibold text-gray-900 font-abc">List of all the Companies</h1>
                               <p className="mt-2 text-sm text-gray-700 font-abc">
                                 These are the list of all the companies listed with BIOCo Tech
                               </p>
@@ -293,12 +294,12 @@ function companies() {
                                       {company.filter((user)=>user.name.toLowerCase().includes(query)).map((person) => (
 
                                         <tr key={person.name}>
-                                          <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6">
+                                          <td className="whitespace-nowrap font-abc py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6">
                                            {person.name}
                                           </td>
-                                          <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-500">{person.member}</td>
-                                          <td className="whitespace-nowrap px-3 py-4 text-sm font-normal w-[560] h-[55] text-gray-900">{person.units}</td>
-                                          <td className="relative whitespace-nowrap py-4 font-abc pl-3 pr-4 text-cyan-600 text-right text-sm font-thin sm:pr-6">
+                                          <td className="whitespace-nowrap font-abc px-3 py-4 text-sm font-light text-gray-500">{person.member}</td>
+                                          <td className="whitespace-nowrap px-3 font-abc py-4 text-sm font-normal w-[560] h-[55] text-gray-900">{person.units}</td>
+                                          <td className="relative whitespace-nowrap py-4 font-abc pl-3 pr-4 text-cyan-600  text-right text-sm font-thin sm:pr-6">
                                             <Link href={`/companies/${person._id}`}>Go to details</Link>
                                           </td>
 
@@ -330,5 +331,5 @@ function companies() {
   )
 }
 
-export default companies
+export default withProtected(companies) 
 
