@@ -160,13 +160,13 @@ function Singlecompany({ data }) {
 
 
 
-    {/*} const fetchUnit = async () => {
-        await axios.get("http://localhost:5000/api/companies/units").then((res) => {
+    {/*const fetchUnit = async (id) => {
+        await axios.get(`http://localhost:5000/api/companies/units/${id}`).then((res) => {
           setItems(res.data);
           // setChange(res.data.reverse())
           
         });
-      };
+      };*/}
 
     {/*} const fetchCompany = async (context) => {
         const {id} =context.query._id;
@@ -183,22 +183,22 @@ function Singlecompany({ data }) {
            
 
         
-    };
+    };*/}
 
 
     useEffect(() => {
-        fetchUnit();
+        //fetchUnit();
         //fetchCompany()
     
-        console.log("fetchList activate");
+        console.log("fetchList ");
 
-    }, []);*/}
+    }, []);
 
 
     const handleSubmit = event => {
         event.preventDefault();
 
-        axios.post(`http://localhost:5000/api/companies/units/`, { id, unit_details })
+        axios.post(`http://localhost:5000/api/companies/units`, { id, unit_details })
             .then(res => {
 
                 console.log(res);
@@ -378,8 +378,8 @@ function Singlecompany({ data }) {
 
                                     <>
                                         <dt className="text-sm font-abc  font-medium text-gray-500">Company Name</dt>
-                                        <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                            <span className="flex-grow font-abc "><input ref={inputElement_0} value={edit ? editValue : data.name} onChange={(e) => { setEditValue(e.target.value) }} /></span>
+                                        <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 ">
+                                            <span className="flex-grow font-abc "><input className='outline-none' ref={inputElement_0} value={edit ? editValue : data.name} onChange={(e) => { setEditValue(e.target.value) }} /></span>
                                             <span className="ml-4 flex-shrink-0">
                                                 <button
                                                     onClick={() => { setEdit(!edit); focusInput(); sendPostRequest() }}
@@ -398,7 +398,7 @@ function Singlecompany({ data }) {
                                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                                     <dt className="text-sm font-medium font-abc  text-gray-500">Company ID</dt>
                                     <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                        <span className="flex-grow font-abc "><input ref={inputElement_1} value={editId ? editVid : data.id} onChange={(e) => { setEditVid(e.target.value) }} /></span>
+                                        <span className="flex-grow font-abc "><input className='outline-none' ref={inputElement_1} value={editId ? editVid : data.id} onChange={(e) => { setEditVid(e.target.value) }} /></span>
                                         <span className="ml-4 flex-shrink-0">
                                             <button
                                                 onClick={() => { setEditId(!editId); focusId(); sendPostId() }}
@@ -416,7 +416,7 @@ function Singlecompany({ data }) {
                                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                                     <dt className="text-sm font-medium font-abc  text-gray-500">Company Pin</dt>
                                     <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                        <span className="flex-grow font-abc "><input ref={inputElement_2} value={editPin ? editVpin : data.pin} onChange={(e) => { setEditVpin(e.target.value) }} /></span>
+                                        <span className="flex-grow font-abc "><input className='outline-none' ref={inputElement_2} value={editPin ? editVpin : data.pin} onChange={(e) => { setEditVpin(e.target.value) }} /></span>
                                         <span className="ml-4 flex-shrink-0">
                                             <button
                                                 onClick={() => { setEditPin(!editPin); focusPin(); sendPostPin() }}
@@ -468,7 +468,7 @@ function Singlecompany({ data }) {
                                     <dt className="text-sm font-medium font-abc  text-gray-500">About/Other details</dt>
                                     <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                         <span className="flex-grow font-abc ">
-                                            <input ref={inputElement_3} value={editAbout ? editVabout : data.about} onChange={(e) => { setEditVabout(e.target.value) }} /></span>
+                                            <input className='outline-none' ref={inputElement_3} value={editAbout ? editVabout : data.about} onChange={(e) => { setEditVabout(e.target.value) }} /></span>
                                         <span className="ml-4 flex-shrink-0">
                                             <button
                                                 onClick={() => { setEditAbout(!editAbout); focusAbout(); sendPostAbout() }}

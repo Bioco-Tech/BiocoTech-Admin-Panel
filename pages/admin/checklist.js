@@ -495,7 +495,7 @@ function checklist() {
 
                             <tr key={list.text}>
                               <td className="whitespace-nowrap font-abc py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6 contentEditable:outline-none">
-                              <input ref={inputElement_0} value={edit ? editValue : list.text} onChange={(e) => { setEditValue(e.target.value) }} />
+                              <input className='outline-none bg-lime-50' ref={inputElement_0} value={edit ? editValue : list.text} onChange={(e) => { setEditValue(e.target.value) }} />
 
                                 {
                                 /*

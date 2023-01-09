@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { TbCheckbox } from 'react-icons/tb'
 import { ImLink } from 'react-icons/im'
@@ -34,15 +34,22 @@ function links() {
 
 
   }
+  const fetchPolicy = async () => {
+    await axios.get("http://localhost:5000/api/company-policy").then((res) => {
+      setItems(res.data.reverse());
+      // setChange(res.data.reverse())
 
-  {/*axios.post(`http://localhost:5000//api/company-policy`, { })
+    });
+  };
+
+  {/*axios.post(`http://localhost:5000//api/`, { })
     .then(res => {
       fetchList()
       console.log(res);
       console.log(res.data);
     })*/}
 
-    const deleteList = (id) => {
+    const deletePolicy = (id) => {
       axios.delete(`http://localhost:5000/api/company-policy/${id}`).then((res) => {
         
         //setItems(res.data);
@@ -50,6 +57,10 @@ function links() {
       })
   
     }
+
+    useEffect(()=>{
+      fetchPolicy()
+    })
 
 
   function toogleSideBar() {
@@ -275,11 +286,11 @@ function links() {
 
               <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                 <dt className="text-sm font-medium text-black font-abc">Companies</dt>
-
-                <dd className="mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0">
-                  {items.map(()=>{
+{items.map((pol)=>{
                     
-                  })}
+                  
+                <dd className="mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0">
+                  
                   <label className='flex font-abc '>Privacy Policy</label>
                   <ul role="list" className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white">
                     <li className="flex items-center justify-between p-2 text-sm">
@@ -297,7 +308,7 @@ function links() {
                           |
                         </span>
                         <button
-                        onClick={() => { deleteList(list_id)}}
+                        onClick={() => { deletePolicy(pol._id)}}
                           type="button"
                           className="rounded-md bg-white ml-1 font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 font-abc focus:ring-offset-2"
                         >
@@ -361,7 +372,7 @@ function links() {
 
 
                   </ul>
-                </dd>
+                </dd>})}
               </div>
             </dl>
           </div>
