@@ -29,13 +29,8 @@ function classNames(...classes) {
 function Singlecompany({ company, units }) {
   // console.log(company)
 
-  const [openModal, setOpenModal] = useState(false);
-  const [items, setItems] = useState([]);
   const [isToggled, setIsToggled] = useState(false);
-  const [id, setId] = useState("");
-  const [unit_details, setUnit_details] = useState("");
-  const [name, setName] = useState("");
-  const [openMenu, setOpenMenu] = useState("hidden");
+
   const router = useRouter();
 
   //////--->useStates
@@ -49,10 +44,27 @@ function Singlecompany({ company, units }) {
   const [editVpin, setEditVpin] = useState(company.pin);
   const [editVabout, setEditVabout] = useState(company.about);
   const [editVattach, setEditVattach] = useState("");
-  const [edituid, setEditUid] = useState(false);
-  const [editud, setEditud] = useState(false);
-  const [editVuid, setEditVUid] = useState(units.id);
-  const [editVud, setEditVUd] = useState(units.unit_details);
+
+  // Unit edit Check
+  const [check_unit_edit, set_check_unit_edit] = useState({
+    unitId: null,
+    edit: false,
+  });
+
+  function handleEdit(unitId) {
+    set_check_unit_edit({ unitId: unitId, edit: true });
+  }
+
+  function handleCancel(unitId) {
+    set_check_unit_edit({ unitId: unitId, edit: false });
+  }
+
+  // Unit edit fields
+  const [get_unit_id_after_edit, set_unit_id_after_edit] = useState(units.id);
+  const [get_unit_details_after_edit, set_unit_details_after_edit] = useState(
+    units.unit_details
+  );
+
   /////--->useRefs
   const inputElement_0 = useRef();
   const inputElement_1 = useRef();
@@ -78,12 +90,12 @@ function Singlecompany({ company, units }) {
   const focusAttach = () => {
     if (editAttach == false) inputElement_4.current.focus();
   };
-  const focusUid = () => {
-    if (editVuid == false) inputElement_5.current.focus();
-  };
-  const focusUd = () => {
-    if (editVud == false) inputElement_6.current.focus();
-  };
+  // const focusUid = () => {
+  //   if (check_unit_edit == false) inputElement_5.current.focus();
+  // };
+  // const focusUd = () => {
+  //   if (check_unit_details == false) inputElement_6.current.focus();
+  // };
 
   const sendPostRequest = () => {
     // console.log(saveOrEdit)
@@ -118,6 +130,14 @@ function Singlecompany({ company, units }) {
       });
     }
   };
+
+  const unit_type_change = (event) => {
+    console.log(event.target.innerHTML);
+  };
+  function unit_type_change_value(value) {
+    console.log(value);
+  }
+
   const sendPostAttach = () => {
     // console.log(saveOrEdit)
     if (editAttach == true) {
@@ -415,135 +435,134 @@ function Singlecompany({ company, units }) {
                   </dd>
                 </div>
 
-                <div className="py-4 sm:grid sm:grid-cols-3 border-b border-gray-200 sm:gap-4 sm:py-5">
-                  {" "}
+                <div className="py-4 sm:grid sm:grid-cols-3 border-b border-gray-200 sm:gap-4 sm:py-5 ">
                   {units.map((unit) => (
                     <>
-                      <dt className="text-sm font-medium text-gray-500 font-abc ">
+                      <dt className="text-sm font-medium text-gray-500 font-abc pt-2.5">
                         Unit
                       </dt>
                       <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         <span className="flex-grow font-abc ">
-                          {openMenu ? (
-                            <Menu
-                              as="div"
-                              className="relative inline-block text-left"
-                            >
-                              <div>
-                                <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-                                  M1
-                                </Menu.Button>
-                              </div>
-                            </Menu>
-                          ) : (
-                            <Menu
-                              as="div"
-                              className="relative inline-block text-left"
-                            >
-                              <div>
-                                <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 focus:ring-offset-gray-100 font-abc ">
-                                  Select unit
-                                  <ChevronDownIcon
-                                    className="-mr-1 ml-2 h-5 w-5"
-                                    aria-hidden="true"
-                                  />
-                                </Menu.Button>
-                              </div>
-
-                              <Transition
-                                as={Fragment}
-                                enter="transition ease-out duration-100"
-                                enterFrom="transform opacity-0 scale-95"
-                                enterTo="transform opacity-100 scale-100"
-                                leave="transition ease-in duration-75"
-                                leaveFrom="transform opacity-100 scale-100"
-                                leaveTo="transform opacity-0 scale-95"
+                          <Menu
+                            as="div"
+                            className="relative inline-block text-left"
+                          >
+                            <div>
+                              <Menu.Button
+                                disabled={
+                                  unit.id === check_unit_edit.unitId &&
+                                  check_unit_edit.unitId != null &&
+                                  check_unit_edit.edit
+                                    ? false
+                                    : true
+                                }
+                                className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 focus:ring-offset-gray-100 font-abc "
                               >
-                                <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                  <div className="py-1">
-                                    <Menu.Item>
-                                      {({ active }) => (
+                                {unit.unit}
+                                <ChevronDownIcon
+                                  className={classNames(
+                                    check_unit_edit.unitId === null
+                                      ? "hidden"
+                                      : unit.id === check_unit_edit.unitId &&
+                                        check_unit_edit.edit
+                                      ? "-mr-1 ml-2 h-5 w-5"
+                                      : "hidden"
+                                  )}
+                                  aria-hidden="true"
+                                />
+                              </Menu.Button>
+                            </div>
+
+                            <Transition
+                              as={Fragment}
+                              enter="transition ease-out duration-100"
+                              enterFrom="transform opacity-0 scale-95"
+                              enterTo="transform opacity-100 scale-100"
+                              leave="transition ease-in duration-75"
+                              leaveFrom="transform opacity-100 scale-100"
+                              leaveTo="transform opacity-0 scale-95"
+                            >
+                              <Menu.Items
+                                defaultValue={"123123"}
+                                className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                              >
+                                <div className="py-1">
+                                  {["M1", "M2", "M6", "M8"].map((item) => {
+                                    return (
+                                      <Menu.Item key={item}>
                                         <a
-                                          href="#"
+                                          // href="#"
+                                          key={unit.id}
+                                          onClick={unit_type_change}
+                                          onChange={unit_type_change_value}
                                           className={classNames(
-                                            active
-                                              ? "bg-gray-100 text-gray-900"
-                                              : "text-gray-700",
-                                            "block px-4 font-abc  py-2 text-sm"
+                                            "text-gray-700 block px-4 font-abc  py-2 text-sm hover:cursor-pointer"
                                           )}
                                         >
-                                          M1
+                                          {item}
                                         </a>
-                                      )}
-                                    </Menu.Item>
-                                    <Menu.Item>
-                                      {({ active }) => (
-                                        <a
-                                          href="#"
-                                          className={classNames(
-                                            active
-                                              ? "bg-gray-100 text-gray-900"
-                                              : "text-gray-700",
-                                            "block px-4 py-2 font-abc  text-sm"
-                                          )}
-                                        >
-                                          M6
-                                        </a>
-                                      )}
-                                    </Menu.Item>
-                                    <Menu.Item>
-                                      {({ active }) => (
-                                        <a
-                                          href="#"
-                                          className={classNames(
-                                            active
-                                              ? "bg-gray-100 text-gray-900"
-                                              : "text-gray-700",
-                                            "block font-abc  px-4 py-2 text-sm"
-                                          )}
-                                        >
-                                          M2
-                                        </a>
-                                      )}
-                                    </Menu.Item>
-                                    <form method="POST" action="#">
-                                      <Menu.Item>
-                                        {({ active }) => (
-                                          <button
-                                            type="submit"
-                                            className={classNames(
-                                              active
-                                                ? "bg-gray-100 text-gray-900"
-                                                : "text-gray-700",
-                                              "block w-full px-4 py-2 font-abc  text-left text-sm"
-                                            )}
-                                          >
-                                            M8
-                                          </button>
-                                        )}
                                       </Menu.Item>
-                                    </form>
-                                  </div>
-                                </Menu.Items>
-                              </Transition>
-                            </Menu>
-                          )}
+                                    );
+                                  })}
+                                </div>
+                              </Menu.Items>
+                            </Transition>
+                          </Menu>
                         </span>
-                        <span className="  flex flex-shrink-0 space-x-4">
+                        <span className="flex flex-shrink-0 space-x-4">
                           <button
-                            onClick={() => {
-                              setOpenMenu(!openMenu);
+                            id={unit.id}
+                            key={unit.id}
+                            onClick={(s) => {
+                              // console.log(s);
+                              // setOpenMenu(!openMenu);
+                              // console.log(check_unit_edit);
+                              // if (check_unit_edit.unitId == null) {
+                              //   handleEdit(unit.id)
+                              // } else if (check) { }
+                              // set_check_unit_edit({
+                              //   unitId:
+                              //     // s.target.innerHTML == "Edit" ? unit.id : null,
+                              //     unit.id,
+                              //   edit: !check_unit_edit.edit,
+                              // });
 
-                              setEditUid(!edituid);
-                              focusUid();
+                              console.log(unit.id);
+                              if (check_unit_edit.unitId == null) {
+                                console.log("1");
+                                // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
+                                set_check_unit_edit({
+                                  unitId: unit.id,
+                                  edit: true,
+                                });
+                              } else if (check_unit_edit.unitId === unit.id) {
+                                console.log("2");
+                                // If the unitId is not null and it matches the current unit's id, set the edit mode to false
+                                set_check_unit_edit({
+                                  unitId: null,
+                                  edit: false,
+                                });
+                              } else {
+                                console.log("3");
+                                set_check_unit_edit({
+                                  unitId: null,
+                                  edit: false,
+                                });
+                              }
 
-                              setEditud(!editud);
-                              focusUd();
+                              // focusUid();
                             }}
                             type="button"
                             className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
                           >
-                            <div>{edituid == false ? "Edit" : "Update"}</div>
+                            <div>
+                              {check_unit_edit.unitId === null
+                                ? "Edit"
+                                : check_unit_edit.unitId === unit.id &&
+                                  check_unit_edit.edit
+                                ? "Update"
+                                : "Edit"}
+                            </div>
                           </button>
                           <span
                             className="text-gray-300 mt-2"
@@ -563,29 +582,91 @@ function Singlecompany({ company, units }) {
                       <dt className="text-sm font-medium text-gray-500 font-abc ">
                         Unit ID
                       </dt>
-                      <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-abc ">
+
+                      {/* <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-abc">
                         <input
-                          className="outline-none"
+                          disabled={!check_unit_edit}
+                          className="outline-none w-full disabled:bg-white"
                           ref={inputElement_5}
-                          value={edituid ? editVuid : unit.id}
+                          value={
+                            check_unit_edit ? get_unit_id_after_edit : unit.id
+                          }
                           onChange={(e) => {
-                            setEditVUid(e.target.value);
+                            set_unit_id_after_edit(e.target.value);
                           }}
                         />
+                      </dd> */}
+                      <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-abc">
+                        {/* <input
+                          disabled={!check_unit_edit}
+                          className="outline-none w-full disabled:bg-white"
+                          ref={inputElement_6}
+                          value={
+                            check_unit_edit
+                              ? get_unit_details_after_edit
+                              : unit.unit_details
+                          }
+                          onChange={(e) => {
+                            set_unit_details_after_edit(e.target.value);
+                          }}
+                        /> */}
+
+                        {check_unit_edit.unitId === null ? (
+                          `${unit.id}`
+                        ) : check_unit_edit.unitId !== unit.id ? (
+                          `${unit.id}`
+                        ) : check_unit_edit.unitId === unit.id &&
+                          !check_unit_edit.edit ? (
+                          `${unit.id}`
+                        ) : (
+                          <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            placeholder="you@example.com"
+                            defaultValue={unit.id}
+                            onChange={set_unit_id_after_edit}
+                          />
+                        )}
                       </dd>
-                      <dt className="text-sm font-medium text-gray-500 font-abc ">
+
+                      <dt className="text-sm font-medium text-gray-500 font-abc divide-y">
                         Unit Details
                       </dt>
-                      <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-abc ">
-                        <input
-                          className="outline-none"
+
+                      <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-abc">
+                        {/* <input
+                          disabled={!check_unit_edit}
+                          className="outline-none w-full disabled:bg-white"
                           ref={inputElement_6}
-                          value={editud ? editVud : unit.unit_details}
+                          value={
+                            check_unit_edit
+                              ? get_unit_details_after_edit
+                              : unit.unit_details
+                          }
                           onChange={(e) => {
-                            setEditVUd(e.target.value);
+                            set_unit_details_after_edit(e.target.value);
                           }}
-                        />
-                        {}
+                        /> */}
+                        {check_unit_edit.unitId === null ? (
+                          `${unit.unit_details}`
+                        ) : check_unit_edit.unitId !== unit.id ? (
+                          `${unit.unit_details}`
+                        ) : check_unit_edit.unitId === unit.id &&
+                          !check_unit_edit.edit ? (
+                          `${unit.unit_details}`
+                        ) : (
+                          <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            placeholder="you@example.com"
+                            defaultValue={unit.unit_details}
+                            onChange={set_unit_details_after_edit}
+                          />
+                        )}
                       </dd>
                     </>
                   ))}

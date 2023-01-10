@@ -7,9 +7,8 @@ module.exports = {
   theme: {
     extend: {},
     fontFamily: {
-      abc:['COCOGOOSE', "sans-serif"],
+      abc: ["COCOGOOSE", "sans-serif"],
     },
-
   },
-  plugins: [],
-}
+  plugins: [require("@tailwindcss/forms")],
+};
