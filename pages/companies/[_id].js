@@ -30,11 +30,14 @@ function Singlecompany({ company, units }) {
   // console.log(company)
 
   const [isToggled, setIsToggled] = useState(false);
+  const [unitid,setUnitid] = useState('')
+  const [unitdetails,setUnitdetails] = useState('')
+  const [showform, setShowform] = useState(false)
 
   const router = useRouter();
 
   //////--->useStates
-  const [edit, setEdit] = useState(false);
+  {/*const [edit, setEdit] = useState(false);
   const [editId, setEditId] = useState(false);
   const [editPin, setEditPin] = useState(false);
   const [editAbout, setEditAbout] = useState(false);
@@ -43,13 +46,35 @@ function Singlecompany({ company, units }) {
   const [editVid, setEditVid] = useState(company.id);
   const [editVpin, setEditVpin] = useState(company.pin);
   const [editVabout, setEditVabout] = useState(company.about);
-  const [editVattach, setEditVattach] = useState("");
+const [editVattach, setEditVattach] = useState("");*/}
 
   // Unit edit Check
   const [check_unit_edit, set_check_unit_edit] = useState({
     unitId: null,
     edit: false,
   });
+  // Company edit Check
+  const [check_name_edit, set_check_name_edit]= useState({
+    name: null,
+    edit: false,
+  });
+  const [check_id_edit, set_check_id_edit]= useState({
+    id: null,
+    edit: false,
+  });
+  const [check_pin_edit, set_check_pin_edit]= useState({
+    pin: null,
+    edit: false,
+  });
+  const [check_web_edit, set_check_web_edit]= useState({
+    web: null,
+    edit: false,
+  });
+  const [check_about_edit, set_check_about_edit]= useState({
+    about: null,
+    edit: false,
+  });
+
 
   function handleEdit(unitId) {
     set_check_unit_edit({ unitId: unitId, edit: true });
@@ -64,18 +89,25 @@ function Singlecompany({ company, units }) {
   const [get_unit_details_after_edit, set_unit_details_after_edit] = useState(
     units.unit_details
   );
+  // Company edit fields
+  const [get_name_after_edit, set_name_after_edit] = useState(company.name);
+  const [get_id_after_edit, set_id_after_edit] = useState(company.id);
+  const [get_pin_after_edit, set_pin_after_edit] = useState(company.pin);
+  const [get_web_after_edit, set_web_after_edit] = useState(company.web);
+  const [get_about_after_edit, set_about_after_edit] = useState(company.about);
+  
 
   /////--->useRefs
-  const inputElement_0 = useRef();
-  const inputElement_1 = useRef();
-  const inputElement_2 = useRef();
-  const inputElement_3 = useRef();
-  const inputElement_4 = useRef();
-  const inputElement_5 = useRef();
-  const inputElement_6 = useRef();
+  //const inputElement_0 = useRef();
+  //const inputElement_1 = useRef();
+  //const inputElement_2 = useRef();
+  //const inputElement_3 = useRef();
+ // const inputElement_4 = useRef();
+  //const inputElement_5 = useRef();
+  //const inputElement_6 = useRef();
   // const saveOrEdit = useRef()
   ////---->functions
-  const focusInput = () => {
+  {/*const focusInput = () => {
     if (edit == false) inputElement_0.current.focus();
   };
   const focusId = () => {
@@ -89,7 +121,7 @@ function Singlecompany({ company, units }) {
   };
   const focusAttach = () => {
     if (editAttach == false) inputElement_4.current.focus();
-  };
+  };*/}
   // const focusUid = () => {
   //   if (check_unit_edit == false) inputElement_5.current.focus();
   // };
@@ -97,14 +129,14 @@ function Singlecompany({ company, units }) {
   //   if (check_unit_details == false) inputElement_6.current.focus();
   // };
 
-  const sendPostRequest = () => {
+ 
+
+  const sendPuttRequest = () => {
     // console.log(saveOrEdit)
     if (edit == true) {
       console.log("hello1");
-      axios.put(`${apiUrl}/api/companies/${company._id}`, { name: editValue });
-      {
-        company.name;
-      }
+      axios.put(`${apiUrl}/api/companies/${company._id}`, { name: set_name_after_edit });
+      
     }
   };
   const sendPostId = () => {
@@ -132,6 +164,9 @@ function Singlecompany({ company, units }) {
   };
 
   const unit_type_change = (event) => {
+
+
+
     console.log(event.target.innerHTML);
   };
   function unit_type_change_value(value) {
@@ -148,10 +183,7 @@ function Singlecompany({ company, units }) {
     }
   };
 
-  useEffect(() => {
-    console.log("in useEffect");
-    sendPostRequest();
-  }, [editValue, editVid, editVpin, editVabout, editVattach]);
+ 
 
   ////////////////////////////////////////////////////////////////////
 
@@ -207,27 +239,93 @@ function Singlecompany({ company, units }) {
                     </dt>
                     <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 ">
                       <span className="flex-grow font-abc ">
-                        <input
-                          className="outline-none"
+                        
+                      {check_name_edit.name === null ? (
+                          `${company.name}`
+                        ) : check_name_edit.name !== company.name ? (
+                          `${company.name}`
+                        ) : check_name_edit.name===company.name &&
+                          !check_name_edit.edit ? (
+                          `${company.name}`
+                        ) : (
+                          <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            
+                            defaultValue={company.name}
+                            onChange={set_name_after_edit}
+                          />
+                        )}
+                     
+                     {/*<input
+                         
                           ref={inputElement_0}
-                          value={edit ? editValue : company.name}
+                          value={edit ? editValue  : company.name}
                           onChange={(e) => {
                             setEditValue(e.target.value);
                           }}
-                        />
+                        />*/}   
                       </span>
                       <span className="ml-4 flex-shrink-0">
                         <button
-                          onClick={() => {
-                            setEdit(!edit);
-                            focusInput();
-                            sendPostRequest();
+                          
+                          id={company.name}
+                          key={company.name}
+                          onClick={(s) => {
+                            // console.log(s);
+
+                            // setOpenMenu(!openMenu);
+                            // console.log(check_unit_edit);
+                            // if (check_unit_edit.unitId == null) {
+                            //   handleEdit(unit.id)
+                            // } else if (check) { }
+                            // set_check_unit_edit({
+                            //   unitId:
+                            //     // s.target.innerHTML == "Edit" ? unit.id : null,
+                            //     unit.id,
+                            //   edit: !check_unit_edit.edit,
+                            // });
+
+                            console.log(company.name);
+                            if (check_name_edit.name == null) {
+                              console.log("1");
+                              // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
+                              set_check_name_edit({
+                                name: company.name,
+                                edit: true,
+                              });
+                            } else if (check_name_edit.name === company.name) {
+                              console.log("2");
+                              // If the unitId is not null and it matches the current unit's id, set the edit mode to false
+                              set_check_name_edit({
+                                name: null,
+                                edit: false,
+                              });
+                            } else {
+                              console.log("3");
+                              set_check_name_edit({
+                                name: null,
+                                edit: false,
+                              });
+                            }
+
+                            // focusUid();
                           }}
                           type="button"
-                          className="rounded-md bg-white  text-sm font-thin text-cyan-600 hover:text-cyan-500 focus:outline-none  font-abc "
+                          className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
                         >
-                          <div>{edit == false ? "Edit" : "Update"}</div>
+                          <div>
+                            {check_name_edit.name === null
+                              ? "Edit"
+                              : check_name_edit.name === company.name &&
+                                check_name_edit.edit
+                              ? "Update"
+                              : "Edit"}
+                          </div>
                         </button>
+                        
                       </span>
                     </dd>
                   </>
@@ -238,28 +336,85 @@ function Singlecompany({ company, units }) {
                   </dt>
                   <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     <span className="flex-grow font-abc ">
-                      <input
-                        className="outline-none"
-                        ref={inputElement_1}
-                        value={editId ? editVid : company.id}
-                        onChange={(e) => {
-                          setEditVid(e.target.value);
-                        }}
-                      />
+                    {check_id_edit.id === null ? (
+                          `${company.id}`
+                        ) : check_id_edit.id !== company.id ? (
+                          `${company.id}`
+                        ) : check_id_edit.id===company.id &&
+                          !check_id_edit.edit ? (
+                          `${company.id}`
+                        ) : (
+                          <input
+                            type="email"
+                            
+                            className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          
+                            defaultValue={company.id}
+                            onChange={set_id_after_edit}
+                          />
+                        )}
+                     
+                     
                     </span>
                     <span className="ml-4 flex-shrink-0">
                       <button
-                        onClick={() => {
-                          setEditId(!editId);
-                          focusId();
-                          sendPostId();
-                        }}
-                        type="button"
-                        className="rounded-md font-abc  bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none "
-                      >
-                        <div>{editId == false ? "Edit" : "Update"}</div>
+                       
+                       id={company.id}
+                       key={company.id}
+                       onClick={(s) => {
+                         // console.log(s);
+
+                         // setOpenMenu(!openMenu);
+                         // console.log(check_unit_edit);
+                         // if (check_unit_edit.unitId == null) {
+                         //   handleEdit(unit.id)
+                         // } else if (check) { }
+                         // set_check_unit_edit({
+                         //   unitId:
+                         //     // s.target.innerHTML == "Edit" ? unit.id : null,
+                         //     unit.id,
+                         //   edit: !check_unit_edit.edit,
+                         // });
+
+                         console.log(company.id);
+                         if (check_id_edit.id == null) {
+                           console.log("1");
+                           // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
+                           set_check_id_edit({
+                             id: company.id,
+                             edit: true,
+                           });
+                         } else if (check_id_edit.id === company.id) {
+                           console.log("2");
+                           // If the unitId is not null and it matches the current unit's id, set the edit mode to false
+                           set_check_id_edit({
+                             id: null,
+                             edit: false,
+                           });
+                         } else {
+                           console.log("3");
+                           set_check_id_edit({
+                             id: null,
+                             edit: false,
+                           });
+                         }
+
+                         // focusUid();
+                       }}
+                       type="button"
+                       className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
+                     >
+                       <div>
+                         {check_id_edit.id === null
+                           ? "Edit"
+                           : check_id_edit.id === company.id &&
+                             check_id_edit.edit
+                           ? "Update"
+                           : "Edit"}
+                       </div>
                       </button>
                     </span>
+                    
                   </dd>
                 </div>
                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
@@ -268,26 +423,80 @@ function Singlecompany({ company, units }) {
                   </dt>
                   <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     <span className="flex-grow font-abc ">
-                      <input
-                        className="outline-none"
-                        ref={inputElement_2}
-                        value={editPin ? editVpin : company.pin}
-                        onChange={(e) => {
-                          setEditVpin(e.target.value);
-                        }}
-                      />
+                    {check_pin_edit.pin === null ? (
+                          `${company.pin}`
+                        ) : check_pin_edit.pin !== company.pin ? (
+                          `${company.pin}`
+                        ) : check_pin_edit.pin===company.pin &&
+                          !check_pin_edit.edit ? (
+                          `${company.pin}`
+                        ) : (
+                          <input
+                            type="email"
+                            
+                            className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                           
+                            defaultValue={company.pin}
+                            onChange={set_pin_after_edit}
+                          />
+                        )}
                     </span>
                     <span className="ml-4 flex-shrink-0">
                       <button
-                        onClick={() => {
-                          setEditPin(!editPin);
-                          focusPin();
-                          sendPostPin();
-                        }}
-                        type="button"
-                        className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500  font-abc  focus:ring-offset-2"
-                      >
-                        <div>{editPin == false ? "Edit" : "Update"}</div>
+                       
+                       id={company.pin}
+                       key={company.pin}
+                       onClick={(s) => {
+                         // console.log(s);
+
+                         // setOpenMenu(!openMenu);
+                         // console.log(check_unit_edit);
+                         // if (check_unit_edit.unitId == null) {
+                         //   handleEdit(unit.id)
+                         // } else if (check) { }
+                         // set_check_unit_edit({
+                         //   unitId:
+                         //     // s.target.innerHTML == "Edit" ? unit.id : null,
+                         //     unit.id,
+                         //   edit: !check_unit_edit.edit,
+                         // });
+
+                         console.log(company.pin);
+                         if (check_pin_edit.pin == null) {
+                           console.log("1");
+                           // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
+                           set_check_pin_edit({
+                             pin: company.pin,
+                             edit: true,
+                           });
+                         } else if (check_pin_edit.pin === company.pin) {
+                           console.log("2");
+                           // If the unitId is not null and it matches the current unit's id, set the edit mode to false
+                           set_check_pin_edit({
+                             pin: null,
+                             edit: false,
+                           });
+                         } else {
+                           console.log("3");
+                           set_check_pin_edit({
+                             pin: null,
+                             edit: false,
+                           });
+                         }
+
+                         // focusUid();
+                       }}
+                       type="button"
+                       className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
+                     >
+                       <div>
+                         {check_pin_edit.pin === null
+                           ? "Edit"
+                           : check_pin_edit.pin === company.pin &&
+                             check_pin_edit.edit
+                           ? "Update"
+                           : "Edit"}
+                       </div>
                       </button>
                     </span>
                   </dd>
@@ -297,7 +506,8 @@ function Singlecompany({ company, units }) {
                     Status
                   </dt>
                   <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                    <span className="flex-grow font-abc ">Action</span>
+                    {isToggled &&<span className="flex-grow font-abc ">Active</span>}
+                    {!isToggled &&<span className="flex-grow font-abc ">In Active</span>}
                     <span className="ml-4 flex-shrink-0">
                       <Switch
                         isToggled={isToggled}
@@ -307,7 +517,7 @@ function Singlecompany({ company, units }) {
                           "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2"
                         )}
                       >
-                        <span className="sr-only font-abc ">Action</span>
+                        
                         <span
                           aria-hidden="true"
                           className={classNames(
@@ -325,7 +535,82 @@ function Singlecompany({ company, units }) {
                   </dt>
                   <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     <span className="flex-grow font-abc ">
-                      {company.website}
+                    {check_web_edit.web === null ? (
+                          `${company.website}`
+                        ) : check_web_edit.web !== company.website ? (
+                          `${company.website}`
+                        ) : check_web_edit.web===company.website &&
+                          !check_web_edit.edit ? (
+                          `${company.website}`
+                        ) : (
+                          <input
+                            type="email"
+                            
+                            className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            
+                            defaultValue={company.website}
+                            onChange={set_web_after_edit}
+                          />
+                        )}
+                    </span>
+                  
+                    <span className="ml-4 flex-shrink-0">
+                      <button
+                         
+                         id={company.website}
+                         key={company.website}
+                         onClick={(s) => {
+                           // console.log(s);
+
+                           // setOpenMenu(!openMenu);
+                           // console.log(check_unit_edit);
+                           // if (check_unit_edit.unitId == null) {
+                           //   handleEdit(unit.id)
+                           // } else if (check) { }
+                           // set_check_unit_edit({
+                           //   unitId:
+                           //     // s.target.innerHTML == "Edit" ? unit.id : null,
+                           //     unit.id,
+                           //   edit: !check_unit_edit.edit,
+                           // });
+
+                           console.log(company.website);
+                           if (check_web_edit.web == null) {
+                             console.log("1");
+                             // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
+                             set_check_web_edit({
+                               web: company.website,
+                               edit: true,
+                             });
+                           } else if (check_web_edit.web === company.website) {
+                             console.log("2");
+                             // If the unitId is not null and it matches the current unit's id, set the edit mode to false
+                             set_check_web_edit({
+                               web: null,
+                               edit: false,
+                             });
+                           } else {
+                             console.log("3");
+                             set_check_web_edit({
+                               web: null,
+                               edit: false,
+                             });
+                           }
+
+                           // focusUid();
+                         }}
+                         type="button"
+                         className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
+                       >
+                         <div>
+                           {check_web_edit.web === null
+                             ? "Edit"
+                             : check_web_edit.web === company.website &&
+                               check_web_edit.edit
+                             ? "Update"
+                             : "Edit"}
+                         </div>
+                      </button>
                     </span>
                   </dd>
                 </div>
@@ -335,26 +620,80 @@ function Singlecompany({ company, units }) {
                   </dt>
                   <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     <span className="flex-grow font-abc ">
-                      <input
-                        className="outline-none"
-                        ref={inputElement_3}
-                        value={editAbout ? editVabout : company.about}
-                        onChange={(e) => {
-                          setEditVabout(e.target.value);
-                        }}
-                      />
+                    {check_about_edit.about === null ? (
+                          `${company.about}`
+                        ) : check_about_edit.about !== company.about ? (
+                          `${company.about}`
+                        ) : check_about_edit.about===company.about &&
+                          !check_about_edit.edit ? (
+                          `${company.about}`
+                        ) : (
+                          <input
+                            type="email"
+                          
+                            className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          
+                            defaultValue={company.about}
+                            onChange={set_about_after_edit}
+                          />
+                        )}
                     </span>
                     <span className="ml-4 flex-shrink-0">
                       <button
-                        onClick={() => {
-                          setEditAbout(!editAbout);
-                          focusAbout();
-                          sendPostAbout();
-                        }}
-                        type="button"
-                        className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500  font-abc  focus:ring-offset-2"
-                      >
-                        <div>{editAbout == false ? "Edit" : "Update"}</div>
+                         
+                         id={company.about}
+                         key={company.about}
+                         onClick={(s) => {
+                           // console.log(s);
+
+                           // setOpenMenu(!openMenu);
+                           // console.log(check_unit_edit);
+                           // if (check_unit_edit.unitId == null) {
+                           //   handleEdit(unit.id)
+                           // } else if (check) { }
+                           // set_check_unit_edit({
+                           //   unitId:
+                           //     // s.target.innerHTML == "Edit" ? unit.id : null,
+                           //     unit.id,
+                           //   edit: !check_unit_edit.edit,
+                           // });
+
+                           console.log(company.about);
+                           if (check_about_edit.about == null) {
+                             console.log("1");
+                             // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
+                             set_check_about_edit({
+                               about: company.about,
+                               edit: true,
+                             });
+                           } else if (check_about_edit.about === company.about) {
+                             console.log("2");
+                             // If the unitId is not null and it matches the current unit's id, set the edit mode to false
+                             set_check_about_edit({
+                               about: null,
+                               edit: false,
+                             });
+                           } else {
+                             console.log("3");
+                             set_check_about_edit({
+                               about: null,
+                               edit: false,
+                             });
+                           }
+
+                           // focusUid();
+                         }}
+                         type="button"
+                         className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
+                       >
+                         <div>
+                           {check_about_edit.about === null
+                             ? "Edit"
+                             : check_about_edit.about === company.about &&
+                               check_about_edit.edit
+                             ? "Update"
+                             : "Edit"}
+                         </div>
                       </button>
                     </span>
                   </dd>
@@ -395,17 +734,10 @@ function Singlecompany({ company, units }) {
                       <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                         <div className="flex w-0 flex-1 items-center">
                           <span className="ml-2 w-0 flex-1 font-abc  truncate">
-                            <input
-                              ref={inputElement_4}
-                              value={
-                                editAttach
-                                  ? editVattach
-                                  : "coverletter_back_end_developer.pdf"
-                              }
-                              onChange={(e) => {
-                                setEditVattach(e.target.value);
-                              }}
-                            />
+                            
+                                coverletter_back_end_developer.pdf
+                             
+                            
                           </span>
                         </div>
                         <div className="ml-4 flex flex-shrink-0 space-x-4">
@@ -515,6 +847,7 @@ function Singlecompany({ company, units }) {
                             key={unit.id}
                             onClick={(s) => {
                               // console.log(s);
+
                               // setOpenMenu(!openMenu);
                               // console.log(check_unit_edit);
                               // if (check_unit_edit.unitId == null) {
@@ -670,19 +1003,167 @@ function Singlecompany({ company, units }) {
                       </dd>
                     </>
                   ))}
-                </div>
+                </div>{/*unit form*/}
+                {
+                  showform ? (
+                <div  className="py-4 sm:grid sm:grid-cols-3 border-b border-gray-200 sm:gap-4 sm:py-5">
+                  {" "}
+                  <>
+                    <dt className="text-sm font-medium text-gray-500 font-abc ">
+                      Unit
+                    </dt>
+                    <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                      <span className="flex-grow font-abc ">
+                        <Menu as="div" className="relative inline-block text-left">
+                          <div>
+                            <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 focus:ring-offset-gray-100 font-abc ">
+                           select options
+                              <ChevronDownIcon
+                                className="-mr-1 ml-2 h-5 w-5"
+                                aria-hidden="true"
+                              />
+                            </Menu.Button>
+                          </div>
 
-                <div>
+                          <Transition
+                            as={Fragment}
+                            enter="transition ease-out duration-100"
+                            enterFrom="transform opacity-0 scale-95"
+                            enterTo="transform opacity-100 scale-100"
+                            leave="transition ease-in duration-75"
+                            leaveFrom="transform opacity-100 scale-100"
+                            leaveTo="transform opacity-0 scale-95"
+                          >
+                            <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                              <div className="py-1">
+                                <Menu.Item>
+                                 <button className="block px-4 py-2 font-abc  text-sm">
+                                      M1
+                                    
+                                 </button>
+                                </Menu.Item>
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <a
+                                      href="#"
+                                      className={classNames(
+                                        active
+                                          ? "bg-gray-100 text-gray-900"
+                                          : "text-gray-700",
+                                          "block px-4 py-2 font-abc  text-sm"
+                                        
+                                      )}
+                                    >
+                                      M6
+                                    </a>
+                                  )}
+                                </Menu.Item>
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <a
+                                      href="#"
+                                      className={classNames(
+                                        active
+                                          ? "bg-gray-100 text-gray-900"
+                                          : "text-gray-700",
+                                        "block font-abc  px-4 py-2 text-sm"
+                                      )}
+                                    >
+                                      M2
+                                    </a>
+                                  )}
+                                </Menu.Item>
+                                <form method="POST" action="#">
+                                  <Menu.Item>
+                                    {({ active }) => (
+                                      <button
+                                        type="submit"
+                                        className={classNames(
+                                          active
+                                            ? "bg-gray-100 text-gray-900"
+                                            : "text-gray-700",
+                                          "block w-full px-4 py-2 font-abc  text-left text-sm"
+                                        )}
+                                      >
+                                        M8
+                                      </button>
+                                    )}
+                                  </Menu.Item>
+                                </form>
+                              </div>
+                            </Menu.Items>
+                          </Transition>
+                        </Menu>
+
+
+
+                      </span>
+                      <span className="  flex flex-shrink-0 space-x-4">
+                        <button
+                          onClick={()=>setShowform(false)}
+                          type="button"
+                          className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
+                        >
+                         Save
+
+
+                        </button>
+                        <span className="text-gray-300 mt-2" aria-hidden="true">
+                          |
+                        </span>
+                        <button
+                          type="button"
+                          className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 font-abc  focus:ring-offset-2"
+                        >
+                          Remove
+                        </button>
+                      </span>
+                    </dd>
+
+                    <dt className="text-sm font-medium text-gray-500 font-abc ">
+                      Unit ID
+                    </dt>
+                    <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-abc ">
+                      <input
+                        type="number"
+                        name="unit"
+                         value={unitid}
+                         onChange={(e)=>setUnitid(e.target.value)}
+                        className="inline-block w-full rounded-md border border-gray-300 p-2 shadow-sm  sm:text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
+                        placeholder="Type ID"
+                      />
+
+                    </dd>
+                    <dt className="text-sm font-medium text-gray-500 font-abc ">
+                      Unit Details
+                    </dt>
+                    <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-abc ">
+                    <textarea
+                        rows={4}
+                        name="comment"
+                       value={unitdetails}
+                       onChange={(e)=>setUnitdetails(e.target.value)}
+                        id="comment"
+                        placeholder="  Add unit details"
+                        className="block w-full rounded-md border  p-2 border-gray-300 shadow-sm  sm:text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 "
+                      />
+                     
+                    </dd>
+                  </>
+
+                </div>):( <div>
                   <button
                     type="button"
-                    onClick={() => {
-                      setOpenModal(true);
-                    }}
+                    onClick={()=>setShowform(true)}
                     className="inline-flex font-abc  mt-2 items-center float-right mb-3 rounded-md border border-transparent bg-cyan-600 px-2 py-2 text-xs font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                   >
                     Add New Unit
                   </button>
-                </div>
+                </div>)
+                }
+               
+
+               
               </dl>
             </div>
           </div>
