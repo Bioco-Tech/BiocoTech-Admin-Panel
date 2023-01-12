@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Link from "next/link";
-import { MdHome, MdOutlineBookmarkAdded } from "react-icons/md";
+import { MdHome } from "react-icons/md";
 import { HiBuildingOffice2 } from "react-icons/hi2";
 import { TbCheckbox } from "react-icons/tb";
 import { ImLink } from "react-icons/im";
@@ -24,26 +24,31 @@ import { Modal } from "react-bootstrap";
 import axios from "axios";
 import { apiUrl } from "../../constants";
 
-let usama2;
-let usama3;
+
 
 function checklist() {
   console.log();
   const [items, setItems] = useState([]);
   const [data, setData] = useState([]);
-  const [edit, setEdit] = useState(false);
-  const [editValue, setEditValue] = useState("");
-  const [text, setText] = useState("");
-  const inputElement_0 = useRef();
 
-  const focusInput = () => {
-    if (edit == false) inputElement_0.current.focus();
-  };
-  const sendPostRequest = (id) => {
+  const [text, setText] = useState("");
+
+
+  // checklist edit Check
+  const [check_list_edit, set_check_list_edit] = useState({
+    text: null,
+    edit: false,
+  });
+  // Unit edit fields
+  const [get_list_after_edit, set_list_after_edit] = useState();
+
+
+
+  const sendPutRequest = (id) => {
     // console.log(saveOrEdit)
-    if (edit == true) {
+    if (check_list_edit == true) {
       console.log("hello1");
-      axios.put(`${apiUrl}/api/checklists/${id}`, { text: editValue });
+      axios.put(`${apiUrl}/api/checklists/${id}`, { text: get_list_after_edit });
       fetchList();
     }
   };
@@ -405,14 +410,24 @@ function checklist() {
                             {items.map((list) => (
                               <tr key={list.text}>
                                 <td className="whitespace-nowrap font-abc py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6 contentEditable:outline-none">
-                                  <input
-                                    className="outline-none bg-lime-50"
-                                    ref={inputElement_0}
-                                    value={edit ? editValue : list.text}
-                                    onChange={(e) => {
-                                      setEditValue(e.target.value);
-                                    }}
-                                  />
+                                  {check_list_edit.text === null ? (
+                                    `${list.text}`
+                                  ) : check_list_edit.text !== list.text ? (
+                                    `${list.text}`
+                                  ) : check_list_edit.text === list.text &&
+                                    !check_list_edit.edit ? (
+                                    `${list.text}`
+                                  ) : (
+                                    <input
+                                      type="email"
+                                      name="email"
+                                      id="email"
+                                      className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+
+                                      defaultValue={list.text}
+                                      onChange={set_list_after_edit}
+                                    />
+                                  )}
 
                                   {/*
                                } <input type="text" value={list.text} onChange={(e) => {
@@ -436,28 +451,76 @@ function checklist() {
                               */}
 
                                   <button
-                                    type="button"
-                                    onClick={() => {
-                                      setEdit(!edit);
-                                      focusInput();
-                                      sendPostRequest(list._id);
-                                    }}
-                                  >
-                                    {edit == false ? (
-                                      <CiEdit className=" cursor-pointer" />
-                                    ) : (
-                                      "Update"
-                                    )}
-                                  </button>
+                                    id={list.text}
+                                    key={list.text}
+                                    onClick={(s) => {
+                                      // console.log(s);
 
-                                  {
-                                    <RiDeleteBin5Line
-                                      className="ml-2 cursor-pointer"
+                                      // setOpenMenu(!openMenu);
+                                      // console.log(check_unit_edit);
+                                      // if (check_unit_edit.unitId == null) {
+                                      //   handleEdit(unit.id)
+                                      // } else if (check) { }
+                                      // set_check_unit_edit({
+                                      //   unitId:
+                                      //     // s.target.innerHTML == "Edit" ? unit.id : null,
+                                      //     unit.id,
+                                      //   edit: !check_unit_edit.edit,
+                                      // });
+
+                                      console.log(list.text);
+                                      if (check_list_edit.text == null) {
+                                        console.log("1");
+                                        // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
+                                        set_check_list_edit({
+                                          text: list.text,
+                                          edit: true,
+                                        });
+                                      } else if (check_list_edit.text === list.text) {
+                                        console.log("2");
+                                        // If the unitId is not null and it matches the current unit's id, set the edit mode to false
+                                        set_check_list_edit({
+                                          text: null,
+                                          edit: false,
+                                        });
+                                      } else {
+                                        console.log("3");
+                                        set_check_list_edit({
+                                          text: null,
+                                          edit: false,
+                                        });
+                                      }
+
+                                      // focusUid();
+                                    }}
+                                    type="button"
+                                    className=" rounded-md  font-thin text-sm text-black hover:text-black font-abc"
+                                  >
+                                    <div>
+                                      {check_list_edit.text === null
+                                        ? <><div className="flex ml-2 cursor-pointer"><CiEdit />  <RiDeleteBin5Line
+                                     
                                       onClick={() => {
                                         deleteList(list._id), notify();
                                       }}
                                     />
-                                  }
+                                    </div>
+                                  </>
+                                        : check_list_edit.text === list.text &&
+                                          check_list_edit.edit
+                                          ? <button onClick={()=>{sendPutRequest(list._id),set_list_after_edit(!check_list_edit)}}>Update</button>
+                                          : <><div className="flex ml-2 cursor-pointer"><CiEdit />  <RiDeleteBin5Line
+                                     
+                                          onClick={() => {
+                                            deleteList(list._id), notify();
+                                          }}
+                                        />
+                                        </div>
+                                      </>}
+                                    </div>
+                                  </button>
+
+                                 
                                   <ToastContainer />
                                 </td>
                                 {console.log(list._id)}
@@ -478,5 +541,4 @@ function checklist() {
   );
 }
 
-export { usama2, usama3 };
 export default withProtected(checklist);
