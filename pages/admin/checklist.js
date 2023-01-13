@@ -29,7 +29,7 @@ import { apiUrl } from "../../constants";
 function checklist() {
   console.log();
   const [items, setItems] = useState([]);
-  const [data, setData] = useState([]);
+  const [showform, setShowform] = useState(false);
 
   const [text, setText] = useState("");
 
@@ -39,19 +39,15 @@ function checklist() {
     text: null,
     edit: false,
   });
-  // Unit edit fields
+  // checklist edit fields
   const [get_list_after_edit, set_list_after_edit] = useState();
 
 
 
-  const sendPutRequest = (id) => {
-    // console.log(saveOrEdit)
-    if (check_list_edit == true) {
-      console.log("hello1");
-      axios.put(`${apiUrl}/api/checklists/${id}`, { text: get_list_after_edit });
-      fetchList();
-    }
-  };
+  const PutRequest = (id) => {
+    //axios.put(`${apiUrl}/api/checklists/${id}`, {text: get_list_after_edit,});
+    console.log(id)
+};
 
   const router = useRouter();
   if (router.isFallback) {
@@ -72,7 +68,7 @@ function checklist() {
     axios.delete(`${apiUrl}/api/checklists/${id}`).then((res) => {
       fetchList();
       //setItems(res.data);
-      console.log("-- res.data --", res.data);
+      //console.log("-- res.data --", res.data);
     });
   };
 
@@ -104,8 +100,8 @@ function checklist() {
 
     axios.post(`${apiUrl}/api/checklists`, { text }).then((res) => {
       fetchList();
-      console.log(res);
-      console.log(res.data);
+      //console.log(res);
+      //console.log(res.data);
     });
   };
 
@@ -121,8 +117,7 @@ function checklist() {
     }*/
   }
 
-  const [openModal, setOpenModal] = useState(false);
-  const [open, setOpen] = useState(false);
+ 
 
   function toogleSideBar() {
     sideBarRef.current.classList.toggle("-translate-x-full");
@@ -197,7 +192,7 @@ function checklist() {
             <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
               <div className="flex flex-shrink-0 items-center px-4">
                 <img
-                  className="h-8 w-auto"
+                  className="h-8 w-auto "
                   src="/logo.png"
                   alt="Your Company"
                 />
@@ -263,88 +258,12 @@ function checklist() {
         </div>
       </div>
 
-      <Modal show={openModal} onHide={closemodal}>
-        <Modal.Body closeModal>
-          <div className="flex  flex-col justify-center md:px-56 md:text-center md:py-24 py-12 sm:px-6 lg:px-8">
-            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-              <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                <button
-                  className="float-right -mt-8"
-                  onClick={() => closemodal(false)}
-                >
-                  x
-                </button>
-                <form className="space-y-6" onSubmit={(e) => handleSubmit(e)}>
-                  <div>
-                    <div className="mt-1">
-                      <input
-                        name="text"
-                        type="text"
-                        value={text}
-                        placeholder="add checklist..."
-                        className="block w-full appearance-none rounded-md border border-gray-300 px-8 py-2 placeholder-gray-400 shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-cyan-500 sm:text-sm"
-                        onChange={(e) => setText(e.target.value)}
-                      />
-                    </div>
-                  </div>
+     
+      
 
-                  <div>
-                    <button
-                      type="submit"
-                      className="flex w-full justify-center rounded-md font-abc border border-transparent bg-cyan-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 "
-                      onClick={closemodal}
-                    >
-                      Add
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
-      {/*update*/}
 
-      <Modal show={open} onHide={close}>
-        <Modal.Body close>
-          <div className="flex  flex-col justify-center md:px-56 md:text-center md:py-24 py-12 sm:px-6 lg:px-8">
-            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-              <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                <button
-                  className="float-right -mt-8"
-                  onClick={() => close(false)}
-                >
-                  x
-                </button>
-                <form className="space-y-6" onSubmit={(e) => updateList(e)}>
-                  <div>
-                    <div className="mt-1">
-                      <input
-                        name="text"
-                        type="text"
-                        value={data}
-                        placeholder="add checklist..."
-                        className="block w-full appearance-none rounded-md border border-gray-300 px-8 py-2 placeholder-gray-400 shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-cyan-500 sm:text-sm"
-                        onChange={(e) => setData(e.target.value)}
-                      />
-                    </div>
-                  </div>
 
-                  <div>
-                    <button
-                      type="submit"
-                      className="flex w-full justify-center rounded-md border border-transparent bg-cyan-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
-                      onClick={close}
-                    >
-                      Update
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+      
 
       <div className="flex flex-1 flex-col md:pl-64">
         <main className="flex-1">
@@ -357,7 +276,7 @@ function checklist() {
                 {/*<div className="h-96 rounded-lg border-4 border-dashed border-gray-200"></div>*/}
               </div>
 
-              {!openModal && (
+              { (
                 <div className="px-4 sm:px-6 py-4 sm:py-6 lg:px-8 lg:py-8 rounded-lg bg-gray-100">
                   <div className="sm:flex sm:items-center  ">
                     <div className="sm:flex-auto ">
@@ -372,9 +291,7 @@ function checklist() {
                     <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none font-abc">
                       <button
                         type="button"
-                        onClick={() => {
-                          setOpenModal(true);
-                        }}
+                        onClick={() => setShowform(true)}
                         className="inline-flex items-center justify-center font-abc rounded-md border border-transparent bg-cyan-600 text-white hover:bg-cyan-700 px-4 py-2 text-xs font-medium  shadow-sm  focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2   sm:w-auto"
                       >
                         Add new daily checklist item
@@ -383,7 +300,7 @@ function checklist() {
                   </div>
                 </div>
               )}
-              {!openModal && (
+            
                 <div className="mt-8 flex flex-col">
                   <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -406,7 +323,29 @@ function checklist() {
                               </th>
                             </tr>
                           </thead>
-                          <tbody className="divide-y divide-gray-200 bg-lime-50">
+                       {showform?(<div className="flex"><input
+                                      type="email"
+                                      name="email"
+                                      id="email"
+                                      placeholder="Add list"
+                                      className="block w-full  rounded-md mt-2.5 mb-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+                                      
+                                      value={get_list_after_edit}
+                                      onChange={(e) => set_list_after_edit(e.target.value)}
+                                    /><span className="  flex flex-shrink-0 space-x-4">
+                                    <button
+                                        onClick={(e) => { setShowform(false)}}
+                                        type="button"
+                                        className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
+                                    >
+
+                                        Save
+
+
+                                    </button>
+
+                                </span></div>):''} 
+                          <tbody className="divide-y  divide-gray-200 bg-lime-50">
                             {items.map((list) => (
                               <tr key={list.text}>
                                 <td className="whitespace-nowrap font-abc py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6 contentEditable:outline-none">
@@ -422,10 +361,10 @@ function checklist() {
                                       type="email"
                                       name="email"
                                       id="email"
-                                      className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-
-                                      defaultValue={list.text}
-                                      onChange={set_list_after_edit}
+                                      className="block w-full  rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+                                       defaultValue={list.text}
+                                      value={get_list_after_edit}
+                                      onChange={(e) => set_list_after_edit(e.target.value)}
                                     />
                                   )}
 
@@ -498,8 +437,8 @@ function checklist() {
                                   >
                                     <div>
                                       {check_list_edit.text === null
-                                        ? <><div className="flex ml-2 cursor-pointer"><CiEdit />  <RiDeleteBin5Line
-                                     
+                                        ? <><div className="flex  cursor-pointer"><CiEdit />  <RiDeleteBin5Line
+                                      className="ml-1"
                                       onClick={() => {
                                         deleteList(list._id), notify();
                                       }}
@@ -508,9 +447,9 @@ function checklist() {
                                   </>
                                         : check_list_edit.text === list.text &&
                                           check_list_edit.edit
-                                          ? <button onClick={()=>{sendPutRequest(list._id),set_list_after_edit(!check_list_edit)}}>Update</button>
-                                          : <><div className="flex ml-2 cursor-pointer"><CiEdit />  <RiDeleteBin5Line
-                                     
+                                          ? <button type='button' className="text-cyan-500" onClick={()=>PutRequest(list._id)}>Update</button>
+                                          : <><div className="flex  cursor-pointer"><CiEdit />  <RiDeleteBin5Line
+                                                 className="ml-1"
                                           onClick={() => {
                                             deleteList(list._id), notify();
                                           }}
@@ -532,7 +471,7 @@ function checklist() {
                     </div>
                   </div>
                 </div>
-              )}
+              
             </div>
           </div>
         </main>

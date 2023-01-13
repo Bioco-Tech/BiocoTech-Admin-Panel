@@ -11,7 +11,6 @@ import { HiBuildingOffice2 } from "react-icons/hi2";
 import { CiLogout } from "react-icons/ci";
 import { useRouter } from "next/router";
 import { GrRestaurant } from "react-icons/gr";
-import people from "./Dashboard";
 
 import Stats from "./Stats";
 import { useRef } from "react";
@@ -20,6 +19,7 @@ import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import { withProtected } from "../context/Route";
 import { apiUrl } from "../constants";
+
 
 function SideBars({ auth }) {
   const router = useRouter();
@@ -92,6 +92,7 @@ function SideBars({ auth }) {
           {/* MAIN SIDEBAR */}
           <div
             ref={sideBarRef}
+
             className="bg-cyan-600  w-56 space-y-10 px-5 py-7  absolute inset-y-0 left-0 transform -translate-x-full
          md:translate-x-0 z-50 transition duration-200 ease-in-out flex flex-col child:transition-all md:max-h-screen md:min-h-screen  md:top-0"
           >
@@ -120,7 +121,7 @@ function SideBars({ auth }) {
                   )} bg-lime-500 hover:bg-lime-500 group flex items-center px-2 py-2 text-sm font-medium rounded-md `}
                 >
                   <MdHome className="mr-1 text-white" />
-                  <h3 className="text-base text-white group-hover:text-white font-abc">
+                  <h3 className= 'text-base text-white group-hover:text-white font-abc'>
                     <Link href="/admin/dashboard">Dashboard</Link>
                   </h3>
                 </div>

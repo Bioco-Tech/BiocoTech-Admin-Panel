@@ -93,6 +93,7 @@ const [editVattach, setEditVattach] = useState("");*/}
     }
 
     // Unit edit fields
+    const [get_unit_after_edit, set_unit_after_edit] = useState(units.unit);
     const [get_unit_id_after_edit, set_unit_id_after_edit] = useState(units.id);
     const [get_unit_details_after_edit, set_unit_details_after_edit] = useState(
         units.unit_details
@@ -139,7 +140,7 @@ const [editVattach, setEditVattach] = useState("");*/}
     // };
 
 
-    //Post Request
+    //Post Request unit
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -150,38 +151,35 @@ const [editVattach, setEditVattach] = useState("");*/}
 
         });
     };
-
-
-
-
-    //Delete Request
-    const deleteUnit = (id) => {
-        axios.delete(`${apiUrl}/api/companies/units/${id}`).then((res) => {
-
-            //setItems(res.data);
-            console.log("-- res.data --", res.data);
-        });
-    };
-
-
-
-    //Put Request
+    //Put Request company
     const sendPutRequest = () => {
-        // console.log(saveOrEdit)
-
-        axios.put(`${apiUrl}/api/companies/${company._id}`, { name: get_name_after_edit,id:get_id_after_edit, pin:get_pin_after_edit, website:get_web_after_edit, about:get_about_after_edit });
-
-
-
+        axios.put(`${apiUrl}/api/companies/${company._id}`, { name: get_name_after_edit, id: get_id_after_edit, pin: get_pin_after_edit, website: get_web_after_edit, about: get_about_after_edit });
     };
-    
+
+    //Put Request unit
+    const PutRequest = (id) => {
+        axios.put(`${apiUrl}/api/companies/units/${id}`, { id: get_unit_id_after_edit, unit_details: get_unit_details_after_edit });
+        console.log(id)
+    };
+
+    //Delete Request unit
+    const DeleteRequest = (id) => {
+        axios.delete(`${apiUrl}/api/companies/units/${id}`).then((res) => {
+            console.log(res)
+        })
+
+
+
+    }
+
+
 
 
 
     // edit unit
     const unit_type_change = (event) => {
         console.log(event.target.innerHTML);
-
+        
 
     };
 
@@ -199,15 +197,7 @@ const [editVattach, setEditVattach] = useState("");*/}
         console.log('Change ', value);
     }
 
-    const sendPostAttach = () => {
-        // console.log(saveOrEdit)
-        if (editAttach == true) {
-            console.log("hello4");
-            axios.put(`${apiUrl}/api/companies/${company._id}`, {
-                attach: editVattach,
-            });
-        }
-    };
+
 
 
 
@@ -367,7 +357,7 @@ const [editVattach, setEditVattach] = useState("");*/}
                                                     className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
 
                                                     value={get_id_after_edit}
-                                                        onChange={(e) => set_id_after_edit(e.target.value)}
+                                                    onChange={(e) => set_id_after_edit(e.target.value)}
                                                 />
                                             )}
 
@@ -758,11 +748,7 @@ const [editVattach, setEditVattach] = useState("");*/}
                                                 </div>
                                                 <div className="ml-4 flex flex-shrink-0 space-x-4">
                                                     <button
-                                                        onClick={() => {
-                                                            setEditAttach(!editAttach);
-                                                            focusAttach();
-                                                            sendPostAttach();
-                                                        }}
+
                                                         type="button"
                                                         className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none  font-abc "
                                                     >
@@ -909,7 +895,7 @@ const [editVattach, setEditVattach] = useState("");*/}
                                                                 ? "Edit"
                                                                 : check_unit_edit.unitId === unit.id &&
                                                                     check_unit_edit.edit
-                                                                    ? "Update"
+                                                                    ? <button type='button' onClick={() => PutRequest(unit._id)}>Update</button>
                                                                     : "Edit"}
                                                         </div>
                                                     </button>
@@ -923,7 +909,7 @@ const [editVattach, setEditVattach] = useState("");*/}
                                                         type="button"
                                                         className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 font-abc  focus:ring-offset-2"
                                                         onClick={() => {
-                                                            deleteUnit(unit._id), notify()
+                                                            DeleteRequest(unit._id), notify()
                                                         }}
                                                     >
 
@@ -978,9 +964,9 @@ const [editVattach, setEditVattach] = useState("");*/}
                                                         name="email"
                                                         id="email"
                                                         className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
-                                                        
                                                         defaultValue={unit.id}
-                                                        onChange={set_unit_id_after_edit}
+                                                        value={get_unit_id_after_edit}
+                                                        onChange={(e) => set_unit_id_after_edit(e.target.value)}
                                                     />
                                                 )}
                                             </dd>
@@ -1136,10 +1122,10 @@ const [editVattach, setEditVattach] = useState("");*/}
                                                 <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-abc ">
                                                     <textarea
                                                         rows={4}
-                                                       
+
                                                         value={unitdetails}
                                                         onChange={(e) => setUnitdetails(e.target.value)}
-                                                       
+
                                                         placeholder="  Add unit details"
                                                         className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm "
                                                     />
