@@ -145,7 +145,7 @@ const [editVattach, setEditVattach] = useState("");*/}
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        axios.post(`${apiUrl}/api/companies/units`, { "unit": new_unit.unit, "id": unitid, "unit_details": unitdetails, "company": company._id }).then((res) => {
+        axios.post(`${apiUrl}/api/units`, { "unit": new_unit.unit, "id": unitid, "unit_details": unitdetails, "company": company._id }).then((res) => {
 
             console.log(res);
 
@@ -158,13 +158,13 @@ const [editVattach, setEditVattach] = useState("");*/}
 
     //Put Request unit
     const PutRequest = (id) => {
-        axios.put(`${apiUrl}/api/companies/units/${id}`, { id: get_unit_id_after_edit, unit_details: get_unit_details_after_edit });
+        axios.put(`${apiUrl}/api/units/${id}`, { id: get_unit_id_after_edit, unit_details: get_unit_details_after_edit });
         console.log(id)
     };
 
     //Delete Request unit
     const DeleteRequest = (id) => {
-        axios.delete(`${apiUrl}/api/companies/units/${id}`).then((res) => {
+        axios.delete(`${apiUrl}/api/companies/${id}`).then((res) => {
             console.log(res)
         })
 
@@ -1266,7 +1266,7 @@ export async function getServerSideProps(context) {
     const { _id } = context.query;
     console.log(context.query._id);
     const company = await fetch(`${apiUrl}/api/companies/${_id}`);
-    const units = await fetch(`${apiUrl}/api/companies/units/${_id}`);
+    const units = await fetch(`${apiUrl}/api/units/${_id}`);
     console.log(company);
     console.log(units);
     const companyData = await company.json();

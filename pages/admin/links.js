@@ -31,12 +31,12 @@ function links() {
   if (router.isFallback) {
     return <h3>Loading...</h3>;
   }
-  const fetchPolicy = async () => {
+  {/*const fetchPolicy = async () => {
     await axios.get(`${apiUrl}/api/company-policy`).then((res) => {
       setItems(res.data.reverse());
       // setChange(res.data.reverse())
     });
-  };
+  };*/}
 
   {
     /*axios.post(`${apiUrl}//api/`, { })
@@ -55,7 +55,7 @@ function links() {
   };
 
   useEffect(() => {
-    fetchPolicy();
+    //fetchPolicy();
   });
 
   function toogleSideBar() {
@@ -268,7 +268,7 @@ function links() {
                 <dt className="text-sm font-medium text-black font-abc">
                   Companies
                 </dt>
-                {items.map((pol) => {
+                
                   <dd className="mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0">
                     <label className="flex font-abc ">Privacy Policy</label>
                     <ul
@@ -382,8 +382,8 @@ function links() {
                         </div>
                       </li>
                     </ul>
-                  </dd>;
-                })}
+                  </dd>
+               
               </div>
             </dl>
           </div>

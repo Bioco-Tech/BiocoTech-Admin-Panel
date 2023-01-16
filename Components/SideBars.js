@@ -10,7 +10,7 @@ import { MdHome } from "react-icons/md";
 import { HiBuildingOffice2 } from "react-icons/hi2";
 import { CiLogout } from "react-icons/ci";
 import { useRouter } from "next/router";
-import { GrRestaurant } from "react-icons/gr";
+import Chart from './Chart'
 
 import Stats from "./Stats";
 import { useRef } from "react";
@@ -121,7 +121,7 @@ function SideBars({ auth }) {
                   )} bg-lime-500 hover:bg-lime-500 group flex items-center px-2 py-2 text-sm font-medium rounded-md `}
                 >
                   <MdHome className="mr-1 text-white" />
-                  <h3 className= 'text-base text-white group-hover:text-white font-abc'>
+                  <h3 className='text-base text-white group-hover:text-white font-abc'>
                     <Link href="/admin/dashboard">Dashboard</Link>
                   </h3>
                 </div>
@@ -168,12 +168,28 @@ function SideBars({ auth }) {
             <div className="py-6">
               <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                 {/*<h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>*/}
-              </div>
+              </div >
               <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-                <div className="py-4">
-                  {/*<div className="h-96 rounded-lg border-4 border-dashed border-gray-200"></div>*/}
-                </div>
+                <div className='flex'>
+                  <div className=" w-32 ">
+                    {/*<div className="h-96 rounded-lg border-4 border-dashed border-gray-200"></div>*/}
+                    <Chart />
+                  </div>
+                  <div className="  ml-5  mt-5">
+                    <p className='text-black font-medium'>600</p>
 
+                    <p className="text-gray-500 font-thin">units operating worldwide</p>
+
+                  
+                    <p className='text-black md:mt-2 font-medium'>24,000</p>
+
+                    <p className="text-gray-500 font-thin ">Orgainc waste processed</p>
+                    <p className='text-black md:mt-2 font-medium'>900</p>
+
+                    <p className="text-gray-500 font-thin">MTCO,Diverted</p>
+
+                  </div>
+                </div>
                 <div className="px-4 sm:px-6 py-4 justify-center sm:py-6 mt-5 lg:px-8 lg:py-8 rounded-lg bg-gray-100">
                   <Stats />
                 </div>

@@ -36,7 +36,7 @@ function checklist() {
 
   // checklist edit Check
   const [check_list_edit, set_check_list_edit] = useState({
-    text: null,
+    list: null,
     edit: false,
   });
   // checklist edit fields
@@ -45,9 +45,16 @@ function checklist() {
 
 
   const PutRequest = (id) => {
-    //axios.put(`${apiUrl}/api/checklists/${id}`, {text: get_list_after_edit,});
-    console.log(id)
+    axios.put(`${apiUrl}/api/checklists/${id}`, { text: get_list_after_edit}).then((res) => {
+      fetchList();
+      console.log(id)
+      //setItems(res.data);
+      //console.log("-- res.data --", res.data);
+    });
+    
+    
 };
+console.log(get_list_after_edit);
 
   const router = useRouter();
   if (router.isFallback) {
@@ -328,15 +335,15 @@ function checklist() {
                                       name="email"
                                       id="email"
                                       placeholder="Add list"
-                                      className="block w-full  rounded-md mt-2.5 mb-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+                                      className="block w-full  ml-7 rounded-md mt-2.5 mb-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
                                       
-                                      value={get_list_after_edit}
-                                      onChange={(e) => set_list_after_edit(e.target.value)}
+                                      value={text}
+                                      onChange={(e) => setText(e.target.value)}
                                     /><span className="  flex flex-shrink-0 space-x-4">
                                     <button
-                                        onClick={(e) => { setShowform(false)}}
+                                        onClick={(e) => { setShowform(false),handleSubmit(e)}}
                                         type="button"
-                                        className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
+                                        className="rounded-md ml-12 bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
                                     >
 
                                         Save
@@ -349,23 +356,24 @@ function checklist() {
                             {items.map((list) => (
                               <tr key={list.text}>
                                 <td className="whitespace-nowrap font-abc py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6 contentEditable:outline-none">
-                                  {check_list_edit.text === null ? (
+                                  {check_list_edit.list === null ? (
                                     `${list.text}`
-                                  ) : check_list_edit.text !== list.text ? (
+                                  ) : check_list_edit.list !== list.text ? (
                                     `${list.text}`
-                                  ) : check_list_edit.text === list.text &&
+                                  ) : check_list_edit.list === list.text &&
                                     !check_list_edit.edit ? (
                                     `${list.text}`
                                   ) : (
                                     <input
-                                      type="email"
-                                      name="email"
-                                      id="email"
+                                      type="text"
+                                      
                                       className="block w-full  rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
                                        defaultValue={list.text}
                                       value={get_list_after_edit}
+                                      
                                       onChange={(e) => set_list_after_edit(e.target.value)}
                                     />
+                                    
                                   )}
 
                                   {/*
@@ -408,24 +416,24 @@ function checklist() {
                                       // });
 
                                       console.log(list.text);
-                                      if (check_list_edit.text == null) {
+                                      if (check_list_edit.list == null) {
                                         console.log("1");
                                         // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
                                         set_check_list_edit({
-                                          text: list.text,
+                                          list: list.text,
                                           edit: true,
                                         });
-                                      } else if (check_list_edit.text === list.text) {
+                                      } else if (check_list_edit.list === list.text) {
                                         console.log("2");
                                         // If the unitId is not null and it matches the current unit's id, set the edit mode to false
                                         set_check_list_edit({
-                                          text: null,
+                                          list: null,
                                           edit: false,
                                         });
                                       } else {
                                         console.log("3");
                                         set_check_list_edit({
-                                          text: null,
+                                          list: null,
                                           edit: false,
                                         });
                                       }
@@ -436,7 +444,7 @@ function checklist() {
                                     className=" rounded-md  font-thin text-sm text-black hover:text-black font-abc"
                                   >
                                     <div>
-                                      {check_list_edit.text === null
+                                      {check_list_edit.list === null
                                         ? <><div className="flex  cursor-pointer"><CiEdit />  <RiDeleteBin5Line
                                       className="ml-1"
                                       onClick={() => {
@@ -445,7 +453,7 @@ function checklist() {
                                     />
                                     </div>
                                   </>
-                                        : check_list_edit.text === list.text &&
+                                        : check_list_edit.list === list.text &&
                                           check_list_edit.edit
                                           ? <button type='button' className="text-cyan-500" onClick={()=>PutRequest(list._id)}>Update</button>
                                           : <><div className="flex  cursor-pointer"><CiEdit />  <RiDeleteBin5Line
