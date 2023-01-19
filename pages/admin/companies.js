@@ -33,8 +33,7 @@ import { useAuth } from "../../context/AuthContext";
 import { withProtected } from "../../context/Route";
 import { apiUrl } from "../../constants";
 
-const staffMembers = [20, 40, 60, 80];
-const units = [2000, 2500, 3000, 3500];
+
 
 function companies() {
   const [company, setCompany] = useState([]);
@@ -43,6 +42,9 @@ function companies() {
 
   const router = useRouter();
   const sideBarRef = useRef();
+
+
+
   const { logout } = useAuth();
 
   if (router.isFallback) {
@@ -131,7 +133,7 @@ function companies() {
                  
                 </Link></div>*/}
                 <Link href="/" legacyBehavior>
-                  <a className="text-white font-abc hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white font-abc font-Cocogoose hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                     <MdHome className="mr-1 text-white" />
                     Dashboard
                   </a>
@@ -292,10 +294,14 @@ function companies() {
                                             .toLowerCase()
                                             .includes(query)
                                         )
-                                        .map((person) => (
-                                          <tr key={person.name}>
+                                        .map((company,person) => (
+                                          <tr key={company.name}>
                                             <td className="whitespace-nowrap font-abc py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6">
-                                              {person.name}
+                                            <Link
+                                                href={`/companies/${company._id}`}
+                                              >
+                                                {company.name}
+                                              </Link>
                                             </td>
                                             <td className="whitespace-nowrap font-abc px-3 py-4 text-sm font-light text-gray-500">
                                               {person.member}
@@ -305,7 +311,7 @@ function companies() {
                                             </td>
                                             <td className="relative whitespace-nowrap py-4 font-abc pl-3 pr-4 text-cyan-600  text-right text-sm font-thin sm:pr-6">
                                               <Link
-                                                href={`/companies/${person._id}`}
+                                                href={`/companies/${company._id}`}
                                               >
                                                 Go to details
                                               </Link>

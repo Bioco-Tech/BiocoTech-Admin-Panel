@@ -26,13 +26,15 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-function Singlecompany({ company, units }) {
+function Singlecompany({ company, units, staff }) {
     // console.log(company)
 
     const [istoggled, setIstoggled] = useState(false);
     const [unitid, setUnitid] = useState('')
     const [unitdetails, setUnitdetails] = useState('')
     const [showform, setShowform] = useState(false)
+    const [query, setQuery] = useState("");
+  console.log(query);
 
 
     const router = useRouter();
@@ -1169,6 +1171,7 @@ const [editVattach, setEditVattach] = useState("");*/}
                                             </div>
                                             <input
                                                 id="search-field"
+                                                onChange={(e) => setQuery(e.target.value)}
                                                 className="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm"
                                                 placeholder="Search Staff Member"
                                                 type="search"
@@ -1183,7 +1186,7 @@ const [editVattach, setEditVattach] = useState("");*/}
                             <div className="sm:flex sm:items-center ">
                                 <div className="sm:flex-auto">
                                     <h1 className="text-xl font-semibold text-gray-900 font-abc ">
-                                        Pizza Hut
+                                        {company.name}
                                     </h1>
                                     <p className="mt-2 text-sm font-abc  text-gray-700">
                                         Below the details of this company
@@ -1229,19 +1232,25 @@ const [editVattach, setEditVattach] = useState("");*/}
                                                     </tr>
                                                 </thead>
                                                 <tbody className="divide-y divide-gray-200 bg-lime-50">
-                                                    {staff.map((person) => (
+                                                    {staff.filter((user)=>
+                                                    user.name
+                                                    .toLowerCase()
+                                            .includes(query)
+                                                    ).
+                                                    
+                                                    map((person) => (
                                                         <tr key={person.name}>
                                                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 font-abc  sm:pl-6">
                                                                 {person.name}
                                                             </td>
                                                             <td className="whitespace-nowrap px-3 py-4 text-sm font-abc  text-gray-500">
-                                                                {person.date}
+                                                                {person.createdAt}
                                                             </td>
                                                             <td className="whitespace-nowrap px-3 py-4 text-sm font-abc  text-gray-500">
-                                                                {person.ibs}
+                                                                {person.lbsProcessed}
                                                             </td>
                                                             <td className="whitespace-nowrap px-3 py-4 text-sm font-abc  text-gray-500">
-                                                                {person.mtco}
+                                                                {person.mtcoDirverted}
                                                             </td>
                                                         </tr>
                                                     ))}
@@ -1267,15 +1276,19 @@ export async function getServerSideProps(context) {
     console.log(context.query._id);
     const company = await fetch(`${apiUrl}/api/companies/${_id}`);
     const units = await fetch(`${apiUrl}/api/units/${_id}`);
+    const staff = await fetch(`${apiUrl}/api/staff/${_id}`);
     console.log(company);
     console.log(units);
+    console.log(staff)
     const companyData = await company.json();
     const unitsData = await units.json();
+    const staffData = await staff.json();
 
     return {
         props: {
             company: companyData,
             units: unitsData,
+            staff: staffData,
             // data:{}
         },
     };

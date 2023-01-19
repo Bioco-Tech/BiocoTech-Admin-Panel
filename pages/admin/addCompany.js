@@ -90,7 +90,7 @@ function addCompany() {
                         onChange={(e) => setName(e.target.value)}
                         id="email-address"
                         autoComplete="email"
-                        className="mt-1 block border w-full p-2 rounded-md border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
+                        className="mt-1 block border w-full p-2 rounded-md border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2"
                       />
                     </div>
 
@@ -108,7 +108,7 @@ function addCompany() {
                         onChange={(e) => setId(e.target.value)}
                         id="email-address"
                         autoComplete="email"
-                        className="mt-1 block border w-full p-2 rounded-md border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
+                        className="mt-1 block border w-full p-2 rounded-md border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500  focus:ring-offset-2"
                       />
                     </div>
 
@@ -126,7 +126,7 @@ function addCompany() {
                         onChange={(e) => setPin(e.target.value)}
                         id="email-address"
                         autoComplete="email"
-                        className="mt-1 block w-full rounded-md p-2   border border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
+                        className="mt-1 block w-full rounded-md p-2   border border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500  focus:ring-offset-2"
                       />
                     </div>
 
@@ -144,7 +144,7 @@ function addCompany() {
                         onChange={(e) => setWebsite(e.target.value)}
                         id="email-address"
                         autoComplete="email"
-                        className="mt-1 block w-full rounded-md   p-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2   sm:text-sm"
+                        className="mt-1 block w-full rounded-md   p-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2   sm:text-sm"
                       />
                     </div>
 
@@ -162,7 +162,7 @@ function addCompany() {
                         onChange={(e) => setAbout(e.target.value)}
                         id="comment"
                         placeholder="  Add new unit..."
-                        className="block w-full rounded-md border  p-2 border-gray-300 shadow-sm  sm:text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 "
+                        className="block w-full rounded-md border  p-2 border-gray-300 shadow-sm  sm:text-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2 "
                       />
                     </div>
 
@@ -176,13 +176,13 @@ function addCompany() {
                       <div className="flex ">
                         <button
                           className="flex w-32 p-1 justify-center rounded-lg border border-gray-300 bg-white  text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 
-                         focus:outline-none focus:ring-2 font-abc focus:ring-gray-300 focus:ring-offset-2"
+                         focus:outline-none focus:ring-2 font-abc focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2"
                         >
                           Upload
                         </button>
                         <button
                           className="flex w-32 ml-2 p-1 justify-center border rounded-lg border-gray-300 bg-white  text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 
-                         focus:outline-none focus:ring-2 font-abc focus:ring-gray-300 focus:ring-offset-2"
+                         focus:outline-none focus:ring-2 font-abc focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2"
                         >
                           Upload
                         </button>

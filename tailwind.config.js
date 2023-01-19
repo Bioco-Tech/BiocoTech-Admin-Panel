@@ -5,10 +5,12 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
-    fontFamily: {
-      abc: ["COCOGOOSE", "sans-serif"],
+    extend: {
+      fontFamily:{
+        Cocogoose:'Cocogoose'
+      }
     },
+    
   },
   plugins: [require("@tailwindcss/forms")],
 };

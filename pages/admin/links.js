@@ -19,44 +19,85 @@ function links() {
   const router = useRouter();
   const sideBarRef = useRef();
   const { logout } = useAuth();
-  const [terms, setTerms] = useState("");
-  const [policy, setPolicy] = useState("");
-  const [faq, setFaq] = useState("");
-  const [term, setTerm] = useState("");
-  const [privacy, setPrivacy] = useState("");
-  const [fa, setFa] = useState("");
-  const [items, setItems] = useState([]);
-  console.log(terms, term, policy, privacy, fa);
+  const [companyConditions, setCompanyConditions] = useState("");
+  const [companyPolicy, setCompanyPolicy] = useState("");
+  const [companyFaqs, setCompanyFaqs] = useState("");
+  const [staffPolicy, setStaffPolicy] = useState("");
+  const [staffConditions, setStaffConditions] = useState("");
+  const [ staffFaqs, setStaffFaqs] = useState("");
+  const [items, setItems] = useState();
+  //console.log(terms, term, policy, privacy, fa);
 
   if (router.isFallback) {
     return <h3>Loading...</h3>;
   }
-  {/*const fetchPolicy = async () => {
-    await axios.get(`${apiUrl}/api/company-policy`).then((res) => {
-      setItems(res.data.reverse());
-      // setChange(res.data.reverse())
-    });
-  };*/}
+   // Company edit Check
+   const [check_cpolicy_edit, set_check_cpolicy_edit] = useState({
+    companyPolicy: null,
+    edit: false,
+});
+const [check_cconditions_edit, set_check_cconditions_edit] = useState({
+    companyConditions: null,
+    edit: false,
+});
+const [check_cfaq_edit, set_check_cfaq_edit] = useState({
+    companyFaqs: null,
+    edit: false,
+});
+const [check_spolicy_edit, set_check_spolicy_edit] = useState({
+    staffPolicy: null,
+    edit: false,
+});
+const [check_sconditions_edit, set_check_sconditions_edit] = useState({
+    staffConditions: null,
+    edit: false,
+});
+const [check_sfaq_edit, set_check_sfaq_edit] = useState({
+  staffFaqs: null,
+  edit: false,
+});
+// links edit fields
+const [get_cpolicy_after_edit, set_cpolicy_after_edit] = useState();
+const [get_cconditions_after_edit, set_cconditions_after_edit] = useState();
+const [get_cfaq_after_edit, set_cfaq_after_edit] = useState();
+const [get_spolicy_after_edit, set_spolicy_after_edit] = useState();
+const [get_sconditions_after_edit, set_sconditions_after_edit] = useState();
+const [get_sfaq_after_edit, set_sfaq_after_edit] = useState();
+ //Post Request
 
-  {
-    /*axios.post(`${apiUrl}//api/`, { })
-    .then(res => {
-      fetchList()
-      console.log(res);
-      console.log(res.data);
-    })*/
-  }
+ axios.post(`${apiUrl}/api/links`, { "companyPolicy": companyPolicy, "companyConditions": companyConditions, "companyFaqs": companyFaqs,"staffPolicy":staffPolicy,"staffConditions":staffConditions,"staffFaqs":staffFaqs }).then((res) => {
 
-  const deletePolicy = (id) => {
-    axios.delete(`${apiUrl}/api/company-policy/${id}`).then((res) => {
-      //setItems(res.data);
-      console.log("-- res.data --", res.data);
-    });
-  };
+  console.log(res);
+
+});
+
+//Get Request
+const fetchList = async () => {
+  await axios.get(`${apiUrl}/api/links`).then((res) => {
+    console.log(res.data);
+    setItems(res.data);
+    // setChange(res.data.reverse())
+  });
+};
+console.log(items)
+//Put Request company
+const sendPutRequest = () => {
+  axios.put(`${apiUrl}/api/links/${company._id}`, { companyPolicy: get_cpolicy_after_edit, companyConditions: get_cconditions_after_edit, companyFaqs: get_cfaq_after_edit, staffPolicy: get_spolicy_after_edit, staffConditions: get_sconditions_after_edit, staffFaqs: get_sfaq_after_edit });
+};
+
+ //Delete Request unit
+ const DeleteRequest = (id) => {
+  axios.delete(`${apiUrl}/api/links/${id}`).then((res) => {
+      console.log(res)
+  })
+
+
+
+}
 
   useEffect(() => {
-    //fetchPolicy();
-  });
+    fetchList();
+  },[]);
 
   function toogleSideBar() {
     sideBarRef.current.classList.toggle("-translate-x-full");
@@ -261,6 +302,8 @@ function links() {
               </ul>
             </dd>
         </div>*/}
+       
+          
         <div className="overflow-hidden bg-gray-100 ml-5 mt-5 mr-5 shadow sm:rounded-lg">
           <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
             <dl className="sm:divide-y sm:divide-gray-200">
@@ -269,20 +312,26 @@ function links() {
                   Companies
                 </dt>
                 
+                
                   <dd className="mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0">
                     <label className="flex font-abc ">Privacy Policy</label>
                     <ul
                       role="list"
                       className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white"
                     >
-                      <li className="flex items-center justify-between p-2 text-sm">
+                      <li className="flex items-center justify-between p-2 text-sm">  
                         <div className="flex w-0 flex-1 items-center">
                           <input
                             className="px-5 outline-none "
-                            value={policy}
-                            onChange={(e) => setPolicy(e.target.value)}
+                            value={companyPolicy}
+                            onChange={(e) => setCompanyPolicy(e.target.value)}
                           />
+                          
+                         
+                          
                         </div>
+                        
+                       
                         <div className="ml-4 flex-shrink-0">
                           <button
                             type="button"
@@ -297,9 +346,7 @@ function links() {
                             |
                           </span>
                           <button
-                            onClick={() => {
-                              deletePolicy(pol._id);
-                            }}
+                            
                             type="button"
                             className="rounded-md bg-white ml-1 font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 font-abc focus:ring-offset-2"
                           >
@@ -320,8 +367,8 @@ function links() {
                         <div className="flex w-0 flex-1 items-center">
                           <input
                             className="px-5 outline-none"
-                            value={terms}
-                            onChange={(e) => setTerms(e.target.value)}
+                            value={companyConditions}
+                            onChange={(e) => setCompanyConditions(e.target.value)}
                           />
                         </div>
                         <div className="ml-4 flex-shrink-0">
@@ -356,8 +403,8 @@ function links() {
                         <div className="flex w-0 flex-1 items-center">
                           <input
                             className="px-5 outline-none"
-                            value={faq}
-                            onChange={(e) => setFaq(e.target.value)}
+                            value={companyFaqs}
+                            onChange={(e) => setCompanyFaqs(e.target.value)}
                           />
                         </div>
                         <div className="ml-4 flex-shrink-0">
@@ -381,9 +428,9 @@ function links() {
                           </button>
                         </div>
                       </li>
-                    </ul>
+                  </ul>
                   </dd>
-               
+              
               </div>
             </dl>
           </div>
@@ -407,8 +454,8 @@ function links() {
                       <div className="flex w-0 flex-1 items-center">
                         <input
                           className="px-5 outline-none"
-                          value={privacy}
-                          onChange={(e) => setPrivacy(e.target.value)}
+                          value={staffPolicy}
+                          onChange={(e) => setStaffPolicy(e.target.value)}
                         />
                       </div>
                       <div className="ml-4 flex-shrink-0">
@@ -442,8 +489,8 @@ function links() {
                       <div className="flex w-0 flex-1 items-center">
                         <input
                           className="px-5 outline-none"
-                          value={term}
-                          onChange={(e) => setTerm(e.target.value)}
+                          value={staffConditions}
+                          onChange={(e) => setStaffConditions(e.target.value)}
                         />
                       </div>
                       <div className="ml-4 flex-shrink-0">
@@ -475,8 +522,8 @@ function links() {
                       <div className="flex w-0 flex-1 items-center">
                         <input
                           className="px-5 outline-none"
-                          value={fa}
-                          onChange={(e) => setFa(e.target.value)}
+                          value={staffFaqs}
+                          onChange={(e) => setStaffFaqs(e.target.value)}
                         />
                       </div>
                       <div className="ml-4 flex-shrink-0">

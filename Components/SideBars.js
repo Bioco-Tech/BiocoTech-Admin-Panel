@@ -21,7 +21,8 @@ import { withProtected } from "../context/Route";
 import { apiUrl } from "../constants";
 
 
-function SideBars({ auth }) {
+
+function SideBars({ auth,staf }) {
   const router = useRouter();
   const sideBarRef = useRef();
   const { logout } = auth;
@@ -272,3 +273,21 @@ function SideBars({ auth }) {
   );
 }
 export default withProtected(SideBars);
+
+export async function getServerSideProps() {
+  
+  const staff = await fetch(`${apiUrl}/api/staff`);
+  
+ 
+  console.log(units);
+  const staffData = await staff.json();
+
+
+  return {
+      props: {
+          staf: staffData,
+        
+          // data:{}
+      },
+  };
+}
