@@ -38,7 +38,7 @@ function addCompany() {
     console.log(apiUrl);
 
     axios
-      .post(`${apiUrl}/api/companies`, { name, id, pin, website, about })
+      .post(`${apiUrl}/api/companies`, { companyName:name, id:id, pin:pin, website:website, about:about })
       .then((res) => {
         console.log(res.data);
       });

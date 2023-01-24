@@ -22,12 +22,13 @@ import { apiUrl } from "../constants";
 
 
 
-function SideBars({ auth,staf }) {
+function SideBars({ auth }) {
   const router = useRouter();
   const sideBarRef = useRef();
   const { logout } = auth;
   const [company, setCompany] = useState([]);
   const [staff, setStaff] = useState([]);
+  const [data, setData] = useState([]);
 
   function toogleSideBar() {
     sideBarRef.current.classList.toggle("-translate-x-full");
@@ -50,18 +51,43 @@ function SideBars({ auth,staf }) {
       return "";
     }
   }
+  //fetch data
 
-  const fetchCompany = async () => {
+  useEffect(() => {
+     const fetchCompany = async () => {
     await axios.get(`${apiUrl}/api/companies`).then((res) => {
       setCompany(res.data.reverse());
       // setChange(res.data.reverse())
     });
+    await axios.get(`${apiUrl}/api/staff`).then((res) => {
+      setStaff(res.data.reverse());
+      // setChange(res.data.reverse())
+    });
   };
-
-  useEffect(() => {
-    fetchCompany();
-    console.log("fetchList activate");
+  fetchCompany();
   }, []);
+
+  useEffect(()=>{
+    const arr=[];
+    if(company.length>0&&staff.length>0){
+      staff.map((item,index)=>{
+        company.map((s,i)=>{
+          let obj={};
+         
+            obj["companyName"] = s.companyName
+            obj["staffName"] = item.staffName
+            
+          arr.push(obj)
+        })
+
+            
+      })
+      setData(arr)
+    }
+
+  },[staff,company])
+
+ 
 
   {
     /*const fetchStaff = async () => {
@@ -73,15 +99,11 @@ function SideBars({ auth,staf }) {
   };*/
   }
 
-  useEffect(() => {
-    fetchCompany();
-    //fetchStaff();
-    console.log("fetchList activate");
-  }, []);
+ console.log(data)
 
   return (
     <>
-      <div className="max-h-screen md:sticky  md:top-0 z-50 text-white ">
+      <div   className="max-h-screen  md:absolute md:top-0 z-50 text-white ">
         {/* MOBILE SIDEBAR */}
         <div className="bg-cyan-600 md:hidden flex justify-between p-2 items-center sticky top-0 z-30">
           <img className="h-8 w-auto" src="/logo.png" alt="Your Company" />
@@ -89,12 +111,13 @@ function SideBars({ auth,staf }) {
             <RxHamburgerMenu size={32} />
           </button>
         </div>
-        <div>
+        <div className="sticky">
           {/* MAIN SIDEBAR */}
           <div
             ref={sideBarRef}
+            
 
-            className="bg-cyan-600  w-56 space-y-10 px-5 py-7  absolute inset-y-0 left-0 transform -translate-x-full
+            className="bg-cyan-600   w-56 space-y-10 px-5 py-7 absolute  inset-y-0 left-0 transform -translate-x-full
          md:translate-x-0 z-50 transition duration-200 ease-in-out flex flex-col child:transition-all md:max-h-screen md:min-h-screen  md:top-0"
           >
             <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
@@ -164,7 +187,7 @@ function SideBars({ auth,staf }) {
             </div>
           </div>
         </div>
-        <div className="flex flex-1 flex-col md:pl-64">
+        <div className="flex flex-1 flex-col md:pl-64 ">
           <main className="flex-1">
             <div className="py-6">
               <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
@@ -241,16 +264,18 @@ function SideBars({ auth,staf }) {
                               </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200 bg-lime-50">
-                              {company.map((person) => (
+                            
+                              {data.map((person) => (
                                 <tr key={person.member}>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-light font-abc  text-gray-500 sm:pl-6">
-                                    {person.member}
+                                    
+                                    {person.staffName}
                                   </td>
                                   <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-500 font-abc ">
-                                    {person.name}
+                                    {person.companyName}
                                   </td>
                                   <td className="whitespace-nowrap px-3 py-4 text-sm font-normal w-[560] h-[55] text-gray-900 font-abc ">
-                                    {person.points}
+                                    {person.id}
                                   </td>
                                   <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-cyan-600 text-right text-sm font-thin sm:pr-6 font-abc ">
                                     {person.action}
@@ -274,7 +299,7 @@ function SideBars({ auth,staf }) {
 }
 export default withProtected(SideBars);
 
-export async function getServerSideProps() {
+{/*export async function getServerSideProps() {
   
   const staff = await fetch(`${apiUrl}/api/staff`);
   
@@ -285,9 +310,9 @@ export async function getServerSideProps() {
 
   return {
       props: {
-          staf: staffData,
+          staff: staffData,
         
           // data:{}
       },
   };
-}
+}*/}

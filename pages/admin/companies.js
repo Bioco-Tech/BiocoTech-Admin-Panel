@@ -290,17 +290,17 @@ function companies() {
                                     <tbody className="divide-y divide-gray-200 bg-lime-50">
                                       {company
                                         .filter((user) =>
-                                          user.name
+                                          user.companyName
                                             .toLowerCase()
                                             .includes(query)
                                         )
                                         .map((company,person) => (
-                                          <tr key={company.name}>
+                                          <tr key={company.companyName}>
                                             <td className="whitespace-nowrap font-abc py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6">
                                             <Link
                                                 href={`/companies/${company._id}`}
                                               >
-                                                {company.name}
+                                                {company.companyName}
                                               </Link>
                                             </td>
                                             <td className="whitespace-nowrap font-abc px-3 py-4 text-sm font-light text-gray-500">

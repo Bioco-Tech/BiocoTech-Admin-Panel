@@ -21,36 +21,29 @@ import { Modal } from "react-bootstrap";
 //react-icon imports
 import { IoIosArrowBack } from "react-icons/io";
 import { apiUrl } from "../../constants";
+import { json } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function Singlecompany({ company, units, staff }) {
+function Singlecompany({company}) {
   // console.log(company)
 
-  const [istoggled, setIstoggled] = useState(false);
+  const [istoggled, setIstoggled] = useState(true);
   const [unitid, setUnitid] = useState("");
   const [unitdetails, setUnitdetails] = useState("");
   const [showform, setShowform] = useState(false);
   const [query, setQuery] = useState("");
+  const [staff,setStaff] = useState([])
+  const [unit,setUnit] = useState([])
+  //const [company,setCompany] = useState([])
+
   //   console.log(query);
 
   const router = useRouter();
 
-  //////--->useStates
-  {
-    /*const [edit, setEdit] = useState(false);
-  const [editId, setEditId] = useState(false);
-  const [editPin, setEditPin] = useState(false);
-  const [editAbout, setEditAbout] = useState(false);
-  const [editAttach, setEditAttach] = useState(false);
-  const [editValue, setEditValue] = useState(company.name);
-  const [editVid, setEditVid] = useState(company.id);
-  const [editVpin, setEditVpin] = useState(company.pin);
-  const [editVabout, setEditVabout] = useState(company.about);
-const [editVattach, setEditVattach] = useState("");*/
-  }
+  
 
   // Unit edit Check
   const [check_unit_edit, set_check_unit_edit] = useState({
@@ -64,8 +57,8 @@ const [editVattach, setEditVattach] = useState("");*/
     details: "",
   });
   // Company edit Check
-  const [check_name_edit, set_check_name_edit] = useState({
-    name: null,
+  const [check_companyName_edit, set_check_companyName_edit] = useState({
+    companyName: null,
     edit: false,
   });
   const [check_id_edit, set_check_id_edit] = useState({
@@ -93,52 +86,21 @@ const [editVattach, setEditVattach] = useState("");*/
     set_check_unit_edit({ unitId: unitId, edit: false });
   }
 
+
   // Unit edit fields
-  const [get_unit_after_edit, set_unit_after_edit] = useState(units.unit);
-  const [get_unit_id_after_edit, set_unit_id_after_edit] = useState(units.id);
+  const [get_unit_after_edit, set_unit_after_edit] = useState(unit.unit);
+  const [get_unit_id_after_edit, set_unit_id_after_edit] = useState(unit.id);
   const [get_unit_details_after_edit, set_unit_details_after_edit] = useState(
-    units.unit_details
+    unit.unit_details
   );
   // Company edit fields
-  const [get_name_after_edit, set_name_after_edit] = useState(company.name);
+  const [get_companyName_after_edit, set_companyName_after_edit] = useState(company.companyName);
   const [get_id_after_edit, set_id_after_edit] = useState(company.id);
   const [get_pin_after_edit, set_pin_after_edit] = useState(company.pin);
   const [get_web_after_edit, set_web_after_edit] = useState(company.website);
   const [get_about_after_edit, set_about_after_edit] = useState(company.about);
 
-  /////--->useRefs
-  //const inputElement_0 = useRef();
-  //const inputElement_1 = useRef();
-  //const inputElement_2 = useRef();
-  //const inputElement_3 = useRef();
-  // const inputElement_4 = useRef();
-  //const inputElement_5 = useRef();
-  //const inputElement_6 = useRef();
-  // const saveOrEdit = useRef()
-  ////---->functions
-  {
-    /*const focusInput = () => {
-    if (edit == false) inputElement_0.current.focus();
-  };
-  const focusId = () => {
-    if (editId == false) inputElement_1.current.focus();
-  };
-  const focusPin = () => {
-    if (editPin == false) inputElement_2.current.focus();
-  };
-  const focusAbout = () => {
-    if (editAbout == false) inputElement_3.current.focus();
-  };
-  const focusAttach = () => {
-    if (editAttach == false) inputElement_4.current.focus();
-  };*/
-  }
-  // const focusUid = () => {
-  //   if (check_unit_edit == false) inputElement_5.current.focus();
-  // };
-  // const focusUd = () => {
-  //   if (check_unit_details == false) inputElement_6.current.focus();
-  // };
+ 
 
   //Post Request unit
 
@@ -159,7 +121,7 @@ const [editVattach, setEditVattach] = useState("");*/
   //Put Request company
   const sendPutRequest = () => {
     axios.put(`${apiUrl}/api/companies/${company._id}`, {
-      name: get_name_after_edit,
+      companyName: get_companyName_after_edit,
       id: get_id_after_edit,
       pin: get_pin_after_edit,
       website: get_web_after_edit,
@@ -171,15 +133,39 @@ const [editVattach, setEditVattach] = useState("");*/
   const PutRequest = (id) => {
     axios.put(`${apiUrl}/api/units/${id}`, {
       id: get_unit_id_after_edit,
-      unit_details: get_unit_details_after_edit,
+      unit_details: toString(get_unit_details_after_edit),
     });
     // console.log(id);
   };
+  //fetch units&staff
+ 
+  const fetch = async () => {
+    
+    await axios.get(`${apiUrl}/api/staff?company=${company._id}`).then((res) => {
+      setStaff(res.data.reverse());
+      // setChange(res.data.reverse())
+    });
+    await axios.get(`${apiUrl}/api/units/${company._id}`).then((res) => {
+      //console.log(res.data);
+      setUnit(res.data.reverse());
+      // setChange(res.data.reverse())
+    });
+   
+  };
+  useEffect(()=>{
+    fetch()
+  })
 
   //Delete Request unit
   const DeleteRequest = (id) => {
+    axios.delete(`${apiUrl}/api/units/${id}`).then((res) => {
+         console.log(res);
+    });
+  };
+  //Delete Request company
+  const Delete = (id) => {
     axios.delete(`${apiUrl}/api/companies/${id}`).then((res) => {
-      //   console.log(res);
+        console.log(res);
     });
   };
 
@@ -243,100 +229,88 @@ const [editVattach, setEditVattach] = useState("");*/
                       Company Name
                     </dt>
                     <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 ">
-                      <span className="flex-grow font-abc ">
-                        {check_name_edit.name === null ? (
-                          `${company.name}`
-                        ) : check_name_edit.name !== company.name ? (
-                          `${company.name}`
-                        ) : check_name_edit.name === company.name &&
-                          !check_name_edit.edit ? (
-                          `${company.name}`
-                        ) : (
-                          <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
-                            value={get_name_after_edit}
-                            onChange={(e) =>
-                              set_name_after_edit(e.target.value)
-                            }
-                          />
-                        )}
+                    <span className="flex-grow font-abc ">
+                      {check_companyName_edit.companyName === null ? (
+                        `${company.companyName}`
+                      ) : check_companyName_edit.companyName !== company.companyName ? (
+                        `${company.companyName}`
+                      ) : check_companyName_edit.companyName === company.companyName &&
+                        !check_companyName_edit.edit ? (
+                        `${company.companyName}`
+                      ) : (
+                        <input
+                          type="email"
+                          className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+                          value={get_companyName_after_edit}
+                          onChange={(e) => set_companyName_after_edit(e.target.value)}
+                        />
+                      )}
+                    </span>
+                    <span className="ml-4 flex-shrink-0">
+                      <button
+                        id={company.companyName}
+                        key={company.companyName}
+                        onClick={(s) => {
+                          // console.log(s);
 
-                        {/*<input
-                         
-                          ref={inputElement_0}
-                          value={edit ? editValue  : company.name}
-                          onChange={(e) => {
-                            setEditValue(e.target.value);
-                          }}
-                        />*/}
-                      </span>
-                      <span className="ml-4 flex-shrink-0">
-                        <button
-                          id={company.name}
-                          key={company.name}
-                          onClick={(s) => {
-                            // console.log(s);
+                          // setOpenMenu(!openMenu);
+                          // console.log(check_unit_edit);
+                          // if (check_unit_edit.unitId == null) {
+                          //   handleEdit(unit.id)
+                          // } else if (check) { }
+                          // set_check_unit_edit({
+                          //   unitId:
+                          //     // s.target.innerHTML == "Edit" ? unit.id : null,
+                          //     unit.id,
+                          //   edit: !check_unit_edit.edit,
+                          // });
 
-                            // setOpenMenu(!openMenu);
-                            // console.log(check_unit_edit);
-                            // if (check_unit_edit.unitId == null) {
-                            //   handleEdit(unit.id)
-                            // } else if (check) { }
-                            // set_check_unit_edit({
-                            //   unitId:
-                            //     // s.target.innerHTML == "Edit" ? unit.id : null,
-                            //     unit.id,
-                            //   edit: !check_unit_edit.edit,
-                            // });
+                          //   console.log(company.id);
+                          if (check_companyName_edit.companyName == null) {
+                            // console.log("1");
+                            // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
+                            set_check_companyName_edit({
+                              companyName: company.companyName,
+                              edit: true,
+                            });
+                          } else if (check_companyName_edit.companyName === company.companyName) {
+                            // console.log("2");
+                            // If the unitId is not null and it matches the current unit's id, set the edit mode to false
+                            set_check_companyName_edit({
+                              companyName: null,
+                              edit: false,
+                            });
+                          } else {
+                            // console.log("3");
+                            set_check_companyName_edit({
+                              companyName: null,
+                              edit: false,
+                            });
+                          }
 
-                            // console.log(company.name);
-                            if (check_name_edit.name == null) {
-                              //   console.log("1");
-                              // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
-                              set_check_name_edit({
-                                name: company.name,
-                                edit: true,
-                              });
-                            } else if (check_name_edit.name === company.name) {
-                              //   console.log("2");
-                              // If the unitId is not null and it matches the current unit's id, set the edit mode to false
-                              set_check_name_edit({
-                                name: null,
-                                edit: false,
-                              });
-                            } else {
-                              //   console.log("3");
-                              set_check_name_edit({
-                                name: null,
-                                edit: false,
-                              });
-                            }
-
-                            // focusUid();
-                          }}
-                          type="button"
-                          className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
-                        >
-                          <div>
-                            {check_name_edit.name === null ? (
-                              "Edit"
-                            ) : check_name_edit.name === company.name &&
-                              check_name_edit.edit ? (
-                              <button
-                                type="button"
-                                onClick={() => sendPutRequest()}
-                              >
-                                Update
-                              </button>
-                            ) : (
-                              "Edit"
-                            )}
-                          </div>
-                        </button>
-                      </span>
+                          // focusUid();
+                        }}
+                        type="button"
+                        className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
+                      >
+                        <div>
+                          {check_companyName_edit.companyName=== null ? (
+                            "Edit"
+                          ) : check_companyName_edit.companyName === company.companyName &&
+                            check_companyName_edit.edit ? (
+                            <button
+                              type="button"
+                              onClick={() => sendPutRequest()}
+                            >
+                              Update
+                            </button>
+                          ) : (
+                            "Edit"
+                          )}
+                        </div>
+                      </button>
+                    </span>
+                     
                     </dd>
                   </>
                 </div>
@@ -786,7 +760,7 @@ const [editVattach, setEditVattach] = useState("");*/
                 </div>
 
                 <div className="py-4 sm:grid sm:grid-cols-3 border-b border-gray-200 sm:gap-4 sm:py-5 ">
-                  {units.map((unit) => (
+                  {unit.map((unit) => (
                     <>
                       <dt className="text-sm font-medium text-gray-500 font-abc pt-2.5">
                         Unit
@@ -930,10 +904,10 @@ const [editVattach, setEditVattach] = useState("");*/
                           </span>
                           <button
                             type="button"
-                            className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 font-abc  focus:ring-offset-2"
-                            onClick={() => {
-                              DeleteRequest(unit._id), notify();
-                            }}
+                            className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none  font-abc  "
+                            onClick={() => {DeleteRequest(unit._id),notify()}
+                              
+                            }
                           >
                             Remove
                           </button>
@@ -1194,14 +1168,14 @@ const [editVattach, setEditVattach] = useState("");*/
               <div className="sm:flex sm:items-center ">
                 <div className="sm:flex-auto">
                   <h1 className="text-xl font-semibold text-gray-900 font-abc ">
-                    {company.name}
+                    {company.companyName}
                   </h1>
                   <p className="mt-2 text-sm font-abc  text-gray-700">
                     Below the details of this company
                   </p>
                 </div>
                 <div className="mt-4 sm:mt-0 font-abc  sm:ml-16 sm:flex-none">
-                  <button>
+                  <button onClick={()=>Delete(company._id)}>
                     <RiDeleteBin5Line />
                   </button>
                 </div>
@@ -1217,7 +1191,7 @@ const [editVattach, setEditVattach] = useState("");*/
                               scope="col"
                               className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-6 font-abc "
                             >
-                              Staff (4)
+                              Staff 
                             </th>
                             <th
                               scope="col"
@@ -1229,25 +1203,25 @@ const [editVattach, setEditVattach] = useState("");*/
                               scope="col"
                               className="px-3 py-3.5 text-left text-sm font-semibold font-abc text-white"
                             >
-                              Ibs Processes (125,675)
+                              Ibs Processes 
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-left text-sm font-semibold font-abc text-white"
                             >
-                              MTCO (5785)
+                              MTCO 
                             </th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-lime-50">
                           {staff
                             .filter((user) =>
-                              user.name.toLowerCase().includes(query)
+                              user.staffName.toLowerCase().includes(query)
                             )
                             .map((person) => (
-                              <tr key={person.name}>
+                              <tr key={person.staffName}>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 font-abc  sm:pl-6">
-                                  {person.name}
+                                  {person.staffName}
                                 </td>
                                 <td className="whitespace-nowrap px-3 py-4 text-sm font-abc  text-gray-500">
                                   {person.createdAt}
@@ -1280,20 +1254,20 @@ export async function getServerSideProps(context) {
   const { _id } = context.query;
   console.log(context.query._id);
   const company = await fetch(`${apiUrl}/api/companies/${_id}`);
-  const units = await fetch(`${apiUrl}/api/units/${_id}`); // by params id
-  const staff = await fetch(`${apiUrl}/api/staff?company=${_id}`); // by query company
+  //const units = await fetch(`${apiUrl}/api/units/${_id}`); // by params id
+  //const staff = await fetch(`${apiUrl}/api/staff?company=${_id}`); // by query company
   console.log(company);
-  console.log(units);
+  //console.log(units);
   console.log(staff);
   const companyData = await company.json();
-  const unitsData = await units.json();
-  const staffData = await staff.json();
+  //const unitsData = await units.json();
+  //const staffData = await staff.json();
 
   return {
     props: {
       company: companyData,
-      units: unitsData,
-      staff: staffData,
+      //units: unitsData,
+      //staff: staffData,
       // data:{}
     },
   };
