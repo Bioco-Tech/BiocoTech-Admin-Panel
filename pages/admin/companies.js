@@ -38,7 +38,7 @@ import { apiUrl } from "../../constants";
 function companies() {
   const [company, setCompany] = useState([]);
   const [query, setQuery] = useState("");
-  console.log(query);
+ 
 
   const router = useRouter();
   const sideBarRef = useRef();
@@ -75,7 +75,7 @@ function companies() {
   useEffect(() => {
     fetchCompany();
     //fetchStaff();
-    console.log("fetchList activate");
+    
   }, []);
 
   async function signOut() {
@@ -95,7 +95,7 @@ function companies() {
     }
   }
 
-  console.log(company);
+  
 
   return (
     <>

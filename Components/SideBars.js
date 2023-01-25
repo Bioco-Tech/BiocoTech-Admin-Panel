@@ -99,7 +99,8 @@ function SideBars({ auth }) {
   };*/
   }
 
- console.log(data)
+ 
+  
 
   return (
     <>
@@ -111,13 +112,11 @@ function SideBars({ auth }) {
             <RxHamburgerMenu size={32} />
           </button>
         </div>
-        <div className="sticky">
+        <div>
           {/* MAIN SIDEBAR */}
           <div
             ref={sideBarRef}
-            
-
-            className="bg-cyan-600   w-56 space-y-10 px-5 py-7 absolute  inset-y-0 left-0 transform -translate-x-full
+            className="bg-cyan-600  w-56 space-y-10 px-5 py-7  absolute inset-y-0 left-0 transform -translate-x-full
          md:translate-x-0 z-50 transition duration-200 ease-in-out flex flex-col child:transition-all md:max-h-screen md:min-h-screen  md:top-0"
           >
             <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
@@ -137,32 +136,32 @@ function SideBars({ auth }) {
                     <MdHome className='mr-1 text-white' />
                     Dashboard
                  
-                </Link></div>*/}
-
-                <div
+                </Link></div>*/}<div
                   className={` ${isActive(
                     "/admin/dashboard"
-                  )} bg-lime-500 hover:bg-lime-500 group flex items-center px-2 py-2 text-sm font-medium rounded-md `}
+                  )} bg-lime-500  hover:bg-lime-500 group flex items-center px-2 py-2 text-sm font-medium rounded-md `}
                 >
                   <MdHome className="mr-1 text-white" />
-                  <h3 className='text-base text-white group-hover:text-white font-abc'>
-                    <Link href="/admin/dashboard">Dashboard</Link>
+                  <h3 className="text-base text-white group-hover:text-white ">
+                    <Link href="/">Dashboard</Link>
                   </h3>
                 </div>
                 <Link href="/admin/companies" legacyBehavior>
-                  <a className="text-white font-abc hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                    <HiBuildingOffice2 className="mr-1 text-white " />
-                    Companies
+                  <a className="text-white font-abc font-Cocogoose hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    <HiBuildingOffice2 className="mr-1 text-white" />
+                   Companies
                   </a>
                 </Link>
+                
+
                 <Link href="/admin/checklist" legacyBehavior>
-                  <a className="text-white font-abc hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white  hover:text-white font-abc group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                     <TbCheckbox className="mr-1 text-white" />
                     Check list
                   </a>
                 </Link>
                 <Link href="/admin/links" legacyBehavior>
-                  <a className="text-white  hover:text-white group font-abc flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white  hover:text-white font-abc group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                     <ImLink className="mr-1 text-white" />
                     Links
                   </a>
@@ -170,14 +169,14 @@ function SideBars({ auth }) {
               </nav>
 
               <div className="flex flex-shrink-0 border-t border-lime-500 p-4">
-                <div className="flex items-center">
-                  <div className="bg-lime-500 h-9 w-9 font-abc  rounded-full">
+                <div className="flex items-center font-abc">
+                  <div className="bg-lime-500 h-9 w-9 rounded-full">
                     <button onClick={signOut}>
-                      <CiLogout className=" ml-2 mt-3 text-white font-abc " />
+                      <CiLogout className=" ml-2 mt-3 font-abc text-white " />
                     </button>
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm font-medium font-abc  text-white group-hover:text-white ">
+                    <p className="text-sm font-medium text-white group-hover:text-white ">
                       Log Out
                     </p>
                     {/*<p className="text-xs font-medium text-white group-hover:text-gray-700">(you will be loged out of your account)</p>*/}
@@ -187,6 +186,7 @@ function SideBars({ auth }) {
             </div>
           </div>
         </div>
+        
         <div className="flex flex-1 flex-col md:pl-64 ">
           <main className="flex-1">
             <div className="py-6">
@@ -306,8 +306,6 @@ export default withProtected(SideBars);
  
   console.log(units);
   const staffData = await staff.json();
-
-
   return {
       props: {
           staff: staffData,

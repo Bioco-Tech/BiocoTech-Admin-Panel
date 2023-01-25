@@ -27,13 +27,18 @@ import { apiUrl } from "../../constants";
 
 
 function checklist() {
-  console.log();
+  
   const [items, setItems] = useState([]);
   const [showform, setShowform] = useState(false);
-
+  const [loading,setLoading] = useState(false)
   const [text, setText] = useState("");
 
-
+const router = useRouter();
+  if (router.isFallback) {
+    return <h3>Loading...</h3>;
+  }
+  const sideBarRef = useRef();
+  const { logout } = useAuth();
   // checklist edit Check
   const [check_list_edit, set_check_list_edit] = useState({
     list: null,
@@ -43,33 +48,30 @@ function checklist() {
   const [get_list_after_edit, set_list_after_edit] = useState();
 
 
-
+//Put Request
   const PutRequest = (id) => {
     axios.put(`${apiUrl}/api/checklists/${id}`, { text: get_list_after_edit}).then((res) => {
       fetchList();
-      console.log(id)
+      
       //setItems(res.data);
       //console.log("-- res.data --", res.data);
     });
     
     
 };
-console.log(get_list_after_edit);
 
-  const router = useRouter();
-  if (router.isFallback) {
-    return <h3>Loading...</h3>;
-  }
-  const sideBarRef = useRef();
-  const { logout } = useAuth();
 
+  
+//Get Request
   const fetchList = async () => {
     await axios.get(`${apiUrl}/api/checklists`).then((res) => {
-      console.log(res.data);
+      
       setItems(res.data.reverse());
+      setLoading(true)
       // setChange(res.data.reverse())
     });
   };
+  //Delete Request
 
   const deleteList = (id) => {
     axios.delete(`${apiUrl}/api/checklists/${id}`).then((res) => {
@@ -79,29 +81,13 @@ console.log(get_list_after_edit);
     });
   };
 
-  {
-    /*const updateList = (id) => {
-    //const text = e.target.value
-
-
-    // axios.put(`${apiUrl}/api/checklists/${id}`,  {"text": change} )
-    //   .then(res => console.log({"text": change})).catch((err)=>{console.log(err)});
-
-
-    axios({
-      method: "put",
-      url: `${apiUrl}/api/checklists/${id._id}`,
-
-    })
-    fetchList()
-  }*/
-  }
+  
 
   useEffect(() => {
     fetchList();
-    console.log("fetchList activate");
+ 
   }, []);
-
+//Post Request
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -112,17 +98,7 @@ console.log(get_list_after_edit);
     });
   };
 
-  {
-    /*async function deleteList(id){
-      const res = await fetch(`${apiUrl}/api/checklists/${id}`,{
-        method: "DELETE"
-      })
-     
-     const res2 = await res.json()
-     console.log(res2)
-     
-    }*/
-  }
+  
 
  
 
@@ -130,13 +106,7 @@ console.log(get_list_after_edit);
     sideBarRef.current.classList.toggle("-translate-x-full");
   }
 
-  function closemodal() {
-    setOpenModal(false);
-  }
-
-  function close() {
-    setOpen(false);
-  }
+ 
 
   async function signOut() {
     try {
@@ -146,6 +116,7 @@ console.log(get_list_after_edit);
       console.log("error occured");
     }
   }
+  //notify
 
   const notify = () =>
     toast.success("checklist deleted!", {
@@ -170,6 +141,20 @@ console.log(get_list_after_edit);
       progress: undefined,
       theme: "colored",
     });
+
+    
+  const updated = () =>
+  toast.success("checklist updated!", {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+  
 
   function isActive(route) {
     if (route == router.pathname) {
@@ -341,7 +326,7 @@ console.log(get_list_after_edit);
                                       onChange={(e) => setText(e.target.value)}
                                     /><span className="  flex flex-shrink-0 space-x-4">
                                     <button
-                                        onClick={(e) => { setShowform(false),handleSubmit(e)}}
+                                        onClick={(e) => { setShowform(false),handleSubmit(e),added()}}
                                         type="button"
                                         className="rounded-md ml-12 bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
                                     >
@@ -352,7 +337,7 @@ console.log(get_list_after_edit);
                                     </button>
 
                                 </span></div>):''} 
-                          <tbody className="divide-y  divide-gray-200 bg-lime-50">
+                          {loading?<tbody className="divide-y  divide-gray-200 bg-lime-50">
                             {items.map((list) => (
                               <tr key={list.text}>
                                 <td className="whitespace-nowrap font-abc py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6 contentEditable:outline-none">
@@ -455,7 +440,7 @@ console.log(get_list_after_edit);
                                   </>
                                         : check_list_edit.list === list.text &&
                                           check_list_edit.edit
-                                          ? <button type='button' className="text-cyan-500" onClick={()=>PutRequest(list._id)}>Update</button>
+                                          ? <button type='button' className="text-cyan-500" onClick={()=>{PutRequest(list._id),updated()}}>Update</button>
                                           : <><div className="flex  cursor-pointer"><CiEdit />  <RiDeleteBin5Line
                                                  className="ml-1"
                                           onClick={() => {
@@ -470,10 +455,10 @@ console.log(get_list_after_edit);
                                  
                                   <ToastContainer />
                                 </td>
-                                {console.log(list._id)}
+                              
                               </tr>
                             ))}
-                          </tbody>
+                          </tbody>:<iDeleteBin5Line/>}
                         </table>
                       </div>
                     </div>

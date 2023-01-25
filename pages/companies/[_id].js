@@ -133,7 +133,7 @@ function Singlecompany({company}) {
   const PutRequest = (id) => {
     axios.put(`${apiUrl}/api/units/${id}`, {
       id: get_unit_id_after_edit,
-      unit_details: toString(get_unit_details_after_edit),
+      unit_details: get_unit_details_after_edit,
     });
     // console.log(id);
   };
@@ -999,7 +999,8 @@ function Singlecompany({company}) {
                             rows={4}
                             name="comment"
                             defaultValue={unit.unit_details}
-                            onChange={set_unit_details_after_edit}
+                            value={get_unit_details_after_edit}
+                            onChange={(e)=>set_unit_details_after_edit(e.target.value)}
                             id="comment"
                             placeholder="  Add unit details"
                             className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
@@ -1252,13 +1253,13 @@ export default Singlecompany;
 
 export async function getServerSideProps(context) {
   const { _id } = context.query;
-  console.log(context.query._id);
+  
   const company = await fetch(`${apiUrl}/api/companies/${_id}`);
   //const units = await fetch(`${apiUrl}/api/units/${_id}`); // by params id
   //const staff = await fetch(`${apiUrl}/api/staff?company=${_id}`); // by query company
   console.log(company);
   //console.log(units);
-  console.log(staff);
+ 
   const companyData = await company.json();
   //const unitsData = await units.json();
   //const staffData = await staff.json();

@@ -14,12 +14,15 @@ function addCompany() {
   const [pin, setPin] = useState("");
   const [website, setWebsite] = useState("");
   const [about, setAbout] = useState("");
+  const [uploading, setUploading] = useState(false)
+  //const [selectedFile, setSelectedFile] = useState<File>('');
+  const [loading, setLoading] = useState(false)
 
   const router = useRouter();
   if (router.isFallback) {
     return <h3>Loading...</h3>;
   }
-
+//notify
   const notify = () =>
     toast.success("add company!", {
       position: "top-right",
@@ -32,15 +35,32 @@ function addCompany() {
       theme: "colored",
     });
 
+    //file uploading
+    {/*const handleUpload= async ()=>{
+      setUploading(true)
+      try{
+        if(!selectedFile) return;
+        const formData = new FormData();
+        formData.append('myFile', selectedFile)
+        const {data} = await axios.post('/api/file',formData)
+        console.log(data)
+      }catch(error ){
+        console.log(error.response?.data);
+      }
+    };*/}
+    //Post Request companies
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(apiUrl);
+  
+
 
     axios
       .post(`${apiUrl}/api/companies`, { companyName:name, id:id, pin:pin, website:website, about:about })
       .then((res) => {
-        console.log(res.data);
+        
+        setLoading(true)
       });
 
     router.push("/admin/companies");
@@ -174,13 +194,31 @@ function addCompany() {
                         Attachments(optional)
                       </label>
                       <div className="flex ">
+                       {/*} <input
+                        type='file'
+                        hidden
+                        onChange={({target})=>{
+                          if(target.files){
+                            const file= target.files[0];
+                            setSelectedFile(file)
+                          }
+                        }
+                      
+
+                        }
+                        
+                        
+                      />*/}
                         <button
+                        //onClick={handleUpload}
+                        //disabled={uploading}
                           className="flex w-32 p-1 justify-center rounded-lg border border-gray-300 bg-white  text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 
                          focus:outline-none focus:ring-2 font-abc focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2"
                         >
                           Upload
                         </button>
                         <button
+                        //onClick={handleUpload}
                           className="flex w-32 ml-2 p-1 justify-center border rounded-lg border-gray-300 bg-white  text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 
                          focus:outline-none focus:ring-2 font-abc focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2"
                         >
