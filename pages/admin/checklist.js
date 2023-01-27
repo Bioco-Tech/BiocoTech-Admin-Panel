@@ -20,7 +20,7 @@ import { useAuth } from "../../context/AuthContext";
 import { withProtected } from "../../context/Route";
 
 import { useState } from "react";
-import { Modal } from "react-bootstrap";
+
 import axios from "axios";
 import { apiUrl } from "../../constants";
 
@@ -66,7 +66,7 @@ const router = useRouter();
   const fetchList = async () => {
     await axios.get(`${apiUrl}/api/checklists`).then((res) => {
       
-      setItems(res.data.reverse());
+      setItems(res.data);
       setLoading(true)
       // setChange(res.data.reverse())
     });

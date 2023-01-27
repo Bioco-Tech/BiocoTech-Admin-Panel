@@ -11,17 +11,17 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import staff from "../../Components/StaffData";
+
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
-import { Modal } from "react-bootstrap";
+
 
 //react-icon imports
 import { IoIosArrowBack } from "react-icons/io";
 import { apiUrl } from "../../constants";
-import { json } from "react-router-dom";
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -142,12 +142,12 @@ function Singlecompany({company}) {
   const fetch = async () => {
     
     await axios.get(`${apiUrl}/api/staff?company=${company._id}`).then((res) => {
-      setStaff(res.data.reverse());
+      setStaff(res.data.staff);
       // setChange(res.data.reverse())
     });
     await axios.get(`${apiUrl}/api/units/${company._id}`).then((res) => {
       //console.log(res.data);
-      setUnit(res.data.reverse());
+      setUnit(res.data);
       // setChange(res.data.reverse())
     });
    

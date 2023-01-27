@@ -37,8 +37,12 @@ import { apiUrl } from "../../constants";
 
 function companies() {
   const [company, setCompany] = useState([]);
+  const [staff, setStaff] = useState([])
+  const [totalCompany,setTotalCompany] = useState([])
+  const [totalStaff,setTotalStaff] = useState([])
   const [query, setQuery] = useState("");
- 
+  console.log(company.results);
+
 
   const router = useRouter();
   const sideBarRef = useRef();
@@ -57,25 +61,27 @@ function companies() {
 
   const fetchCompany = async () => {
     await axios.get(`${apiUrl}/api/companies`).then((res) => {
-      setCompany(res.data.reverse());
+       setCompany(res.data.companies);
+       setTotalCompany(res.data)
+      //console.log(res.data)
+      // setChange(res.data.reverse())
+    });
+  };
+  const fetchStaff = async () => {
+    await axios.get(`${apiUrl}/api/staff`).then((res) => {
+      setStaff(res.data.staff);
+      setTotalStaff(res.data)
+      //console.log(res.data.reverse())
       // setChange(res.data.reverse())
     });
   };
 
-  {
-    /*const fetchStaff = async () => {
-    await axios.get("${apiUrl}/api/companies/staff").then((res) => {
-      setStaff(res.data.reverse());
-      // setChange(res.data.reverse())
-      
-    });
-  };*/
-  }
+
 
   useEffect(() => {
     fetchCompany();
-    //fetchStaff();
-    
+    fetchStaff();
+
   }, []);
 
   async function signOut() {
@@ -95,11 +101,11 @@ function companies() {
     }
   }
 
-  
+
 
   return (
     <>
-      <div className="max-h-screen sticky top-0 md:sticky md:top-0 z-50 text-white">
+      <div className="max-h-screen md:sticky md:top-0 z-50 text-white">
         {/* MOBILE SIDEBAR */}
         <div className="bg-cyan-600 md:hidden flex justify-between p-2 items-center sticky top-0 z-30">
           <img className="h-8 w-auto" src="/logo.png" alt="Your Company" />
@@ -112,12 +118,12 @@ function companies() {
           <div
             ref={sideBarRef}
             className="bg-cyan-600  w-56 space-y-10 px-5 py-7  absolute inset-y-0 left-0 transform -translate-x-full
-         md:translate-x-0 z-50 transition duration-200 ease-in-out flex flex-col child:transition-all md:max-h-screen md:min-h-screen  md:top-0"
+            md:translate-x-0 z-50 transition duration-200 ease-in-out flex flex-col child:transition-all md:max-h-screen md:min-h-screen  md:top-0"
           >
-            <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
+           <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
               <div className="flex flex-shrink-0 items-center px-4">
                 <img
-                  className="h-8 w-auto"
+                  className="h-8 w-auto "
                   src="/logo.png"
                   alt="Your Company"
                 />
@@ -133,26 +139,26 @@ function companies() {
                  
                 </Link></div>*/}
                 <Link href="/" legacyBehavior>
-                  <a className="text-white font-abc font-Cocogoose hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <a className="text-white font-abc hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                     <MdHome className="mr-1 text-white" />
                     Dashboard
                   </a>
                 </Link>
+
                 <div
                   className={` ${isActive(
                     "/admin/companies"
-                  )} bg-lime-500 font-abc hover:bg-lime-500 group flex items-center px-2 py-2 text-sm font-medium rounded-md `}
+                  )} bg-lime-500 hover:bg-lime-500 group flex items-center px-2 py-2 text-sm font-medium rounded-md `}
                 >
                   <HiBuildingOffice2 className="mr-1 text-white" />
-                  <h3 className="text-base text-white group-hover:text-white ">
+                  <h3 className="text-base text-white font-abc group-hover:text-white ">
                     <Link href="/admin/companies">Companies</Link>
                   </h3>
                 </div>
-
                 <Link href="/admin/checklist" legacyBehavior>
-                  <a className="text-white  hover:text-white font-abc group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                    <TbCheckbox className="mr-1 text-white" />
-                    Check list
+                  <a className="text-white font-abc hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                    < TbCheckbox className="mr-1 text-white" />
+                    Checklists
                   </a>
                 </Link>
                 <Link href="/admin/links" legacyBehavior>
@@ -216,7 +222,9 @@ function companies() {
                               name="search"
                             />
                           </div>
+                          
                         </form>
+                        
                       </div>
                     </div>
                     <div className="ml-4 flex items-center  md:ml-6">
@@ -259,18 +267,20 @@ function companies() {
                                 <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                                   <table className="min-w-full divide-y divide-gray-300 ">
                                     <thead className="bg-lime-500">
+
                                       <tr>
                                         <th
                                           scope="col"
                                           className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold  text-white sm:pl-6 font-abc"
                                         >
-                                          Company
+                                          Company ({totalCompany.results})
+                                          
                                         </th>
                                         <th
                                           scope="col"
                                           className="px-3 py-3.5 font-abc text-left text-sm font-semibold text-white"
                                         >
-                                          Staff Member
+                                          Staff Member ({totalStaff.results})
                                         </th>
                                         <th
                                           scope="col"
@@ -288,16 +298,22 @@ function companies() {
                                       </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200 bg-lime-50">
+
                                       {company
                                         .filter((user) =>
                                           user.companyName
+                                         
                                             .toLowerCase()
                                             .includes(query)
-                                        )
-                                        .map((company,person) => (
+                                           
+                                      )
+                                        .map((company, person) => (
+                                          
                                           <tr key={company.companyName}>
+                                            
                                             <td className="whitespace-nowrap font-abc py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6">
-                                            <Link
+                                              
+                                              <Link
                                                 href={`/companies/${company._id}`}
                                               >
                                                 {company.companyName}

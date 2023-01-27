@@ -11,7 +11,8 @@ import { HiBuildingOffice2 } from "react-icons/hi2";
 import { CiLogout } from "react-icons/ci";
 import { useRouter } from "next/router";
 import Chart from './Chart'
-
+import {RiPhoneFill} from 'react-icons/ri'
+import {BsEnvelopeFill} from 'react-icons/bs'
 import Stats from "./Stats";
 import { useRef } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -56,11 +57,11 @@ function SideBars({ auth }) {
   useEffect(() => {
      const fetchCompany = async () => {
     await axios.get(`${apiUrl}/api/companies`).then((res) => {
-      setCompany(res.data.reverse());
+      setCompany(res.data.companies);
       // setChange(res.data.reverse())
     });
     await axios.get(`${apiUrl}/api/staff`).then((res) => {
-      setStaff(res.data.reverse());
+      setStaff(res.data.staff);
       // setChange(res.data.reverse())
     });
   };
@@ -267,9 +268,15 @@ function SideBars({ auth }) {
                             
                               {data.map((person) => (
                                 <tr key={person.member}>
+                                  
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-light font-abc  text-gray-500 sm:pl-6">
-                                    
-                                    {person.staffName}
+                                    <div className="flex ">
+                                       <RiPhoneFill className="ml-2 text-cyan-600"/>
+                                       <BsEnvelopeFill className="ml-2 text-cyan-600"/>
+                                       <div className="ml-2">
+                                    {person.staffName}</div>
+                                    </div>
+                                   
                                   </td>
                                   <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-500 font-abc ">
                                     {person.companyName}
