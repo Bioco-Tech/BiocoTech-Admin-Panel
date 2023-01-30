@@ -48,6 +48,7 @@ function addCompany() {
         console.log(error.response?.data);
       }
     };*/}
+   
     //Post Request companies
 
   const handleSubmit = (event) => {
@@ -194,24 +195,17 @@ function addCompany() {
                         Attachments(optional)
                       </label>
                       <div className="flex ">
-                       {/*} <input
+                       <input
                         type='file'
-                        hidden
-                        onChange={({target})=>{
-                          if(target.files){
-                            const file= target.files[0];
-                            setSelectedFile(file)
-                          }
-                        }
+                        name='attachments'
+                        onChange={e=>setUploading(e.target.files[0])}
                       
-
-                        }
-                        
-                        
-                      />*/}
+                        />
                         <button
                         //onClick={handleUpload}
                         //disabled={uploading}
+                        
+                        
                           className="flex w-32 p-1 justify-center rounded-lg border border-gray-300 bg-white  text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 
                          focus:outline-none focus:ring-2 font-abc focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2"
                         >

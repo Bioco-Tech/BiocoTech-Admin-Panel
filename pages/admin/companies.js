@@ -40,6 +40,9 @@ function companies() {
   const [staff, setStaff] = useState([])
   const [totalCompany,setTotalCompany] = useState([])
   const [totalStaff,setTotalStaff] = useState([])
+  const [totalUnits,setTotalUnits] = useState([])
+  const [totalSingleStaff,setTotalSingleStaff] = useState([])
+  const [totalSingleUnit,setTotalSingleUnit] = useState([])
   const [query, setQuery] = useState("");
   console.log(company.results);
 
@@ -59,30 +62,45 @@ function companies() {
     sideBarRef.current.classList.toggle("-translate-x-full");
   }
 
-  const fetchCompany = async () => {
+  const fetchData = async () => {
     await axios.get(`${apiUrl}/api/companies`).then((res) => {
        setCompany(res.data.companies);
        setTotalCompany(res.data)
-      //console.log(res.data)
-      // setChange(res.data.reverse())
+     
     });
-  };
-  const fetchStaff = async () => {
-    await axios.get(`${apiUrl}/api/staff`).then((res) => {
-      setStaff(res.data.staff);
+     await axios.get(`${apiUrl}/api/staff`).then((res) => {
+   
       setTotalStaff(res.data)
-      //console.log(res.data.reverse())
-      // setChange(res.data.reverse())
+      
     });
+    await axios.get(`${apiUrl}/api/units`).then((res) => {
+      
+       setTotalUnits(res.data)
+       
+     });
+    await axios.get(`${apiUrl}/api/staff?company=${company._id}`).then((res) => {
+     
+      setTotalSingleStaff(res.data)
+      console.log(res.data)
+      
+    });
+    await axios.get(`${apiUrl}/api/units?company=${company._id}&staff=${staff._id}`).then((res) => {
+      
+       setTotalSingleUnit(res.data)
+       //console.log(res.data)
+       
+     });
   };
-
-
-
-  useEffect(() => {
-    fetchCompany();
-    fetchStaff();
-
+ 
+useEffect(() => {
+    fetchData();
+    
   }, []);
+ 
+
+
+
+  
 
   async function signOut() {
     try {
@@ -286,7 +304,7 @@ function companies() {
                                           scope="col"
                                           className="px-3 py-3.5 font-abc text-left text-sm font-semibold text-white"
                                         >
-                                          Total Units
+                                          Total Units ({totalUnits.results})
                                         </th>
 
                                         <th
@@ -307,7 +325,7 @@ function companies() {
                                             .includes(query)
                                            
                                       )
-                                        .map((company, person) => (
+                                        .map((company) => (
                                           
                                           <tr key={company.companyName}>
                                             
@@ -318,12 +336,22 @@ function companies() {
                                               >
                                                 {company.companyName}
                                               </Link>
-                                            </td>
+                                            </td> 
                                             <td className="whitespace-nowrap font-abc px-3 py-4 text-sm font-light text-gray-500">
-                                              {person.member}
+                                            <Link
+                                                href={`/companies/${company._id}`}
+                                              >
+                                                {totalSingleStaff.results}
+                                              </Link>
+                                             
                                             </td>
                                             <td className="whitespace-nowrap px-3 font-abc py-4 text-sm font-normal w-[560] h-[55] text-gray-900">
-                                              {person.units}
+                                            <Link
+                                                href={`/companies/${company._id}`}
+                                              >
+                                                {totalSingleUnit.results}
+                                              </Link>
+                                            
                                             </td>
                                             <td className="relative whitespace-nowrap py-4 font-abc pl-3 pr-4 text-cyan-600  text-right text-sm font-thin sm:pr-6">
                                               <Link
@@ -333,7 +361,7 @@ function companies() {
                                               </Link>
                                             </td>
                                           </tr>
-                                        ))}
+                                       ))}
                                     </tbody>
                                   </table>
                                 </div>
