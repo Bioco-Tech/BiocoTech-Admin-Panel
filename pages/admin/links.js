@@ -34,8 +34,6 @@ function links() {
     return <h3>Loading...</h3>;
   }
 
-  
-
   //Get Request
   const fetchLink = async () => {
     console.log("hi rfresh");
@@ -48,21 +46,32 @@ function links() {
         staffPolicy: { data: res.data.staffPolicy },
         staffConditions: { data: res.data.staffConditions },
         staffFaqs: { data: res.data.staffFaqs },
-        
       });
       //console.log(`data: ${links}`);
     });
   };
 
   //Put Request link
-  
-    const sendPutRequest = () => {
-  axios.put(`${apiUrl}/api/links`, {  companyPolicy: { data: links.companyPolicy.data} }).then((res)=>{
-    console.log(res)
-    fetchLink();
-  });
-};
-  
+
+  const sendPutRequest = () => {
+    try {
+      axios
+        .put(`${apiUrl}/api/links`, {
+          companyConditions: links.companyConditions,
+          companyFaqs: links.companyFaqs,
+          companyPolicy: links.companyPolicy,
+          staffConditions: links.staffConditions,
+          staffFaqs: links.staffFaqs,
+          staffPolicy: links.staffPolicy,
+        })
+        .then((res) => {
+          console.log(res);
+          fetchLink();
+        });
+    } catch (error) {
+      console.log("errorsss: ", error.message);
+    }
+  };
 
   //Delete Request link
   const DeleteRequest = () => {
@@ -186,7 +195,7 @@ function links() {
           <div className="overflow-hidden bg-gray-100 ml-5 mt-5 mr-5 shadow sm:rounded-lg">
             <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
               <dl className="sm:divide-y sm:divide-gray-200">
-                <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                <div className="py-4 sm:grid sm:grid-cols-2 sm:gap-8 sm:py-5 sm:px-6">
                   <dt className="text-sm font-medium text-black font-abc">
                     Companies
                   </dt>
@@ -199,92 +208,99 @@ function links() {
                     >
                       <li className="flex items-center justify-between p-2 text-sm">
                         <div className="flex w-0 flex-1 items-center">
-                        {links === '' ? (
-                                    `${links.companyPolicy.data}`
-                                  ) : links !== links.companyPolicy.data ? (
-                                    `${links.companyPolicy.data}`
-                                  ) : links === links.companyPolicy.data &&
-                                    !links ? (
-                                    `${links.companyPolicy.data}`
-                                  ) : (
-                                     <input
-                            className="px-1 outline-none"
-                            value={links.companyPolicy.data}
-                            defaultValue={links.companyPolicy.data}
-                            onChange={(e) =>
-                              setLinks({
-                                companyPolicy: {
-                                  editing: true,
-                                  data: e.target.value,
-                                },
-                              })
-                            }
-                          />
-                                    
-                                  )}
-                         
+                          {!links.companyPolicy.editing ? (
+                            <input
+                              className="px-1 outline-none"
+                              value={links.companyPolicy.data}
+                              defaultValue={links.companyPolicy.data}
+                              // onChange={(e) =>
+                              //   setLinks({
+                              //     companyPolicy: {
+                              //       editing: true,
+                              //       data: e.target.value,
+                              //     },
+                              //   })
+                              // }
+                            />
+                          ) : (
+                            <input
+                              type="text"
+                              // value={unitid}
+                              onChange={(e) => {
+                                console.log(
+                                  "new value company policy: ",
+                                  e.target.value
+                                );
+                                setLinks({
+                                  companyPolicy: {
+                                    data: e.target.value,
+                                    editing: true,
+                                  },
+                                });
+                              }}
+                              // onSubmit={(e) => {
+                              //   console.log(
+                              //     "1new value company policy: ",
+                              //     e.target.value
+                              //   );
+                              //   setLinks({
+                              //     companyPolicy: { data: e.target.value },
+                              //   });
+                              // }}
+
+                              // onSubmitCapture={(e) => {
+                              //   console.log(
+                              //     "3new value company policy: ",
+                              //     e.target.value
+                              //   );
+                              //   setLinks({
+                              //     companyPolicy: { data: e.target.value },
+                              //   });
+                              // }}
+                              className="block w-full rounded-md  border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+                              placeholder="Type ID"
+                            />
+                          )}
                         </div>
 
                         <div className="ml-4 flex-shrink-0">
-                           
-                        <button
+                          <button
                             // id={unit.id}
                             // key={unit.id}
                             onClick={(e) => {
-                           
-                              if (links.companyPolicy.data == '') {
-                                 console.log("1");
-                                
-                                 setLinks({
-                                  companyPolicy: {
-                                    editing: true,
-                                    data: e.target.value,
-                                  },
-                                })
-                              } else if (links.companyPolicy.data === links.companyPolicy.data) {
-                                 console.log("2");
-                              
-                                 setLinks({
-                                  companyPolicy: {
-                                    editing: false,
-                                    data: '',
-                                  },
-                                })
-                              } else {
-                                // console.log("3");
+                              console.log(e.target.outerText);
+                              if (e.target.outerText == "Edit") {
+                                setLinks({ companyFaqs: { editing: false } });
                                 setLinks({
-                                  companyPolicy: {
-                                    editing: false,
-                                    data: '',
-                                  },
-                                })
-                              }
+                                  companyConditions: { editing: false },
+                                });
+                                setLinks({
+                                  staffConditions: { editing: false },
+                                });
+                                setLinks({ staffFaqs: { editing: false } });
+                                setLinks({ staffPolicy: { editing: false } });
 
-                              // focusUid();
+                                setLinks({ companyPolicy: { editing: true } });
+                              } else {
+                                setLinks({
+                                  companyFaqs: { editing: false },
+                                  companyConditions: { editing: false },
+                                  staffConditions: { editing: false },
+                                  staffFaqs: { editing: false },
+                                  staffPolicy: { editing: false },
+                                  companyPolicy: { editing: false },
+                                });
+                                sendPutRequest();
+                              }
                             }}
                             type="button"
                             className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
                           >
                             <div>
-                              {links.companyPolicy.data === '' ? (
-                                "Edit"
-                              ) : links.companyPolicy.data === links.companyPolicy.data &&
-                              links.companyPolicy.editing ? (
-                                <button
-                                  type="button"
-                                  onClick={() => sendPutRequest()}
-                                >
-                                  Update
-                                </button>
-                              ) : (
-                                "Edit"
-                              )}
+                              {!links.companyPolicy.editing ? "Edit" : "Update"}
                             </div>
                           </button>
-                          
-                       
-                          
-                         
+
                           <span
                             className="text-gray-300 ml-1 font-abc"
                             aria-hidden="true"
@@ -357,7 +373,7 @@ function links() {
                     >
                       <li className="flex items-center justify-between p-2 text-sm">
                         <div className="flex w-0 flex-1 items-center">
-                        <input
+                          <input
                             className="px-1 outline-none"
                             //value={links.companyFaqs.data}
                             onChange={(e) =>
@@ -415,7 +431,7 @@ function links() {
                     >
                       <li className="flex items-center justify-between p-2 text-sm">
                         <div className="flex w-0 flex-1 items-center">
-                        <input
+                          <input
                             className="px-1 outline-none"
                             //value={links.staffPolicy.data}
                             onChange={(e) =>
@@ -430,19 +446,16 @@ function links() {
                         </div>
                         <div className="ml-4 flex-shrink-0">
                           <button
-                           
                             type="button"
                             className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
                           >
                             <div>
-                             
-                                <button
-                                  type="button"
-                                  onClick={() => sendPutRequest()}
-                                >
-                                  Update
-                                </button>
-                             
+                              <button
+                                type="button"
+                                onClick={() => sendPutRequest()}
+                              >
+                                Update
+                              </button>
                             </div>
                           </button>
                           <span
@@ -471,7 +484,7 @@ function links() {
                     >
                       <li className="flex items-center justify-between p-2 text-sm">
                         <div className="flex w-0 flex-1 items-center">
-                        <input
+                          <input
                             className="px-1 outline-none"
                             //value={links.staffConditions.data}
                             onChange={(e) =>
@@ -486,21 +499,16 @@ function links() {
                         </div>
                         <div className="ml-4 flex-shrink-0">
                           <button
-                           
-
-                             
                             type="button"
                             className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
                           >
                             <div>
-                           
-                                <button
-                                  type="button"
-                                  onClick={() => sendPutRequest()}
-                                >
-                                  Update
-                                </button>
-                            
+                              <button
+                                type="button"
+                                onClick={() => sendPutRequest()}
+                              >
+                                Update
+                              </button>
                             </div>
                           </button>
                           <span
@@ -527,7 +535,7 @@ function links() {
                     >
                       <li className="flex items-center justify-between p-2 text-sm">
                         <div className="flex w-0 flex-1 items-center">
-                        <input
+                          <input
                             className="px-1 outline-none"
                             //value={links.staffFaqs.data}
                             onChange={(e) =>
@@ -543,21 +551,16 @@ function links() {
                         <div className="ml-4 flex-shrink-0">
                           <button
                             id={links.staffFaqs}
-                         
-                            
-                            
                             type="button"
                             className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
                           >
                             <div>
-                              
-                                <button
-                                  type="button"
-                                  onClick={() => sendPutRequest()}
-                                >
-                                  Update
-                                </button>
-                              
+                              <button
+                                type="button"
+                                onClick={() => sendPutRequest()}
+                              >
+                                Update
+                              </button>
                             </div>
                           </button>
                           <span
