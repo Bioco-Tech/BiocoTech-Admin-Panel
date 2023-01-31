@@ -25,7 +25,7 @@ function links() {
   const [staffPolicy, setStaffPolicy] = useState("");
   const [staffConditions, setStaffConditions] = useState("");
   const [ staffFaqs, setStaffFaqs] = useState("");
-  const [links, setLinks] = useState([]);
+  const [links, setLinks] = useState({});
 
   
 
@@ -66,7 +66,7 @@ const [get_sconditions_after_edit, set_sconditions_after_edit] = useState();
 const [get_sfaq_after_edit, set_sfaq_after_edit] = useState();
  //Post Request
 
- axios.post(`${apiUrl}/api/links`, { "companyPolicy": companyPolicy, "companyConditions": companyConditions, "companyFaqs": companyFaqs,"staffPolicy":staffPolicy,"staffConditions":staffConditions,"staffFaqs":staffFaqs }).then((res) => {
+ axios.post(`${apiUrl}/api/links`, { companyPolicy:companyPolicy, companyConditions:companyConditions, companyFaqs:companyFaqs,staffPolicy:staffPolicy,staffConditions:staffConditions,staffFaqs:staffFaqs }).then((res) => {
 
   console.log(res);
 
@@ -78,7 +78,7 @@ const fetchLink = async () => {
   await axios.get(`${apiUrl}/api/links`).then((res) => {
     console.log(res.data);
     setLinks(res.data);
-    console.log(links.companyPolicy);
+    console.log(`data: ${links}`);
    
   });
 };
@@ -242,7 +242,7 @@ const fetchLink = async () => {
                        
                        <input
                             className="px-5 outline-none"
-                            value={links.companyPolicy}
+                            value={companyPolicy}
                             //defaultValue={links.companyPolicy}
                             onChange={(e) => setCompanyPolicy(e.target.value)}
                           />

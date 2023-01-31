@@ -44,7 +44,7 @@ function companies() {
   const [totalSingleStaff,setTotalSingleStaff] = useState([])
   const [totalSingleUnit,setTotalSingleUnit] = useState([])
   const [query, setQuery] = useState("");
-  console.log(company.results);
+  //console.log(totalCompany.results);
 
 
   const router = useRouter();
