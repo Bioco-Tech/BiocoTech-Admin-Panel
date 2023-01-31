@@ -54,15 +54,16 @@ function links() {
   //Put Request link
 
   const sendPutRequest = () => {
+    console.log("putt??? ", links);
     try {
       axios
         .put(`${apiUrl}/api/links`, {
-          companyConditions: links.companyConditions,
-          companyFaqs: links.companyFaqs,
-          companyPolicy: links.companyPolicy,
-          staffConditions: links.staffConditions,
-          staffFaqs: links.staffFaqs,
-          staffPolicy: links.staffPolicy,
+          companyConditions: links.companyConditions.data,
+          companyFaqs: links.companyFaqs.data,
+          companyPolicy: links.companyPolicy.data,
+          staffConditions: links.staffConditions.data,
+          staffFaqs: links.staffFaqs.data,
+          staffPolicy: links.staffPolicy.data,
         })
         .then((res) => {
           console.log(res);
@@ -225,7 +226,7 @@ function links() {
                           ) : (
                             <input
                               type="text"
-                              // value={unitid}
+                              value={links.companyPolicy.data}
                               onChange={(e) => {
                                 console.log(
                                   "new value company policy: ",
