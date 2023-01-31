@@ -34,7 +34,6 @@ function links() {
     return <h3>Loading...</h3>;
   }
 
-<<<<<<< HEAD
   
 
   //Get Request
@@ -64,30 +63,6 @@ function links() {
   });
 };
   
-=======
-  //Get Request
-  const fetchLink = async () => {
-    console.log("hi rfresh");
-    await axios.get(`${apiUrl}/api/links`).then((res) => {
-      console.log(res.data);
-      setLinks({
-        companyPolicy: { data: res.data.companyPolicy },
-        companyConditions: { data: res.data.companyPolicy },
-      });
-      console.log(`data: ${links}`);
-    });
-  };
-
-  //Put Request link
-  {
-    /*const sendPutRequest = () => {
-  axios.put(`${apiUrl}/api/links`, { companyPolicy: get_cpolicy_after_edit, companyConditions: get_cconditions_after_edit, companyFaqs: get_cfaq_after_edit, staffPolicy: get_spolicy_after_edit, staffConditions: get_sconditions_after_edit, staffFaqs: get_sfaq_after_edit }).then((res)=>{
-    console.log(res)
-    fetchLink();
-  });
-};*/
-  }
->>>>>>> 0c6dec95603eb44fc47e5cb6c669bca4607510cf
 
   //Delete Request link
   const DeleteRequest = () => {
@@ -224,7 +199,6 @@ function links() {
                     >
                       <li className="flex items-center justify-between p-2 text-sm">
                         <div className="flex w-0 flex-1 items-center">
-<<<<<<< HEAD
                         {links === '' ? (
                                     `${links.companyPolicy.data}`
                                   ) : links !== links.companyPolicy.data ? (
@@ -237,12 +211,6 @@ function links() {
                             className="px-1 outline-none"
                             value={links.companyPolicy.data}
                             defaultValue={links.companyPolicy.data}
-=======
-                          <input
-                            className="px-5 outline-none"
-                            value={links.companyPolicy.data}
-                            //defaultValue={links.companyPolicy}
->>>>>>> 0c6dec95603eb44fc47e5cb6c669bca4607510cf
                             onChange={(e) =>
                               setLinks({
                                 companyPolicy: {
@@ -252,7 +220,6 @@ function links() {
                               })
                             }
                           />
-<<<<<<< HEAD
                                     
                                   )}
                          
@@ -318,14 +285,6 @@ function links() {
                        
                           
                          
-=======
-                        </div>
-
-                        <div className="ml-4 flex-shrink-0">
-                          <button className="rounded-md bg-white ml-1 font-abc font-thin text-sm text-cyan-600 hover:text-cyan-500 ">
-                            Update
-                          </button>
->>>>>>> 0c6dec95603eb44fc47e5cb6c669bca4607510cf
                           <span
                             className="text-gray-300 ml-1 font-abc"
                             aria-hidden="true"
@@ -353,13 +312,8 @@ function links() {
                       <li className="flex items-center justify-between p-2 text-sm">
                         <div className="flex w-0 flex-1 items-center">
                           <input
-<<<<<<< HEAD
                             className="px-1 outline-none"
                             //value={links.companyConditions.data}
-=======
-                            className="px-5 outline-none"
-                            value={links.companyConditions.data}
->>>>>>> 0c6dec95603eb44fc47e5cb6c669bca4607510cf
                             onChange={(e) =>
                               setLinks({
                                 companyConditions: {
@@ -403,7 +357,6 @@ function links() {
                     >
                       <li className="flex items-center justify-between p-2 text-sm">
                         <div className="flex w-0 flex-1 items-center">
-<<<<<<< HEAD
                         <input
                             className="px-1 outline-none"
                             //value={links.companyFaqs.data}
@@ -415,12 +368,6 @@ function links() {
                                 },
                               })
                             }
-=======
-                          <input
-                            className="px-5 outline-none"
-                            value={companyFaqs}
-                            onChange={(e) => setCompanyFaqs(e.target.value)}
->>>>>>> 0c6dec95603eb44fc47e5cb6c669bca4607510cf
                           />
                         </div>
                         <div className="ml-4 flex-shrink-0">
@@ -468,7 +415,6 @@ function links() {
                     >
                       <li className="flex items-center justify-between p-2 text-sm">
                         <div className="flex w-0 flex-1 items-center">
-<<<<<<< HEAD
                         <input
                             className="px-1 outline-none"
                             //value={links.staffPolicy.data}
@@ -485,84 +431,18 @@ function links() {
                         <div className="ml-4 flex-shrink-0">
                           <button
                            
-=======
-                          {check_spolicy_edit.staffPolicy === null ? (
-                            `${links.staffPolicy}`
-                          ) : check_spolicy_edit.staffPolicy !==
-                            links.staffPolicy ? (
-                            `${links.staffPolicy}`
-                          ) : check_spolicy_edit.staffPolicy ===
-                              links.staffPolicy && !check_spolicy_edit.edit ? (
-                            `${links.staffPolicy}`
-                          ) : (
-                            <input
-                              className="px-5 outline-none"
-                              value={get_spolicy_after_edit}
-                              onChange={(e) =>
-                                set_spolicy_after_edit(e.target.value)
-                              }
-                            />
-                          )}
-                        </div>
-                        <div className="ml-4 flex-shrink-0">
-                          <button
-                            id={links.staffPolicy}
-                            key={links.staffPolicy}
-                            onClick={(s) => {
-                              if (check_spolicy_edit.staffPolicy == null) {
-                                // console.log("1");
-                                // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
-                                set_check_spolicy_edit({
-                                  staffPolicy: links.staffPolicy,
-                                  edit: true,
-                                });
-                              } else if (
-                                check_spolicy_edit.staffPolicy ===
-                                links.staffPolicy
-                              ) {
-                                // console.log("2");
-                                // If the unitId is not null and it matches the current unit's id, set the edit mode to false
-                                set_check_spolicy_edit({
-                                  staffPolicy: null,
-                                  edit: false,
-                                });
-                              } else {
-                                // console.log("3");
-                                set_check_spolicy_edit({
-                                  staffPolicy: null,
-                                  edit: false,
-                                });
-                              }
-
-                              // focusUid();
-                            }}
->>>>>>> 0c6dec95603eb44fc47e5cb6c669bca4607510cf
                             type="button"
                             className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
                           >
                             <div>
-<<<<<<< HEAD
                              
-=======
-                              {check_spolicy_edit.staffPolicy === null ? (
-                                "Update"
-                              ) : check_spolicy_edit.staffPolicy ===
-                                  links.staffPolicy &&
-                                check_spolicy_edit.edit ? (
->>>>>>> 0c6dec95603eb44fc47e5cb6c669bca4607510cf
                                 <button
                                   type="button"
                                   onClick={() => sendPutRequest()}
                                 >
                                   Update
                                 </button>
-<<<<<<< HEAD
                              
-=======
-                              ) : (
-                                "Update"
-                              )}
->>>>>>> 0c6dec95603eb44fc47e5cb6c669bca4607510cf
                             </div>
                           </button>
                           <span
@@ -591,7 +471,6 @@ function links() {
                     >
                       <li className="flex items-center justify-between p-2 text-sm">
                         <div className="flex w-0 flex-1 items-center">
-<<<<<<< HEAD
                         <input
                             className="px-1 outline-none"
                             //value={links.staffConditions.data}
@@ -610,88 +489,18 @@ function links() {
                            
 
                              
-=======
-                          {check_sconditions_edit.staffConditions === null ? (
-                            `${links.staffConditions}`
-                          ) : check_sconditions_edit.staffConditions !==
-                            links.staffConditions ? (
-                            `${links.companyPolicy}`
-                          ) : check_sconditions_edit.staffConditions ===
-                              links.staffConditions &&
-                            !check_sconditions_edit.edit ? (
-                            `${links.staffConditions}`
-                          ) : (
-                            <input
-                              className="px-5 outline-none"
-                              value={get_sconditions_after_edit}
-                              onChange={(e) =>
-                                set_sconditions_after_edit(e.target.value)
-                              }
-                            />
-                          )}
-                        </div>
-                        <div className="ml-4 flex-shrink-0">
-                          <button
-                            id={links.staffConditions}
-                            key={links.staffConditions}
-                            onClick={(s) => {
-                              if (
-                                check_sconditions_edit.staffConditions == null
-                              ) {
-                                // console.log("1");
-                                // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
-                                set_check_sconditions_edit({
-                                  staffConditions: links.staffConditions,
-                                  edit: true,
-                                });
-                              } else if (
-                                check_sconditions_edit.staffConditions ===
-                                links.staffConditions
-                              ) {
-                                // console.log("2");
-                                // If the unitId is not null and it matches the current unit's id, set the edit mode to false
-                                set_check_sconditions_edit({
-                                  staffConditions: null,
-                                  edit: false,
-                                });
-                              } else {
-                                // console.log("3");
-                                set_check_sconditions_edit({
-                                  staffConditions: null,
-                                  edit: false,
-                                });
-                              }
-
-                              // focusUid();
-                            }}
->>>>>>> 0c6dec95603eb44fc47e5cb6c669bca4607510cf
                             type="button"
                             className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
                           >
                             <div>
-<<<<<<< HEAD
                            
-=======
-                              {check_sconditions_edit.staffConditions ===
-                              null ? (
-                                "Update"
-                              ) : check_sconditions_edit.staffConditions ===
-                                  links.staffConditions &&
-                                check_sconditions_edit.edit ? (
->>>>>>> 0c6dec95603eb44fc47e5cb6c669bca4607510cf
                                 <button
                                   type="button"
                                   onClick={() => sendPutRequest()}
                                 >
                                   Update
                                 </button>
-<<<<<<< HEAD
                             
-=======
-                              ) : (
-                                "Update"
-                              )}
->>>>>>> 0c6dec95603eb44fc47e5cb6c669bca4607510cf
                             </div>
                           </button>
                           <span
@@ -718,7 +527,6 @@ function links() {
                     >
                       <li className="flex items-center justify-between p-2 text-sm">
                         <div className="flex w-0 flex-1 items-center">
-<<<<<<< HEAD
                         <input
                             className="px-1 outline-none"
                             //value={links.staffFaqs.data}
@@ -731,87 +539,25 @@ function links() {
                               })
                             }
                           />
-=======
-                          {check_sfaq_edit.staffFaqs === null ? (
-                            `${links.staffFaqs}`
-                          ) : check_sfaq_edit.staffFaqs !== links.staffFaqs ? (
-                            `${links.staffFaqs}`
-                          ) : check_sfaq_edit.staffFaqs === links.staffFaqs &&
-                            !check_sfaq_edit.edit ? (
-                            `${links.staffFaqs}`
-                          ) : (
-                            <input
-                              className="px-5 outline-none"
-                              value={get_sfaq_after_edit}
-                              onChange={(e) =>
-                                set_sfaq_after_edit(e.target.value)
-                              }
-                            />
-                          )}
->>>>>>> 0c6dec95603eb44fc47e5cb6c669bca4607510cf
                         </div>
                         <div className="ml-4 flex-shrink-0">
                           <button
                             id={links.staffFaqs}
-<<<<<<< HEAD
                          
                             
                             
-=======
-                            key={links.staffFaqs}
-                            onClick={(s) => {
-                              if (check_sfaq_edit.staffFaqs == null) {
-                                // console.log("1");
-                                // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
-                                set_check_sfaq_edit({
-                                  staffFaqs: links.staffFaqs,
-                                  edit: true,
-                                });
-                              } else if (
-                                check_sfaq_edit.staffFaqs === links.staffFaqs
-                              ) {
-                                // console.log("2");
-                                // If the unitId is not null and it matches the current unit's id, set the edit mode to false
-                                set_check_sfaq_edit({
-                                  staffFaqs: null,
-                                  edit: false,
-                                });
-                              } else {
-                                // console.log("3");
-                                set_check_sfaq_edit({
-                                  staffFaqs: null,
-                                  edit: false,
-                                });
-                              }
-
-                              // focusUid();
-                            }}
->>>>>>> 0c6dec95603eb44fc47e5cb6c669bca4607510cf
                             type="button"
                             className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
                           >
                             <div>
-<<<<<<< HEAD
                               
-=======
-                              {check_sfaq_edit.staffFaqs === null ? (
-                                "Update"
-                              ) : check_sfaq_edit.staffFaqs ===
-                                  links.staffFaqs && check_sfaq_edit.edit ? (
->>>>>>> 0c6dec95603eb44fc47e5cb6c669bca4607510cf
                                 <button
                                   type="button"
                                   onClick={() => sendPutRequest()}
                                 >
                                   Update
                                 </button>
-<<<<<<< HEAD
                               
-=======
-                              ) : (
-                                "Update"
-                              )}
->>>>>>> 0c6dec95603eb44fc47e5cb6c669bca4607510cf
                             </div>
                           </button>
                           <span
