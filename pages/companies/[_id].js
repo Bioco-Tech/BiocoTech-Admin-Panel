@@ -251,37 +251,21 @@ function Singlecompany({company}) {
                         id={company.companyName}
                         key={company.companyName}
                         onClick={(s) => {
-                          // console.log(s);
-
-                          // setOpenMenu(!openMenu);
-                          // console.log(check_unit_edit);
-                          // if (check_unit_edit.unitId == null) {
-                          //   handleEdit(unit.id)
-                          // } else if (check) { }
-                          // set_check_unit_edit({
-                          //   unitId:
-                          //     // s.target.innerHTML == "Edit" ? unit.id : null,
-                          //     unit.id,
-                          //   edit: !check_unit_edit.edit,
-                          // });
-
-                          //   console.log(company.id);
+                         
                           if (check_companyName_edit.companyName == null) {
-                            // console.log("1");
-                            // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
+                           
                             set_check_companyName_edit({
                               companyName: company.companyName,
                               edit: true,
                             });
                           } else if (check_companyName_edit.companyName === company.companyName) {
-                            // console.log("2");
-                            // If the unitId is not null and it matches the current unit's id, set the edit mode to false
+                           
                             set_check_companyName_edit({
                               companyName: null,
                               edit: false,
                             });
                           } else {
-                            // console.log("3");
+                          
                             set_check_companyName_edit({
                               companyName: null,
                               edit: false,

@@ -1,5 +1,6 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/rules-of-hooks */
+
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { TbCheckbox } from "react-icons/tb";
@@ -19,92 +20,61 @@ function links() {
   const router = useRouter();
   const sideBarRef = useRef();
   const { logout } = useAuth();
-  const [companyConditions, setCompanyConditions] = useState("");
-  const [companyPolicy, setCompanyPolicy] = useState("");
-  const [companyFaqs, setCompanyFaqs] = useState("");
-  const [staffPolicy, setStaffPolicy] = useState("");
-  const [staffConditions, setStaffConditions] = useState("");
-  const [ staffFaqs, setStaffFaqs] = useState("");
-  const [links, setLinks] = useState({});
 
-  
+  const [links, setLinks] = useState({
+    companyConditions: { editing: false, data: "" },
+    companyFaqs: { editing: false, data: "" },
+    companyPolicy: { editing: false, data: "" },
+    staffConditions: { editing: false, data: "" },
+    staffFaqs: { editing: false, data: "" },
+    staffPolicy: { editing: false, data: "" },
+  });
 
   if (router.isFallback) {
     return <h3>Loading...</h3>;
   }
-   // Company edit Check
-   {/*const [check_cpolicy_edit, set_check_cpolicy_edit] = useState({
-    companyPolicy: null,
-    edit: false,
-});
-const [check_cconditions_edit, set_check_cconditions_edit] = useState({
-    companyConditions: null,
-    edit: false,
-});
-const [check_cfaq_edit, set_check_cfaq_edit] = useState({
-    companyFaqs: null,
-    edit: false,
-});*/}
-const [check_spolicy_edit, set_check_spolicy_edit] = useState({
-    staffPolicy: null,
-    edit: false,
-});
-const [check_sconditions_edit, set_check_sconditions_edit] = useState({
-    staffConditions: null,
-    edit: false,
-});
-const [check_sfaq_edit, set_check_sfaq_edit] = useState({
-  staffFaqs: null,
-  edit: false,
-});
-// links edit fields
-{/*const [get_cpolicy_after_edit, set_cpolicy_after_edit] = useState();
-const [get_cconditions_after_edit, set_cconditions_after_edit] = useState();
-const [get_cfaq_after_edit, set_cfaq_after_edit] = useState();*/}
-const [get_spolicy_after_edit, set_spolicy_after_edit] = useState();
-const [get_sconditions_after_edit, set_sconditions_after_edit] = useState();
-const [get_sfaq_after_edit, set_sfaq_after_edit] = useState();
- //Post Request
 
- axios.post(`${apiUrl}/api/links`, { companyPolicy:companyPolicy, companyConditions:companyConditions, companyFaqs:companyFaqs,staffPolicy:staffPolicy,staffConditions:staffConditions,staffFaqs:staffFaqs }).then((res) => {
+  
 
-  console.log(res);
+  //Get Request
+  const fetchLink = async () => {
+    console.log("hi rfresh");
+    await axios.get(`${apiUrl}/api/links`).then((res) => {
+      console.log(res.data);
+      setLinks({
+        companyPolicy: { data: res.data.companyPolicy },
+        companyConditions: { data: res.data.companyConditions },
+        companyFaqs: { data: res.data.companyFaqs },
+        staffPolicy: { data: res.data.staffPolicy },
+        staffConditions: { data: res.data.staffConditions },
+        staffFaqs: { data: res.data.staffFaqs },
+        
+      });
+      //console.log(`data: ${links}`);
+    });
+  };
 
-});
-
-//Get Request
-const fetchLink = async () => {
-  console.log('hi rfresh')
-  await axios.get(`${apiUrl}/api/links`).then((res) => {
-    console.log(res.data);
-    setLinks(res.data);
-    console.log(`data: ${links}`);
-   
-  });
-};
-
-//Put Request link
-{/*const sendPutRequest = () => {
-  axios.put(`${apiUrl}/api/links`, { companyPolicy: get_cpolicy_after_edit, companyConditions: get_cconditions_after_edit, companyFaqs: get_cfaq_after_edit, staffPolicy: get_spolicy_after_edit, staffConditions: get_sconditions_after_edit, staffFaqs: get_sfaq_after_edit }).then((res)=>{
+  //Put Request link
+  
+    const sendPutRequest = () => {
+  axios.put(`${apiUrl}/api/links`, {  companyPolicy: { data: links.companyPolicy.data} }).then((res)=>{
     console.log(res)
     fetchLink();
   });
-};*/}
+};
+  
 
- //Delete Request link
- const DeleteRequest = () => {
-  axios.delete(`${apiUrl}/api/links`).then((res) => {
-      console.log(res)
+  //Delete Request link
+  const DeleteRequest = () => {
+    axios.delete(`${apiUrl}/api/links`).then((res) => {
+      console.log(res);
       fetchLink();
-  })
-
-
-
-}
+    });
+  };
 
   useEffect(() => {
     fetchLink();
-  },[]);
+  }, []);
 
   function toogleSideBar() {
     sideBarRef.current.classList.toggle("-translate-x-full");
@@ -156,7 +126,6 @@ const fetchLink = async () => {
                 {/*<div className={`${isActive('/admin/dashboard')} hover:bg-lime-500 text-white  group flex items-center px-2 py-2 text-sm font-medium rounded-md`}>
                 <Link href='/admin/dashboard' >
                   
-
                     <MdHome className='mr-1 text-white' />
                     Dashboard
                  
@@ -213,25 +182,16 @@ const fetchLink = async () => {
         </div>
       </div>
       <div>
-        
+        <div className="flex flex-1 flex-col md:pl-64 ">
+          <div className="overflow-hidden bg-gray-100 ml-5 mt-5 mr-5 shadow sm:rounded-lg">
+            <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+              <dl className="sm:divide-y sm:divide-gray-200">
+                <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                  <dt className="text-sm font-medium text-black font-abc">
+                    Companies
+                  </dt>
 
-      <div className="flex flex-1 flex-col md:pl-64 ">
-       
-       
-          
-        <div className="overflow-hidden bg-gray-100 ml-5 mt-5 mr-5 shadow sm:rounded-lg">
-           
-                
-          <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
-            <dl className="sm:divide-y sm:divide-gray-200">
-              <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                <dt className="text-sm font-medium text-black font-abc">
-                  Companies
-                </dt>
-             
-                  <dd  className="mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0">  
-                  
-                  
+                  <dd className="mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0">
                     <label className="flex font-abc ">Privacy Policy</label>
                     <ul
                       role="list"
@@ -239,25 +199,92 @@ const fetchLink = async () => {
                     >
                       <li className="flex items-center justify-between p-2 text-sm">
                         <div className="flex w-0 flex-1 items-center">
-                       
-                       <input
-                            className="px-5 outline-none"
-                            value={companyPolicy}
-                            //defaultValue={links.companyPolicy}
-                            onChange={(e) => setCompanyPolicy(e.target.value)}
+                        {links === '' ? (
+                                    `${links.companyPolicy.data}`
+                                  ) : links !== links.companyPolicy.data ? (
+                                    `${links.companyPolicy.data}`
+                                  ) : links === links.companyPolicy.data &&
+                                    !links ? (
+                                    `${links.companyPolicy.data}`
+                                  ) : (
+                                     <input
+                            className="px-1 outline-none"
+                            value={links.companyPolicy.data}
+                            defaultValue={links.companyPolicy.data}
+                            onChange={(e) =>
+                              setLinks({
+                                companyPolicy: {
+                                  editing: true,
+                                  data: e.target.value,
+                                },
+                              })
+                            }
                           />
-                        
-                         </div>
-                      
-                          
-                          
-                        
-                      
+                                    
+                                  )}
+                         
+                        </div>
+
                         <div className="ml-4 flex-shrink-0">
-                        <button  className="rounded-md bg-white ml-1 font-abc font-thin text-sm text-cyan-600 hover:text-cyan-500 ">
-                        
-                       Update
-                      </button>
+                           
+                        <button
+                            // id={unit.id}
+                            // key={unit.id}
+                            onClick={(e) => {
+                           
+                              if (links.companyPolicy.data == '') {
+                                 console.log("1");
+                                
+                                 setLinks({
+                                  companyPolicy: {
+                                    editing: true,
+                                    data: e.target.value,
+                                  },
+                                })
+                              } else if (links.companyPolicy.data === links.companyPolicy.data) {
+                                 console.log("2");
+                              
+                                 setLinks({
+                                  companyPolicy: {
+                                    editing: false,
+                                    data: '',
+                                  },
+                                })
+                              } else {
+                                // console.log("3");
+                                setLinks({
+                                  companyPolicy: {
+                                    editing: false,
+                                    data: '',
+                                  },
+                                })
+                              }
+
+                              // focusUid();
+                            }}
+                            type="button"
+                            className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
+                          >
+                            <div>
+                              {links.companyPolicy.data === '' ? (
+                                "Edit"
+                              ) : links.companyPolicy.data === links.companyPolicy.data &&
+                              links.companyPolicy.editing ? (
+                                <button
+                                  type="button"
+                                  onClick={() => sendPutRequest()}
+                                >
+                                  Update
+                                </button>
+                              ) : (
+                                "Edit"
+                              )}
+                            </div>
+                          </button>
+                          
+                       
+                          
+                         
                           <span
                             className="text-gray-300 ml-1 font-abc"
                             aria-hidden="true"
@@ -265,11 +292,10 @@ const fetchLink = async () => {
                             |
                           </span>
                           <button
-                          onClick={()=>DeleteRequest(links)}
+                            onClick={() => DeleteRequest(links)}
                             type="button"
                             className="rounded-md bg-white ml-1 font-abc font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                           >
-                            
                             Remove
                           </button>
                         </div>
@@ -285,27 +311,28 @@ const fetchLink = async () => {
                     >
                       <li className="flex items-center justify-between p-2 text-sm">
                         <div className="flex w-0 flex-1 items-center">
-                        
-                       <input
-                            className="px-5 outline-none"
-                            value={companyConditions}
-                            onChange={(e) => setCompanyConditions(e.target.value)}
+                          <input
+                            className="px-1 outline-none"
+                            //value={links.companyConditions.data}
+                            onChange={(e) =>
+                              setLinks({
+                                companyConditions: {
+                                  editing: true,
+                                  data: e.target.value,
+                                },
+                              })
+                            }
                           />
-                     
-                            
                         </div>
                         <div className="ml-4 flex-shrink-0">
-                       
-                        <button
-                       
+                          <button
+                            // focusUid();
 
-                          // focusUid();
-                     
-                        type="button"
-                        className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
-                      >
-                       Update
-                      </button>
+                            type="button"
+                            className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
+                          >
+                            Update
+                          </button>
                           <span
                             className="text-gray-300 ml-1 font-abc"
                             aria-hidden="true"
@@ -313,7 +340,7 @@ const fetchLink = async () => {
                             |
                           </span>
                           <button
-                           onClick={()=>DeleteRequest(links._id)}
+                            onClick={() => DeleteRequest(links._id)}
                             type="button"
                             className="rounded-md bg-white ml-1 font-abc font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                           >
@@ -330,25 +357,26 @@ const fetchLink = async () => {
                     >
                       <li className="flex items-center justify-between p-2 text-sm">
                         <div className="flex w-0 flex-1 items-center">
-                       
-                       <input
-                            className="px-5 outline-none"
-                            value={companyFaqs}
-                            onChange={(e) => setCompanyFaqs(e.target.value)}
+                        <input
+                            className="px-1 outline-none"
+                            //value={links.companyFaqs.data}
+                            onChange={(e) =>
+                              setLinks({
+                                companyFaqs: {
+                                  editing: true,
+                                  data: e.target.value,
+                                },
+                              })
+                            }
                           />
-                      
-                           
                         </div>
                         <div className="ml-4 flex-shrink-0">
                           <button
-                       
-                        type="button"
-                        className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
-                      >
-                        <div>
-                         Update
-                        </div>
-                      </button>
+                            type="button"
+                            className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
+                          >
+                            <div>Update</div>
+                          </button>
                           <span
                             className="text-gray-300 ml-1"
                             aria-hidden="true"
@@ -356,7 +384,7 @@ const fetchLink = async () => {
                             |
                           </span>
                           <button
-                           onClick={()=>DeleteRequest(links._id)}
+                            onClick={() => DeleteRequest(links._id)}
                             type="button"
                             className="rounded-md bg-white ml-1 font-abc font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                           >
@@ -364,287 +392,197 @@ const fetchLink = async () => {
                           </button>
                         </div>
                       </li>
-                  </ul>
-             </dd>
-              </div>
-            </dl>
-          </div>       
-
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col md:pl-64 ">
-        <div className="overflow-hidden bg-gray-100 ml-5 mt-5 mr-5 shadow sm:rounded-lg">
-          <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
-            <dl className="sm:divide-y sm:divide-gray-200">
-              <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                <dt className="text-sm font-medium text-black font-abc">
-                  Staff
-                </dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0">
-                  <label className="flex font-abc ">Privacy Policy</label>
-                  <ul
-                    role="list"
-                    className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white"
-                  >
-                    <li className="flex items-center justify-between p-2 text-sm">
-                      <div className="flex w-0 flex-1 items-center">
-                      {check_spolicy_edit.staffPolicy === null ? (
-                        `${links.staffPolicy}`
-                      ) : check_spolicy_edit.staffPolicy !== links.staffPolicy ? (
-                        `${links.staffPolicy}`
-                      ) : check_spolicy_edit.staffPolicy === links.staffPolicy &&
-                        !check_spolicy_edit.edit ? (
-                        `${links.staffPolicy}`
-                      ) : (
-                       <input
-                            className="px-5 outline-none"
-                            value={get_spolicy_after_edit}
-                            onChange={(e) => set_spolicy_after_edit(e.target.value)}
-                          />
-                      )}
-                         
-                      </div>
-                      <div className="ml-4 flex-shrink-0">
-                      <button
-                        id={links.staffPolicy}
-                        key={links.staffPolicy}
-                        onClick={(s) => {
-                         
-                          if (check_spolicy_edit.staffPolicy == null) {
-                            // console.log("1");
-                            // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
-                            set_check_spolicy_edit({
-                              staffPolicy: links.staffPolicy,
-                              edit: true,
-                            });
-                          } else if (check_spolicy_edit.staffPolicy === links.staffPolicy) {
-                            // console.log("2");
-                            // If the unitId is not null and it matches the current unit's id, set the edit mode to false
-                            set_check_spolicy_edit({
-                             staffPolicy: null,
-                              edit: false,
-                            });
-                          } else {
-                            // console.log("3");
-                            set_check_spolicy_edit({
-                              staffPolicy: null,
-                              edit: false,
-                            });
-                          }
-
-                          // focusUid();
-                        }}
-                        type="button"
-                        className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
-                      >
-                        <div>
-                          {check_spolicy_edit.staffPolicy=== null ? (
-                            "Update"
-                          ) : check_spolicy_edit.staffPolicy === links.staffPolicy &&
-                            check_spolicy_edit.edit ? (
-                            <button
-                              type="button"
-                              onClick={() => sendPutRequest()}
-                            >
-                              Update
-                            </button>
-                          ) : (
-                            "Update"
-                          )}
-                        </div>
-                      </button>
-                        <span className="text-gray-300 ml-1" aria-hidden="true">
-                          |
-                        </span>
-                        <button
-                         onClick={()=>DeleteRequest(links._id)}
-                          type="button"
-                          className="rounded-md bg-white ml-1 font-abc font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    </li>
-                  </ul>
-
-                  <label className="flex mt-4 font-abc">
-                    Terms & Conditions
-                  </label>
-                  <ul
-                    role="list"
-                    className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white"
-                  >
-                    <li className="flex items-center justify-between p-2 text-sm">
-                      <div className="flex w-0 flex-1 items-center">
-                       
-                      {check_sconditions_edit.staffConditions === null ? (
-                        `${links.staffConditions}`
-                      ) : check_sconditions_edit.staffConditions !== links.staffConditions ? (
-                        `${links.companyPolicy}`
-                      ) : check_sconditions_edit.staffConditions === links.staffConditions &&
-                        !check_sconditions_edit.edit ? (
-                        `${links.staffConditions}`
-                      ) : (
-                       <input
-                            className="px-5 outline-none"
-                            value={get_sconditions_after_edit}
-                            onChange={(e) => set_sconditions_after_edit(e.target.value)}
-                          />
-                      )}
-                      </div>
-                      <div className="ml-4 flex-shrink-0">
-                      <button
-                        id={links.staffConditions}
-                        key={links.staffConditions}
-                        onClick={(s) => {
-                         
-                          if (check_sconditions_edit.staffConditions == null) {
-                            // console.log("1");
-                            // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
-                            set_check_sconditions_edit({
-                              staffConditions: links.staffConditions,
-                              edit: true,
-                            });
-                          } else if (check_sconditions_edit.staffConditions === links.staffConditions) {
-                            // console.log("2");
-                            // If the unitId is not null and it matches the current unit's id, set the edit mode to false
-                            set_check_sconditions_edit({
-                              staffConditions: null,
-                              edit: false,
-                            });
-                          } else {
-                            // console.log("3");
-                            set_check_sconditions_edit({
-                              staffConditions: null,
-                              edit: false,
-                            });
-                          }
-
-                          // focusUid();
-                        }}
-                        type="button"
-                        className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
-                      >
-                        <div>
-                          {check_sconditions_edit.staffConditions=== null ? (
-                            "Update"
-                          ) : check_sconditions_edit.staffConditions === links.staffConditions &&
-                            check_sconditions_edit.edit ? (
-                            <button
-                              type="button"
-                              onClick={() => sendPutRequest()}
-                            >
-                              Update
-                            </button>
-                          ) : (
-                            "Update"
-                          )}
-                        </div>
-                      </button>
-                        <span className="text-gray-300 ml-1" aria-hidden="true">
-                          |
-                        </span>
-                        <button
-                         onClick={()=>DeleteRequest(links._id)}
-                          type="button"
-                          className="rounded-md font-abc bg-white ml-1 font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none "
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    </li>
-                  </ul>
-
-                  <label className="flex mt-4 font-abc">FAQs</label>
-                  <ul
-                    role="list"
-                    className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white"
-                  >
-                    <li className="flex items-center justify-between p-2 text-sm">
-                      <div className="flex w-0 flex-1 items-center">
-                      {check_sfaq_edit.staffFaqs === null ? (
-                        `${links.staffFaqs}`
-                      ) : check_sfaq_edit.staffFaqs !== links.staffFaqs ? (
-                        `${links.staffFaqs}`
-                      ) : check_sfaq_edit.staffFaqs === links.staffFaqs &&
-                        !check_sfaq_edit.edit ? (
-                        `${links.staffFaqs}`
-                      ) : (
-                       <input
-                            className="px-5 outline-none"
-                            value={get_sfaq_after_edit}
-                            onChange={(e) => set_sfaq_after_edit(e.target.value)}
-                          />
-                      )}
-                      </div>
-                      <div className="ml-4 flex-shrink-0">
-                      <button
-                        id={links.staffFaqs}
-                        key={links.staffFaqs}
-                        onClick={(s) => {
-                         
-                          if (check_sfaq_edit.staffFaqs == null) {
-                            // console.log("1");
-                            // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
-                            set_check_sfaq_edit({
-                              staffFaqs: links.staffFaqs,
-                              edit: true,
-                            });
-                          } else if (check_sfaq_edit.staffFaqs === links.staffFaqs) {
-                            // console.log("2");
-                            // If the unitId is not null and it matches the current unit's id, set the edit mode to false
-                            set_check_sfaq_edit({
-                              staffFaqs: null,
-                              edit: false,
-                            });
-                          } else {
-                            // console.log("3");
-                            set_check_sfaq_edit({
-                              staffFaqs: null,
-                              edit: false,
-                            });
-                          }
-
-                          // focusUid();
-                        }}
-                        type="button"
-                        className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
-                      >
-                        <div>
-                          {check_sfaq_edit.staffFaqs=== null ? (
-                            "Update"
-                          ) : check_sfaq_edit.staffFaqs === links.staffFaqs &&
-                            check_sfaq_edit.edit ? (
-                            <button
-                              type="button"
-                              onClick={() => sendPutRequest()}
-                            >
-                              Update
-                            </button>
-                          ) : (
-                            "Update"
-                          )}
-                        </div>
-                      </button>
-                        <span className="text-gray-300 ml-1" aria-hidden="true">
-                          |
-                        </span>
-                        <button
-                         onClick={()=>DeleteRequest()}
-                          type="button"
-                          className="rounded-md bg-white font-abc ml-1 font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    </li>
-                  </ul>
-                </dd>
-              </div>
-            </dl>
+                    </ul>
+                  </dd>
+                </div>
+              </dl>
+            </div>
           </div>
         </div>
-      </div></div>
+        <div className="flex flex-1 flex-col md:pl-64 ">
+          <div className="overflow-hidden bg-gray-100 ml-5 mt-5 mr-5 shadow sm:rounded-lg">
+            <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+              <dl className="sm:divide-y sm:divide-gray-200">
+                <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                  <dt className="text-sm font-medium text-black font-abc">
+                    Staff
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0">
+                    <label className="flex font-abc ">Privacy Policy</label>
+                    <ul
+                      role="list"
+                      className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white"
+                    >
+                      <li className="flex items-center justify-between p-2 text-sm">
+                        <div className="flex w-0 flex-1 items-center">
+                        <input
+                            className="px-1 outline-none"
+                            //value={links.staffPolicy.data}
+                            onChange={(e) =>
+                              setLinks({
+                                staffPolicy: {
+                                  editing: true,
+                                  data: e.target.value,
+                                },
+                              })
+                            }
+                          />
+                        </div>
+                        <div className="ml-4 flex-shrink-0">
+                          <button
+                           
+                            type="button"
+                            className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
+                          >
+                            <div>
+                             
+                                <button
+                                  type="button"
+                                  onClick={() => sendPutRequest()}
+                                >
+                                  Update
+                                </button>
+                             
+                            </div>
+                          </button>
+                          <span
+                            className="text-gray-300 ml-1"
+                            aria-hidden="true"
+                          >
+                            |
+                          </span>
+                          <button
+                            onClick={() => DeleteRequest(links._id)}
+                            type="button"
+                            className="rounded-md bg-white ml-1 font-abc font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+
+                    <label className="flex mt-4 font-abc">
+                      Terms & Conditions
+                    </label>
+                    <ul
+                      role="list"
+                      className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white"
+                    >
+                      <li className="flex items-center justify-between p-2 text-sm">
+                        <div className="flex w-0 flex-1 items-center">
+                        <input
+                            className="px-1 outline-none"
+                            //value={links.staffConditions.data}
+                            onChange={(e) =>
+                              setLinks({
+                                staffConditions: {
+                                  editing: true,
+                                  data: e.target.value,
+                                },
+                              })
+                            }
+                          />
+                        </div>
+                        <div className="ml-4 flex-shrink-0">
+                          <button
+                           
+
+                             
+                            type="button"
+                            className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
+                          >
+                            <div>
+                           
+                                <button
+                                  type="button"
+                                  onClick={() => sendPutRequest()}
+                                >
+                                  Update
+                                </button>
+                            
+                            </div>
+                          </button>
+                          <span
+                            className="text-gray-300 ml-1"
+                            aria-hidden="true"
+                          >
+                            |
+                          </span>
+                          <button
+                            onClick={() => DeleteRequest(links._id)}
+                            type="button"
+                            className="rounded-md font-abc bg-white ml-1 font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none "
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+
+                    <label className="flex mt-4 font-abc">FAQs</label>
+                    <ul
+                      role="list"
+                      className="divide-y mt-2 divide-white p-0 rounded-md border bg-white border-white"
+                    >
+                      <li className="flex items-center justify-between p-2 text-sm">
+                        <div className="flex w-0 flex-1 items-center">
+                        <input
+                            className="px-1 outline-none"
+                            //value={links.staffFaqs.data}
+                            onChange={(e) =>
+                              setLinks({
+                                staffFaqs: {
+                                  editing: true,
+                                  data: e.target.value,
+                                },
+                              })
+                            }
+                          />
+                        </div>
+                        <div className="ml-4 flex-shrink-0">
+                          <button
+                            id={links.staffFaqs}
+                         
+                            
+                            
+                            type="button"
+                            className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
+                          >
+                            <div>
+                              
+                                <button
+                                  type="button"
+                                  onClick={() => sendPutRequest()}
+                                >
+                                  Update
+                                </button>
+                              
+                            </div>
+                          </button>
+                          <span
+                            className="text-gray-300 ml-1"
+                            aria-hidden="true"
+                          >
+                            |
+                          </span>
+                          <button
+                            onClick={() => DeleteRequest()}
+                            type="button"
+                            className="rounded-md bg-white font-abc ml-1 font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
