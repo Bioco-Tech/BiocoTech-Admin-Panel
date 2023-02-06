@@ -17,7 +17,7 @@ import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import { apiUrl } from "../../constants";
 
-function links() {
+function links({ initialData }) {
   const router = useRouter();
   const sideBarRef = useRef();
   const { logout } = useAuth();
@@ -831,7 +831,6 @@ if (router.isFallback) {
     </>
   );
 }
-
 
 
 export default links;
