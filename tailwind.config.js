@@ -7,10 +7,30 @@ module.exports = {
   theme: {
     extend: {
       fontFamily:{
-        Cocogoose:'Cocogoose'
-      }
+        Italic:'Italic'
+      },
+      fontFamily:{
+       Light :'Light'
+      },
+      fontFamily:{
+        Semilight :'Semilight'
+       },
+       fontFamily:{
+        Thin :'Thin'
+       },
+       fontFamily:{
+        Thintrial:'ThinTrial'
+       },
+       fontFamily:{
+        UltraLight:'UltraLight'
+       }
     },
     
   },
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [
+    require("@tailwindcss/forms"),
+    //require("tailwind-scrollbar-hide")
+  ],
+  
+ 
 };

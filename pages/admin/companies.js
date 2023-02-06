@@ -18,7 +18,7 @@ import { useState, useEffect } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
-import company from "../../Components/Company";
+
 import axios from "axios";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
@@ -38,11 +38,11 @@ import { apiUrl } from "../../constants";
 function companies() {
   const [company, setCompany] = useState([]);
   const [staff, setStaff] = useState([])
-  const [totalCompany,setTotalCompany] = useState([])
-  const [totalStaff,setTotalStaff] = useState([])
-  const [totalUnits,setTotalUnits] = useState([])
-  const [totalSingleStaff,setTotalSingleStaff] = useState([])
-  const [totalSingleUnit,setTotalSingleUnit] = useState([])
+  const [totalCompany, setTotalCompany] = useState([])
+  const [totalStaff, setTotalStaff] = useState([])
+  const [totalUnits, setTotalUnits] = useState([])
+  const [totalSingleStaff, setTotalSingleStaff] = useState([])
+  const [totalSingleUnit, setTotalSingleUnit] = useState([])
   const [query, setQuery] = useState("");
   //console.log(totalCompany.results);
 
@@ -64,43 +64,43 @@ function companies() {
 
   const fetchData = async () => {
     await axios.get(`${apiUrl}/api/companies`).then((res) => {
-       setCompany(res.data.companies);
-       setTotalCompany(res.data)
-     
+      setCompany(res.data.companies);
+      setTotalCompany(res.data)
+
     });
-     await axios.get(`${apiUrl}/api/staff`).then((res) => {
-   
+    await axios.get(`${apiUrl}/api/staff`).then((res) => {
+
       setTotalStaff(res.data)
-      
+
     });
     await axios.get(`${apiUrl}/api/units`).then((res) => {
-      
-       setTotalUnits(res.data)
-       
-     });
+
+      setTotalUnits(res.data)
+
+    });
     await axios.get(`${apiUrl}/api/staff?company=${company._id}`).then((res) => {
-     
+
       setTotalSingleStaff(res.data)
       console.log(res.data)
-      
+
     });
-    await axios.get(`${apiUrl}/api/units?company=${company._id}&staff=${staff._id}`).then((res) => {
-      
-       setTotalSingleUnit(res.data)
-       //console.log(res.data)
-       
-     });
+    await axios.get(`${apiUrl}/api/units?company=${company._id}`).then((res) => {
+
+      setTotalSingleUnit(res.data)
+      //console.log(res.data)
+
+    });
   };
- 
-useEffect(() => {
+
+  useEffect(() => {
     fetchData();
-    
+
   }, []);
- 
 
 
 
-  
+
+
 
   async function signOut() {
     try {
@@ -135,10 +135,11 @@ useEffect(() => {
           {/* MAIN SIDEBAR */}
           <div
             ref={sideBarRef}
-            className="bg-cyan-600  w-56 space-y-10 px-5 py-7  absolute inset-y-0 left-0 transform -translate-x-full
+            style={{ position: 'fixed' }}
+            className="bg-cyan-600  w-64 space-y-10 px-5 py-7  absolute inset-y-0 left-0 transform -translate-x-full
             md:translate-x-0 z-50 transition duration-200 ease-in-out flex flex-col child:transition-all md:max-h-screen md:min-h-screen  md:top-0"
           >
-           <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
+            <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
               <div className="flex flex-shrink-0 items-center px-4">
                 <img
                   className="h-8 w-auto "
@@ -156,50 +157,56 @@ useEffect(() => {
                     Dashboard
                  
                 </Link></div>*/}
-                <Link href="/" legacyBehavior>
-                  <a className="text-white font-abc hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                    <MdHome className="mr-1 text-white" />
-                    Dashboard
-                  </a>
-                </Link>
+                <div className="flex">
+                  <MdHome className="mr-1 ml-2 text-white text-xl" />
+                  <Link href="/" legacyBehavior>
+                    <a className="text-white font-thin  hover:text-white group flex items-center px-2 py-2 text-sm -mt-2  rounded-md">
 
+                      Dashboard
+                    </a>
+                  </Link>
+                </div>
                 <div
                   className={` ${isActive(
                     "/admin/companies"
-                  )} bg-lime-500 hover:bg-lime-500 group flex items-center px-2 py-2 text-sm font-medium rounded-md `}
+                  )} bg-lime-500 hover:bg-lime-500 group flex items-center w-52 h-9 px-2 py-2 text-sm font-medium rounded-md `}
                 >
-                  <HiBuildingOffice2 className="mr-1 text-white" />
-                  <h3 className="text-base text-white font-abc group-hover:text-white ">
+                  <HiBuildingOffice2 className="mr-1 text-xl text-white" />
+                  <h3 className="text-base ml-2 text-white group-hover:text-white font-thin ">
                     <Link href="/admin/companies">Companies</Link>
                   </h3>
                 </div>
-                <Link href="/admin/checklist" legacyBehavior>
-                  <a className="text-white font-abc hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                    < TbCheckbox className="mr-1 text-white" />
-                    Checklists
-                  </a>
-                </Link>
-                <Link href="/admin/links" legacyBehavior>
-                  <a className="text-white  hover:text-white font-abc group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                    <ImLink className="mr-1 text-white" />
-                    Links
-                  </a>
-                </Link>
+                <div className="flex">
+                  < TbCheckbox className="mr-1 ml-2 text-white text-xl" />
+                  <Link href="/admin/checklist" legacyBehavior>
+                    <a className="text-white font-thin  hover:text-white group flex items-center px-2 py-2 text-sm -mt-2  rounded-md">
+
+                      Checklists
+                    </a>
+                  </Link></div>
+                <div className="flex">
+                  <ImLink className="mr-1 ml-2 text-white text-xl" />
+                  <Link href="/admin/links" legacyBehavior>
+                    <a className="text-white font-thin  hover:text-white group flex items-center px-2 py-2 text-sm -mt-2  rounded-md">
+
+                      Links
+                    </a>
+                  </Link></div>
               </nav>
 
-              <div className="flex flex-shrink-0 border-t border-lime-500 p-4">
-                <div className="flex items-center font-abc">
+              <div className="flex flex-shrink-0   border-t  border-lime-500 p-4 ">
+                <div className="flex items-center ">
                   <div className="bg-lime-500 h-9 w-9 rounded-full">
                     <button onClick={signOut}>
-                      <CiLogout className=" ml-2 mt-3 font-abc text-white " />
+                      <CiLogout className=" ml-2 mt-2 text-xl text-white " />
                     </button>
                   </div>
-                  <div className="ml-3">
-                    <p className="text-sm font-medium text-white group-hover:text-white ">
+                  <div className="ml-3 ">
+                    <p className="text-sm font-thin text-white group-hover:text-white ">
                       Log Out
                     </p>
-                    {/*<p className="text-xs font-medium text-white group-hover:text-gray-700">(you will be loged out of your account)</p>*/}
-                  </div>
+
+                  </div> {/*<p className="text-xs font-light  text-white group-hover:text-gray-700">(you will be loged out of your account)</p>*/}
                 </div>
               </div>
             </div>
@@ -220,7 +227,7 @@ useEffect(() => {
                         >
                           <label
                             htmlFor="search-field"
-                            className="sr-only font-abc text-cyan-400"
+                            className="sr-only font-light text-cyan-400"
                           >
                             Search Company
                           </label>
@@ -240,24 +247,23 @@ useEffect(() => {
                               name="search"
                             />
                           </div>
-                          
+
                         </form>
-                        
+
                       </div>
                     </div>
                     <div className="ml-4 flex items-center  md:ml-6">
                       <button
                         type="button"
-                        className="inline-flex items-center rounded-md border border-transparent bg-cyan-600 px-1 py-2   text-xs font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 font-abc"
+                        className=" inline-flex items-center font-light rounded-md border border-transparent bg-cyan-600   md:px-10 py-3  text-xs text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 font-abc"
                       >
                         <Link href={"/admin/addCompany"}>Add New Company</Link>
                       </button>
 
-                      {/* Profile dropdown */}
                     </div>
                   </div>
 
-                  <main className="flex-1">
+                  <main className="flex-1 md:-ml-10">
                     <div className="py-6">
                       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                         {/*<h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>*/}
@@ -269,11 +275,11 @@ useEffect(() => {
 
                         <div className="px-4 sm:px-6 py-4 sm:py-6 lg:px-8 lg:py-8 rounded-lg bg-gray-100">
                           <div className="sm:flex sm:items-center  ">
-                            <div className="sm:flex-auto ">
-                              <h1 className="text-xl  font-semibold text-gray-900 font-abc">
+                            <div className="sm:flex-auto font-Semilight">
+                              <h1 className="   text-black font-thin">
                                 List of all the Companies
                               </h1>
-                              <p className="mt-2 text-sm text-gray-700 font-abc">
+                              <p className="mt-2 text-sm text-gray-500 font-light">
                                 These are the list of all the companies listed
                                 with BIOCo Tech
                               </p>
@@ -284,32 +290,32 @@ useEffect(() => {
                               <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                                 <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                                   <table className="min-w-full divide-y divide-gray-300 ">
-                                    <thead className="bg-lime-500">
+                                    <thead className="bg-lime-500 font-light">
 
                                       <tr>
                                         <th
                                           scope="col"
-                                          className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold  text-white sm:pl-6 font-abc"
+                                          className=" py-3.5 pl-4 pr-3 text-left text-sm   text-white sm:pl-6 font-light"
                                         >
-                                          Company ({totalCompany.results})
-                                          
+                                          Company     {<span className="ml-5">({totalCompany.results})</span>}
+
                                         </th>
                                         <th
                                           scope="col"
-                                          className="px-3 py-3.5 font-abc text-left text-sm font-semibold text-white"
+                                          className=" px-3 py-3.5 font-abc text-left text-sm  text-white font-light"
                                         >
-                                          Staff Member ({totalStaff.results})
+                                          Staff Member {<span className="ml-5">({totalStaff.results})</span>}
                                         </th>
                                         <th
                                           scope="col"
-                                          className="px-3 py-3.5 font-abc text-left text-sm font-semibold text-white"
+                                          className="px-3 py-3.5 font-abc text-left text-sm  text-white font-light"
                                         >
-                                          Total Units ({totalUnits.results})
+                                          Total Units {<span className="ml-5">({totalUnits.results})</span>}
                                         </th>
 
                                         <th
                                           scope="col"
-                                          className="relative py-3.5 font-abc pl-3 pr-4 sm:pr-6 text-right text-white"
+                                          className="relative py-3.5 font-abc pl-3 pr-4 sm:pr-6 text-right text-white font-light"
                                         >
                                           Action
                                         </th>
@@ -320,40 +326,40 @@ useEffect(() => {
                                       {company
                                         .filter((user) =>
                                           user.companyName
-                                         
+
                                             .toLowerCase()
                                             .includes(query)
-                                           
-                                      )
+
+                                        )
                                         .map((company) => (
-                                          
+
                                           <tr key={company.companyName}>
-                                            
-                                            <td className="whitespace-nowrap font-abc py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6">
-                                              
+
+                                            <td className="whitespace-nowrap font-light py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6">
+
                                               <Link
                                                 href={`/companies/${company._id}`}
                                               >
                                                 {company.companyName}
                                               </Link>
-                                            </td> 
+                                            </td>
                                             <td className="whitespace-nowrap font-abc px-3 py-4 text-sm font-light text-gray-500">
-                                            <Link
+                                              <Link
                                                 href={`/companies/${company._id}`}
                                               >
                                                 {totalSingleStaff.results}
                                               </Link>
-                                             
+
                                             </td>
-                                            <td className="whitespace-nowrap px-3 font-abc py-4 text-sm font-normal w-[560] h-[55] text-gray-900">
-                                            <Link
+                                            <td className="whitespace-nowrap px-3 font-light py-4 text-sm  w-[560] h-[55] text-gray-900">
+                                              <Link
                                                 href={`/companies/${company._id}`}
                                               >
                                                 {totalSingleUnit.results}
                                               </Link>
-                                            
+
                                             </td>
-                                            <td className="relative whitespace-nowrap py-4 font-abc pl-3 pr-4 text-cyan-600  text-right text-sm font-thin sm:pr-6">
+                                            <td className="font-light relative whitespace-nowrap py-4 font-abc pl-3 pr-4 text-cyan-600  text-right text-sm  sm:pr-6">
                                               <Link
                                                 href={`/companies/${company._id}`}
                                               >
@@ -361,7 +367,7 @@ useEffect(() => {
                                               </Link>
                                             </td>
                                           </tr>
-                                       ))}
+                                        ))}
                                     </tbody>
                                   </table>
                                 </div>

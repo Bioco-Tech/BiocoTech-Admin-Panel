@@ -35,19 +35,27 @@ function addCompany() {
       theme: "colored",
     });
 
-    //file uploading
-    {/*const handleUpload= async ()=>{
-      setUploading(true)
-      try{
-        if(!selectedFile) return;
-        const formData = new FormData();
-        formData.append('myFile', selectedFile)
-        const {data} = await axios.post('/api/file',formData)
-        console.log(data)
-      }catch(error ){
-        console.log(error.response?.data);
-      }
-    };*/}
+   //file uploading
+
+
+
+  const hiddenFileInput = React.useRef(null);
+
+
+  const handleClick = () => {
+    hiddenFileInput.current.click();
+    
+  };
+
+  const uploadFile =(e)=>{
+    //console.log(files[0]);
+     Formdata = new FormData();
+    Formdata.append('attachments',e.target.files[0])
+    axios.post(`${apiUrl}/api/file`,Formdata).then((res)=>{
+      console.log('file',res.data)
+    })
+  }
+
    
     //Post Request companies
 
@@ -68,8 +76,8 @@ function addCompany() {
   };
   return (
     <>
-      <button className="text-lg ml-5 mt-5 font-medium leading-6 text-gray-900">
-        <span className=" text-md">
+      <button className="text-lg ml-5 mt-5 font-light leading-6 text-gray-900">
+        <span className=" ">
           {" "}
           <Link
             className="flex justify-center flex-row font-abc items-center"
@@ -85,10 +93,10 @@ function addCompany() {
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="">
               <div className="px-4 ml-5 sm:px-0">
-                <h3 className="text-lg font-medium leading-6 text-gray-900 font-abc">
+                <h3 className="text-lg font-light leading-6 text-black">
                   New Company
                 </h3>
-                <p className="mt-1 text-sm text-gray-600 font-abc">
+                <p className="mt-1  text-gray-600 font-light">
                   Add the information of new company
                 </p>
               </div>
@@ -100,7 +108,7 @@ function addCompany() {
                     <div className="col-span-6 sm:col-span-4">
                       <label
                         htmlFor="first-name"
-                        className="block font-abc text-sm mb-2 font-medium text-gray-700"
+                        className="block font-light text-sm mb-2  text-gray-700"
                       >
                         Company Name
                       </label>
@@ -111,14 +119,14 @@ function addCompany() {
                         onChange={(e) => setName(e.target.value)}
                         id="email-address"
                         autoComplete="email"
-                        className="mt-1 block border w-full p-2 rounded-md border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2"
+                        className="mt-1 block border lg:w-64 w-full p-2 rounded-md border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2"
                       />
                     </div>
 
                     <div className="col-span-6 sm:col-span-4">
                       <label
                         htmlFor="email-address"
-                        className="block font-abc text-sm mb-2 font-medium text-gray-700"
+                        className="block font-light text-sm mb-2  text-gray-700"
                       >
                         Company ID
                       </label>
@@ -129,14 +137,14 @@ function addCompany() {
                         onChange={(e) => setId(e.target.value)}
                         id="email-address"
                         autoComplete="email"
-                        className="mt-1 block border w-full p-2 rounded-md border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500  focus:ring-offset-2"
+                        className="mt-1 block border lg:w-64 w-full p-2 rounded-md border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500  focus:ring-offset-2"
                       />
                     </div>
 
                     <div className="col-span-6 sm:col-span-4">
                       <label
                         htmlFor="email-address"
-                        className="block font-abc mb-2 text-sm font-medium text-gray-700"
+                        className="block font-light mb-2 text-sm  text-gray-700"
                       >
                         Company PIN
                       </label>
@@ -147,14 +155,14 @@ function addCompany() {
                         onChange={(e) => setPin(e.target.value)}
                         id="email-address"
                         autoComplete="email"
-                        className="mt-1 block w-full rounded-md p-2   border border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500  focus:ring-offset-2"
+                        className="mt-1 lg:w-64 block w-full rounded-md p-2   border border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500  focus:ring-offset-2"
                       />
                     </div>
 
                     <div className="col-span-6 sm:col-span-4">
                       <label
                         htmlFor="email-address"
-                        className="block font-abc mb-2 text-sm font-medium text-gray-700"
+                        className="block font-light mb-2 text-sm  text-gray-700"
                       >
                         Website/Other link(optional)
                       </label>
@@ -165,14 +173,14 @@ function addCompany() {
                         onChange={(e) => setWebsite(e.target.value)}
                         id="email-address"
                         autoComplete="email"
-                        className="mt-1 block w-full rounded-md   p-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2   sm:text-sm"
+                        className="mt-1 lg:w-64 block w-full rounded-md   p-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2   sm:text-sm"
                       />
                     </div>
 
                     <div className="col-span-6 sm:col-span-4">
                       <label
                         htmlFor="email-address"
-                        className="block font-abc mb-2 text-sm font-medium text-gray-700"
+                        className="block  mb-2 text-sm font-light text-gray-700"
                       >
                         About/Other details(optional)
                       </label>
@@ -183,41 +191,42 @@ function addCompany() {
                         onChange={(e) => setAbout(e.target.value)}
                         id="comment"
                         placeholder="  Add new unit..."
-                        className="block w-full rounded-md border  p-2 border-gray-300 shadow-sm  sm:text-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2 "
+                        className="block lg:w-64  w-full rounded-md border  p-2 border-gray-300 shadow-sm  sm:text-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2 "
                       />
                     </div>
 
                     <div className="col-span-6">
                       <label
                         htmlFor="street-address"
-                        className="block font-abc mb-2 text-sm font-medium text-gray-700"
+                        className="block  mb-2 text-sm font-light text-gray-700"
                       >
                         Attachments(optional)
                       </label>
                       <div className="flex ">
-                       <input
-                        type='file'
-                        name='attachments'
-                        onChange={e=>setUploading(e.target.files[0])}
-                      
+                       
+                        <button
+                         onClick={handleClick}
+                        // disabled={uploading}
+                          className="flex w-32 p-1 lg:w-32 justify-center rounded-lg border border-gray-300 bg-white  text-sm  text-gray-700 shadow-sm hover:bg-gray-50 
+                         focus:outline-none focus:ring-2 font-light focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2"
+                        >
+                          Upload
+                        </button>
+                        <button
+                         onClick={handleClick}
+                        // disabled={uploading}
+                          className="flex w-32 ml-2 p-1 lg:w-32 justify-center border rounded-lg border-gray-300 bg-white  text-sm font-light text-gray-700 shadow-sm hover:bg-gray-50 
+                         focus:outline-none focus:ring-2  focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2"
+                        >
+                          Upload
+                        </button>
+                        <input
+                          type="file"
+
+                          ref={hiddenFileInput}
+                          onChange={uploadFile}
+                          style={{ display: 'none' }}
                         />
-                        <button
-                        //onClick={handleUpload}
-                        //disabled={uploading}
-                        
-                        
-                          className="flex w-32 p-1 justify-center rounded-lg border border-gray-300 bg-white  text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 
-                         focus:outline-none focus:ring-2 font-abc focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2"
-                        >
-                          Upload
-                        </button>
-                        <button
-                        //onClick={handleUpload}
-                          className="flex w-32 ml-2 p-1 justify-center border rounded-lg border-gray-300 bg-white  text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 
-                         focus:outline-none focus:ring-2 font-abc focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2"
-                        >
-                          Upload
-                        </button>
                       </div>
                     </div>
                     <div className="col-span-6 sm:col-span-4">
@@ -226,8 +235,8 @@ function addCompany() {
                         onClick={(e) => {
                           handleSubmit(e), notify();
                         }}
-                        className="flex w-full ml-2 p-2 justify-center border rounded-lg border-gray-300 bg-cyan-600 text-sm font-medium text-white shadow-sm hover:bg-cyan-500 
-                      focus:outline-none focus:ring-2 font-abc focus:ring-cyan-500 focus:ring-offset-2"
+                        className="flex w-full lg:w-64 ml-2 p-2 justify-center border rounded-lg border-gray-300 bg-cyan-600 text-sm  text-white shadow-sm hover:bg-cyan-500 
+                      focus:outline-none focus:ring-2 font-light focus:ring-cyan-500 focus:ring-offset-2"
                       >
                         Create and Save
                       </button>

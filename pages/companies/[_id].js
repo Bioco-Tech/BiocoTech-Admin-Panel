@@ -113,6 +113,7 @@ function Singlecompany({company}) {
         id: unitid,
         unit_details: unitdetails,
         company: company._id,
+        
       })
       .then((res) => {
         // console.log(res);
@@ -167,6 +168,7 @@ function Singlecompany({company}) {
     axios.delete(`${apiUrl}/api/companies/${id}`).then((res) => {
         console.log(res);
     });
+    router.push("/admin/companies");
   };
 
   // edit unit
@@ -209,7 +211,7 @@ function Singlecompany({company}) {
           <span className=" text-md">
             {" "}
             <Link
-              className="flex font-abc  justify-center flex-row items-center"
+              className="flex font-light  justify-center flex-row items-center"
               href="/admin/companies"
             >
               <IoIosArrowBack />
@@ -225,11 +227,11 @@ function Singlecompany({company}) {
               <dl className="divide-y divide-lime-200">
                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                   <>
-                    <dt className="text-sm font-abc  font-medium text-gray-500">
+                    <dt className="text-sm font-light text-gray-500">
                       Company Name
                     </dt>
-                    <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 ">
-                    <span className="flex-grow font-abc ">
+                    <dd className="mt-1 flex text-sm text-gray-600 sm:col-span-2 sm:mt-0 ">
+                    <span className="flex-grow font-light ">
                       {check_companyName_edit.companyName === null ? (
                         `${company.companyName}`
                       ) : check_companyName_edit.companyName !== company.companyName ? (
@@ -299,11 +301,11 @@ function Singlecompany({company}) {
                   </>
                 </div>
                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                  <dt className="text-sm font-medium font-abc  text-gray-500">
+                  <dt className="text-sm font-light  text-gray-500">
                     Company ID
                   </dt>
-                  <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                    <span className="flex-grow font-abc ">
+                  <dd className="mt-1 flex text-sm text-black sm:col-span-2 sm:mt-0">
+                    <span className="flex-grow font-thin ">
                       {check_id_edit.id === null ? (
                         `${company.id}`
                       ) : check_id_edit.id !== company.id ? (
@@ -387,11 +389,11 @@ function Singlecompany({company}) {
                   </dd>
                 </div>
                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                  <dt className="text-sm font-medium font-abc  text-gray-500">
+                  <dt className="text-sm font-light  text-gray-500">
                     Company Pin
                   </dt>
-                  <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                    <span className="flex-grow font-abc ">
+                  <dd className="mt-1 flex text-sm text-black sm:col-span-2 sm:mt-0">
+                    <span className="flex-grow text-black font-thin ">
                       {check_pin_edit.pin === null ? (
                         `${company.pin}`
                       ) : check_pin_edit.pin !== company.pin ? (
@@ -475,15 +477,15 @@ function Singlecompany({company}) {
                   </dd>
                 </div>
                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                  <dt className="text-sm font-medium font-abc  text-gray-500">
+                  <dt className="text-sm font-light  text-gray-500">
                     Status
                   </dt>
-                  <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                  <dd className="mt-1 flex text-sm text-gray-500 sm:col-span-2 sm:mt-0">
                     {istoggled && (
-                      <span className="flex-grow font-abc ">Active</span>
+                      <span className="flex-grow font-light ">Active</span>
                     )}
                     {!istoggled && (
-                      <span className="flex-grow font-abc ">In Active</span>
+                      <span className="flex-grow font-light ">In Active</span>
                     )}
                     <span className="ml-4 flex-shrink-0">
                       <Switch
@@ -506,11 +508,11 @@ function Singlecompany({company}) {
                   </dd>
                 </div>
                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                  <dt className="text-sm font-medium font-abc  text-gray-500">
+                  <dt className="text-sm font-light  text-gray-500">
                     Web/Link(options)
                   </dt>
-                  <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                    <span className="flex-grow font-abc ">
+                  <dd className="mt-1 flex text-sm text-gray-500 sm:col-span-2 sm:mt-0">
+                    <span className="flex-grow font-light ">
                       {check_web_edit.web === null ? (
                         `${company.website}`
                       ) : check_web_edit.web !== company.website ? (
@@ -595,11 +597,11 @@ function Singlecompany({company}) {
                   </dd>
                 </div>
                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                  <dt className="text-sm font-medium font-abc  text-gray-500">
+                  <dt className="text-sm font-light  text-gray-500">
                     About/Other details
                   </dt>
-                  <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                    <span className="flex-grow font-abc ">
+                  <dd className="mt-1 flex text-sm text-gray-500 sm:col-span-2 sm:mt-0">
+                    <span className="flex-grow font-light ">
                       {check_about_edit.about === null ? (
                         `${company.about}`
                       ) : check_about_edit.about !== company.about ? (
@@ -683,10 +685,10 @@ function Singlecompany({company}) {
                   </dd>
                 </div>
                 <div className="py-4 sm:grid sm:grid-cols-3 font-abc  sm:gap-4 sm:py-5">
-                  <dt className="text-sm font-medium text-gray-500">
+                  <dt className="text-sm font-light text-gray-500">
                     Attachments
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                  <dd className="mt-1 text-sm text-gray-500 sm:col-span-2 sm:mt-0">
                     <ul
                       role="list"
                       className="divide-y divide-gray-200 rounded-md border border-gray-200"
@@ -746,11 +748,11 @@ function Singlecompany({company}) {
                 <div className="py-4 sm:grid sm:grid-cols-3 border-b border-gray-200 sm:gap-4 sm:py-5 ">
                   {unit.map((unit) => (
                     <>
-                      <dt className="text-sm font-medium text-gray-500 font-abc pt-2.5">
+                      <dt className="text-sm font-light text-gray-500 font-abc pt-2.5">
                         Unit
                       </dt>
-                      <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                        <span className="flex-grow font-abc ">
+                      <dd className="mt-1 flex text-sm text-black sm:col-span-2 sm:mt-0 font-thin">
+                        <span className="flex-grow  ">
                           <Menu
                             as="div"
                             className="relative inline-block text-left"
@@ -764,7 +766,7 @@ function Singlecompany({company}) {
                                     ? false
                                     : true
                                 }
-                                className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 focus:ring-offset-gray-100 font-abc "
+                                className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-thin text-black shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 focus:ring-offset-gray-100 font-abc "
                               >
                                 {unit.unit}
                                 <ChevronDownIcon
@@ -773,10 +775,11 @@ function Singlecompany({company}) {
                                       ? "hidden"
                                       : unit.id === check_unit_edit.unitId &&
                                         check_unit_edit.edit
-                                      ? "-mr-1 ml-2 h-5 w-5"
+                                      ? "-mr-1 ml-2 h-5 w-5 text-lime-500"
                                       : "hidden"
                                   )}
                                   aria-hidden="true"
+                                  
                                 />
                               </Menu.Button>
                             </div>
@@ -804,7 +807,7 @@ function Singlecompany({company}) {
                                           onClick={unit_type_change}
                                           onChange={unit_type_change_value}
                                           className={classNames(
-                                            "text-gray-700 block px-4 font-abc  py-2 text-sm hover:cursor-pointer"
+                                            "text-black block px-4 font-thin  py-2 text-sm hover:cursor-pointer"
                                           )}
                                         >
                                           {item}
@@ -899,7 +902,7 @@ function Singlecompany({company}) {
                         </span>
                       </dd>
 
-                      <dt className="text-sm font-medium text-gray-500 font-abc ">
+                      <dt className="text-sm font-light text-gray-500 font-abc ">
                         Unit ID
                       </dt>
 
@@ -916,7 +919,7 @@ function Singlecompany({company}) {
                           }}
                         />
                       </dd> */}
-                      <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-abc">
+                      <dd className="mt-1 flex text-sm text-black sm:col-span-2 sm:mt-0 font-thin">
                         {/* <input
                           disabled={!check_unit_edit}
                           className="outline-none w-full disabled:bg-white"
@@ -953,11 +956,11 @@ function Singlecompany({company}) {
                         )}
                       </dd>
 
-                      <dt className="text-sm font-medium text-gray-500 font-abc divide-y">
+                      <dt className="text-sm font-light text-gray-500  divide-y">
                         Unit Details
                       </dt>
 
-                      <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-abc">
+                      <dd className="mt-1 flex text-sm text-gray-700 sm:col-span-2 sm:mt-0 font-light">
                         {/* <input
                           disabled={!check_unit_edit}
                           className="outline-none w-full disabled:bg-white"
@@ -1002,8 +1005,8 @@ function Singlecompany({company}) {
                       <dt className="text-sm font-medium text-gray-500 font-abc ">
                         Unit
                       </dt>
-                      <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                        <span className="flex-grow font-abc ">
+                      <dd className="mt-1 flex text-sm text-black sm:col-span-2 sm:mt-0">
+                        <span className="flex-grow font-thin ">
                           <Menu
                             as="div"
                             className="relative inline-block text-left"
@@ -1021,7 +1024,7 @@ function Singlecompany({company}) {
                               >
                                 {new_unit.unit}
                                 <ChevronDownIcon
-                                  className="-mr-1 ml-2 h-5 w-5"
+                                  className="-mr-1 ml-2 h-5 w-5 text-lime-500"
                                   aria-hidden="true"
                                 />
                               </Menu.Button>
@@ -1051,7 +1054,7 @@ function Singlecompany({company}) {
                                           onClick={unit_type_change_new}
                                           onChange={unit_type_change_value_new}
                                           className={classNames(
-                                            "text-gray-700 block px-4 font-abc  py-2 text-sm hover:cursor-pointer"
+                                            "text-black block px-4 font-thin  py-2 text-sm hover:cursor-pointer"
                                           )}
                                         >
                                           {item}
@@ -1077,29 +1080,29 @@ function Singlecompany({company}) {
                         </span>
                       </dd>
 
-                      <dt className="text-sm font-medium text-gray-500 font-abc ">
+                      <dt className="text-sm font-light text-gray-500 font-abc ">
                         Unit ID
                       </dt>
-                      <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-abc ">
+                      <dd className="mt-1 flex text-sm text-black sm:col-span-2 sm:mt-0 font-abc ">
                         <input
                           type="text"
                           name="number"
                           value={unitid}
                           onChange={(e) => setUnitid(e.target.value)}
-                          className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+                          className="block w-full font-thin rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
                           placeholder="Type ID"
                         />
                       </dd>
-                      <dt className="text-sm font-medium text-gray-500 font-abc ">
+                      <dt className="text-sm font-light text-gray-500  ">
                         Unit Details
                       </dt>
-                      <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-abc ">
+                      <dd className="mt-1 flex text-sm text-gray-600 sm:col-span-2 sm:mt-0 font-thin ">
                         <textarea
                           rows={4}
                           value={unitdetails}
                           onChange={(e) => setUnitdetails(e.target.value)}
                           placeholder="  Add unit details"
-                          className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm "
+                          className="block w-full rounded-md font-light -mt-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm "
                         />
                       </dd>
                     </>
@@ -1109,7 +1112,7 @@ function Singlecompany({company}) {
                     <button
                       type="button"
                       onClick={() => setShowform(true)}
-                      className="inline-flex font-abc  mt-2 items-center float-right mb-3 rounded-md border border-transparent bg-cyan-600 px-2 py-2 text-xs font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                      className="inline-flex font-light  md:px-10 py-3 mt-2 items-center float-right mb-3 rounded-md border border-transparent bg-cyan-600 px-2  text-xs  text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                     >
                       Add New Unit
                     </button>
@@ -1125,7 +1128,7 @@ function Singlecompany({company}) {
                   <form className="flex w-full md:ml-0" action="#" method="GET">
                     <label
                       htmlFor="search-field"
-                      className="sr-only text-cyan-400 font-abc "
+                      className="sr-only text-cyan-400 font-thin "
                     >
                       Search Staff Member
                     </label>
@@ -1152,10 +1155,10 @@ function Singlecompany({company}) {
             <div className="px-4 sm:px-6 py-4 sm:py-6 lg:px-8 lg:py-8 rounded-lg bg-gray-100">
               <div className="sm:flex sm:items-center ">
                 <div className="sm:flex-auto">
-                  <h1 className="text-xl font-semibold text-gray-900 font-abc ">
+                  <h1 className="text-xl font-light text-black ">
                     {company.companyName}
                   </h1>
-                  <p className="mt-2 text-sm font-abc  text-gray-700">
+                  <p className="mt-2 text-sm font-thin  text-gray-700">
                     Below the details of this company
                   </p>
                 </div>
@@ -1174,25 +1177,25 @@ function Singlecompany({company}) {
                           <tr>
                             <th
                               scope="col"
-                              className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-6 font-abc "
+                              className="py-3.5 pl-4 pr-3 text-left text-sm font-light text-white sm:pl-6 font-abc "
                             >
                               Staff 
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-left text-sm font-semibold font-abc text-white"
+                              className="px-3 py-3.5 text-left text-sm font-light text-white"
                             >
                               Registered Date & Time
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-left text-sm font-semibold font-abc text-white"
+                              className="px-3 py-3.5 text-left text-sm font-light text-white"
                             >
                               Ibs Processes 
                             </th>
                             <th
                               scope="col"
-                              className="px-3 py-3.5 text-left text-sm font-semibold font-abc text-white"
+                              className="px-3 py-3.5 text-left text-sm font-light text-white"
                             >
                               MTCO 
                             </th>
@@ -1208,7 +1211,7 @@ function Singlecompany({company}) {
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 font-abc  sm:pl-6">
                                   {person.staffName}
                                 </td>
-                                <td className="whitespace-nowrap px-3 py-4 text-sm font-abc  text-gray-500">
+                                <td className="whitespace-nowrap font-thin px-3 py-4 text-sm font-abc  text-gray-500">
                                   {person.createdAt}
                                 </td>
                                 <td className="whitespace-nowrap px-3 py-4 text-sm font-abc  text-gray-500">

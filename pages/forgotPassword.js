@@ -29,19 +29,19 @@ function ForgotPassword() {
     <div>
       <div className=' flex flex-col mt-56 justify-center items-center'>
         <div className="relative mt-1 rounded-md shadow-sm">
-        <div className="relative mt-1 bg-cyan-600 rounded-lg w-64 p-2 mb-3 shadow-sm">
+        <div className="relative mt-1  rounded-lg w-64 p-2 mb-3 ">
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-          <FaRegUser  className=" text-white" />
+          <FaRegUser  className=" text-white  ml-2 " />
         </div>
         <input
           type='text' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Admin Email'
-          className="block w-full bg-cyan-600  rounded-md outline-none pl-10 placeholder:text-white sm:text-sm"
+          className="block w-full bg-cyan-600  text-white rounded-md outline-none pl-10 placeholder:text-white sm:text-sm hover:bg-cyan-600 
+          focus:ring-cyan-500 "
           
         />
       </div>
         </div>
-        <button className='flex w-64 p-2 justify-center  rounded-lg  bg-lime-600  text-sm font-medium text-white shadow-sm hover:bg-lime-500 
-            focus:outline-none focus:ring-2 focus:ring-lime-500 font-abc focus:ring-offset-2' onClick={submitHandler}>Submit</button>
+        <button className='block w-60 ml-2 p-2 justify-center mt-5  rounded-lg  bg-lime-600  text-sm font-medium text-white  hover:bg-lime-500 ' onClick={submitHandler}>Submit</button>
       </div>
     </div>
   )

@@ -6,17 +6,31 @@ function Chart() {
   ChartJS.register(ArcElement);
 
 const data = {
-  labels: ["Hired", "Canceled", "Pending"],
+  
   datasets: [
     {
-      label: "Total",
-      data: [54, 20, 26],
+      
+      data: [40, 20, 40],
       backgroundColor: ["rgb(132, 204 ,22)","rgb(8 145 178)",'rgb(156 163 175)'],
-      position:'outside',
+      borderWidth:1,
+      cutout:'80%',
+      borderRadius:20,
+     
 
-      }, 
+      },
+     
   ],
-};
+  
+},
+options= {
+  plugins: {
+    datalabels: {
+      formatter: (value) => {
+        return value + '%';
+      },
+    },
+  },
+}
 
 
 
@@ -24,7 +38,8 @@ const data = {
     <div>
        <Doughnut
                 data={data}
-                options={{ cutout: "65%" }}
+                options={options}
+                
                 className=" "
                
               />
