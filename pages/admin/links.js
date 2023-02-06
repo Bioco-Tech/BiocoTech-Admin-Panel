@@ -16,19 +16,27 @@ import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import { apiUrl } from "../../constants";
 
-function links() {
+function links({ initialData }) {
   const router = useRouter();
   const sideBarRef = useRef();
   const { logout } = useAuth();
 
-  const [links, setLinks] = useState({
-    companyConditions: { editing: false, data: "" },
-    companyFaqs: { editing: false, data: "" },
-    companyPolicy: { editing: false, data: "" },
-    staffConditions: { editing: false, data: "" },
-    staffFaqs: { editing: false, data: "" },
-    staffPolicy: { editing: false, data: "" },
-  });
+  const [companyConditions, setCompanyConditions] = useState("");
+  const [companyFaqs, setCompanyFaqs] = useState("");
+  const [companyPolicy, setCompanyPolicy] = useState("");
+  const [staffConditions, setStaffConditions] = useState("");
+  const [staffFaqs, setStaffFaqs] = useState("");
+  const [staffPolicy, setStaffPolicy] = useState("");
+  const [visitWebsite, setVisitWebsite] = useState("");
+  //
+  const [companyConditionsEditing, setCompanyConditionsEditing] =
+    useState(false);
+  const [companyFaqsEditing, setCompanyFaqsEditing] = useState(false);
+  const [companyPolicyEditing, setCompanyPolicyEditing] = useState(false);
+  const [staffConditionsEditing, setStaffConditionsEditing] = useState(false);
+  const [staffFaqsEditing, setStaffFaqsEditing] = useState(false);
+  const [staffPolicyEditing, setStaffPolicyEditing] = useState(false);
+  const [visitWebsiteEditing, setVisitWebsiteEditing] = useState(false);
 
   if (router.isFallback) {
     return <h3>Loading...</h3>;
@@ -39,33 +47,33 @@ function links() {
     console.log("hi rfresh");
     await axios.get(`${apiUrl}/api/links`).then((res) => {
       console.log(res.data);
-      setLinks({
-        companyPolicy: { data: res.data.companyPolicy },
-        companyConditions: { data: res.data.companyConditions },
-        companyFaqs: { data: res.data.companyFaqs },
-        staffPolicy: { data: res.data.staffPolicy },
-        staffConditions: { data: res.data.staffConditions },
-        staffFaqs: { data: res.data.staffFaqs },
-      });
+      setCompanyConditions(res.data.companyConditions);
+      setCompanyPolicy(res.data.companyPolicy);
+      setCompanyFaqs(res.data.companyFaqs);
+      setStaffConditions(res.data.staffConditions);
+      setStaffPolicy(res.data.staffPolicy);
+      setStaffFaqs(res.data.staffFaqs);
+      setVisitWebsite(res.data.visitWebsite);
       //console.log(`data: ${links}`);
     });
   };
 
   //Put Request link
 
-  const sendPutRequest = () => {
+  const sendPutRequest = async () => {
     console.log("putt??? ", links);
     try {
       axios
         .put(`${apiUrl}/api/links`, {
-          companyConditions: links.companyConditions.data,
-          companyFaqs: links.companyFaqs.data,
-          companyPolicy: links.companyPolicy.data,
-          staffConditions: links.staffConditions.data,
-          staffFaqs: links.staffFaqs.data,
-          staffPolicy: links.staffPolicy.data,
+          companyConditions,
+          companyFaqs,
+          companyPolicy,
+          staffConditions,
+          staffFaqs,
+          staffPolicy,
+          visitWebsite,
         })
-        .then((res) => {
+        .then(async (res) => {
           console.log(res);
           fetchLink();
         });
@@ -84,7 +92,8 @@ function links() {
 
   useEffect(() => {
     fetchLink();
-  }, []);
+    console.log("company policy? ", companyPolicy);
+  }, [companyPolicy]);
 
   function toogleSideBar() {
     sideBarRef.current.classList.toggle("-translate-x-full");
@@ -209,55 +218,25 @@ function links() {
                     >
                       <li className="flex items-center justify-between p-2 text-sm">
                         <div className="flex w-0 flex-1 items-center">
-                          {!links.companyPolicy.editing ? (
+                          {!companyPolicyEditing ? (
                             <input
-                              className="px-1 outline-none"
-                              value={links.companyPolicy.data}
-                              defaultValue={links.companyPolicy.data}
-                              // onChange={(e) =>
-                              //   setLinks({
-                              //     companyPolicy: {
-                              //       editing: true,
-                              //       data: e.target.value,
-                              //     },
-                              //   })
-                              // }
+                              className="px-1 outline-none disabled:bg-white"
+                              value={companyPolicy}
+                              defaultValue={companyPolicy}
+                              disabled
                             />
                           ) : (
                             <input
                               type="text"
-                              value={links.companyPolicy.data}
+                              value={companyPolicy}
                               onChange={(e) => {
                                 console.log(
                                   "new value company policy: ",
                                   e.target.value
                                 );
-                                setLinks({
-                                  companyPolicy: {
-                                    data: e.target.value,
-                                    editing: true,
-                                  },
-                                });
+                                setCompanyPolicy(e.target.value);
+                                setCompanyPolicyEditing(true);
                               }}
-                              // onSubmit={(e) => {
-                              //   console.log(
-                              //     "1new value company policy: ",
-                              //     e.target.value
-                              //   );
-                              //   setLinks({
-                              //     companyPolicy: { data: e.target.value },
-                              //   });
-                              // }}
-
-                              // onSubmitCapture={(e) => {
-                              //   console.log(
-                              //     "3new value company policy: ",
-                              //     e.target.value
-                              //   );
-                              //   setLinks({
-                              //     companyPolicy: { data: e.target.value },
-                              //   });
-                              // }}
                               className="block w-full rounded-md  border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
                               placeholder="Type ID"
                             />
@@ -271,26 +250,9 @@ function links() {
                             onClick={(e) => {
                               console.log(e.target.outerText);
                               if (e.target.outerText == "Edit") {
-                                setLinks({ companyFaqs: { editing: false } });
-                                setLinks({
-                                  companyConditions: { editing: false },
-                                });
-                                setLinks({
-                                  staffConditions: { editing: false },
-                                });
-                                setLinks({ staffFaqs: { editing: false } });
-                                setLinks({ staffPolicy: { editing: false } });
-
-                                setLinks({ companyPolicy: { editing: true } });
+                                setCompanyPolicyEditing(true);
                               } else {
-                                setLinks({
-                                  companyFaqs: { editing: false },
-                                  companyConditions: { editing: false },
-                                  staffConditions: { editing: false },
-                                  staffFaqs: { editing: false },
-                                  staffPolicy: { editing: false },
-                                  companyPolicy: { editing: false },
-                                });
+                                setCompanyPolicyEditing(false);
                                 sendPutRequest();
                               }
                             }}
@@ -298,7 +260,7 @@ function links() {
                             className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
                           >
                             <div>
-                              {!links.companyPolicy.editing ? "Edit" : "Update"}
+                              {!companyPolicyEditing ? "Edit" : "Update"}
                             </div>
                           </button>
 
@@ -309,7 +271,13 @@ function links() {
                             |
                           </span>
                           <button
-                            onClick={() => DeleteRequest(links)}
+                            onClick={() => {
+                              console.log(companyPolicy);
+                              setCompanyPolicy("");
+                              // setCompanyPolicy("");
+                              console.log("shits?? ", companyPolicy);
+                              sendPutRequest();
+                            }}
                             type="button"
                             className="rounded-md bg-white ml-1 font-abc font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
                           >
@@ -590,5 +558,13 @@ function links() {
     </>
   );
 }
+
+links.getInitialProps = async (ctx) => {
+  var ress;
+  await axios.get(`${apiUrl}/api/links`).then((res) => {
+    ress = res;
+  });
+  return { initialData: ress };
+};
 
 export default links;
