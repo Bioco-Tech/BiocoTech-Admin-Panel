@@ -10,9 +10,9 @@ import { MdHome } from "react-icons/md";
 import { HiBuildingOffice2 } from "react-icons/hi2";
 import { CiLogout } from "react-icons/ci";
 import { useRouter } from "next/router";
-import Chart from './Chart'
-import { RiPhoneFill } from 'react-icons/ri'
-import { BsEnvelopeFill } from 'react-icons/bs'
+import Chart from "./Chart";
+import { RiPhoneFill } from "react-icons/ri";
+import { BsEnvelopeFill } from "react-icons/bs";
 import Stats from "./Stats";
 import { useRef } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -21,8 +21,6 @@ import axios from "axios";
 import { withProtected } from "../context/Route";
 import { apiUrl } from "../constants";
 
-
-
 function SideBars({ auth }) {
   const router = useRouter();
   const sideBarRef = useRef();
@@ -30,8 +28,8 @@ function SideBars({ auth }) {
   const [company, setCompany] = useState([]);
   const [staff, setStaff] = useState([]);
   const [data, setData] = useState([]);
-  const [totalUnits, setTotalUnits] = useState([])
-  const [totalProcess, setTotalProcess] = useState([])
+  const [totalUnits, setTotalUnits] = useState([]);
+  const [totalProcess, setTotalProcess] = useState([]);
 
   function toogleSideBar() {
     sideBarRef.current.classList.toggle("-translate-x-full");
@@ -69,21 +67,17 @@ function SideBars({ auth }) {
     };
     const fetchData = async () => {
       await axios.get(`${apiUrl}/api/units`).then((res) => {
-
-        setTotalUnits(res.data)
-
+        setTotalUnits(res.data);
       });
     };
     const fetch = async () => {
       await axios.get(`${apiUrl}/api/staff`).then((res) => {
-
-        setTotalProcess(res.data.staff)
-
+        setTotalProcess(res.data.staff);
       });
     };
     fetchCompany();
-    fetchData()
-    fetch()
+    fetchData();
+    fetch();
   }, []);
 
   useEffect(() => {
@@ -93,22 +87,15 @@ function SideBars({ auth }) {
         company.map((s, i) => {
           let obj = {};
 
-          obj["companyName"] = s.companyName
-          obj["staffName"] = item.staffName
+          obj["companyName"] = s.companyName;
+          obj["staffName"] = item.staffName;
 
-          arr.push(obj)
-        })
-
-
-      })
-      setData(arr)
+          arr.push(obj);
+        });
+      });
+      setData(arr);
     }
-
-  }, [staff, company])
-
-
-
-
+  }, [staff, company]);
 
   {
     /*const fetchStaff = async () => {
@@ -119,9 +106,6 @@ function SideBars({ auth }) {
     });
   };*/
   }
-
-
-
 
   return (
     <>
@@ -137,8 +121,8 @@ function SideBars({ auth }) {
           {/* MAIN SIDEBAR */}
           <div
             ref={sideBarRef}
-            style={{ position: 'fixed' }}
-            className="bg-cyan-600 font-Italic w-64 space-y-10 px-5 py-7  absolute inset-y-0 left-0 transform -translate-x-full
+            style={{ position: "fixed" }}
+            className="bg-cyan-600 max-h-full font-Italic w-64 space-y-10 px-5 py-7  absolute inset-y-0 left-0 transform -translate-x-full
          md:translate-x-0 z-50 transition duration-200 ease-in-out flex flex-col child:transition-all md:max-h-screen md:min-h-screen  md:top-0"
           >
             <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
@@ -158,7 +142,8 @@ function SideBars({ auth }) {
                     <MdHome className='mr-1 text-white' />
                     Dashboard
                  
-                </Link></div>*/}<div
+                </Link></div>*/}
+                <div
                   className={` ${isActive(
                     "/admin/dashboard"
                   )}  bg-lime-500 hover:bg-lime-500 group flex items-center w-52 h-9 px-2 py-2 text-sm  rounded-md `}
@@ -167,12 +152,11 @@ function SideBars({ auth }) {
                   <h3 className="text-base ml-2 text-white group-hover:text-white font-thin">
                     <Link href="/">Dashboard</Link>
                   </h3>
-                </div >
+                </div>
                 <div className="flex ">
                   <HiBuildingOffice2 className="mr-1 ml-2 text-white text-xl" />
                   <Link href="/admin/companies" legacyBehavior>
                     <a className="text-white font-thin  hover:text-white group flex items-center px-2 py-2 text-sm -mt-2  rounded-md">
-
                       Companies
                     </a>
                   </Link>
@@ -181,18 +165,18 @@ function SideBars({ auth }) {
                   <TbCheckbox className="mr-1 ml-2 text-white text-xl" />
                   <Link href="/admin/checklist" legacyBehavior>
                     <a className="text-white  hover:text-white  group flex items-center px-2 py-2 text-sm font-thin rounded-md -mt-2">
-
                       Check list
                     </a>
-                  </Link></div>
+                  </Link>
+                </div>
                 <div className="flex ">
                   <ImLink className="mr-1 ml-2 text-white text-xl" />
                   <Link href="/admin/links" legacyBehavior>
                     <a className="text-white  hover:text-white font-abc group flex items-center px-2 py-2 text-sm font-thin rounded-md -mt-2">
-
                       Links
                     </a>
-                  </Link></div>
+                  </Link>
+                </div>
               </nav>
 
               <div className="flex flex-shrink-0 border-t  border-lime-500 p-4">
@@ -219,26 +203,32 @@ function SideBars({ auth }) {
             <div className="py-6">
               <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                 {/*<h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>*/}
-              </div >
+              </div>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-                <div className='flex'>
+                <div className="flex">
                   <div className=" w-32 ">
                     {/*<div className="h-96 rounded-lg border-4 border-dashed border-gray-200"></div>*/}
                     <Chart />
                   </div>
                   <div className="  ml-5 lg:ml-32 mt-5">
-                    <p className='text-black font-normal'>{totalUnits.results}</p>
+                    <p className="text-black font-normal">
+                      {totalUnits.results}
+                    </p>
 
-                    <p className="text-gray-500 font-light">units operating worldwide</p>
+                    <p className="text-gray-500 font-light">
+                      units operating worldwide
+                    </p>
 
+                    <p className="text-black md:mt-2 font-normal">
+                      {totalProcess.lbsProcessed}
+                    </p>
 
-                    <p className='text-black md:mt-2 font-normal'>{totalProcess.lbsProcessed}</p>
-
-                    <p className="text-gray-500 font-light">Orgainc waste processed</p>
-                    <p className='text-black md:mt-2 font-light'>900</p>
+                    <p className="text-gray-500 font-light">
+                      Orgainc waste processed
+                    </p>
+                    <p className="text-black md:mt-2 font-light">900</p>
 
                     <p className="text-gray-500 font-light">MTCO 2 Diverted</p>
-
                   </div>
                 </div>
                 <div className="lg:h-28 px-4  py-4 sm:px-6  justify-center sm:py-6 mt-5 lg:px-8 lg:py-8 rounded-lg bg-gray-100">
@@ -247,9 +237,7 @@ function SideBars({ auth }) {
                 <div className="px-4 sm:px-6 py-4 sm:py-6 mt-5 lg:px-8 lg:py-8 rounded-lg bg-gray-100">
                   <div className="sm:flex sm:items-center  ">
                     <div className="sm:flex-auto ">
-                      <h1 className="  text-black font-thin">
-                        Redeem Points
-                      </h1>
+                      <h1 className="  text-black font-thin">Redeem Points</h1>
                       <p className="mt-2 text-sm text-gray-500 font-light">
                         These are the staff people who have hightest redeem
                         points
@@ -292,18 +280,16 @@ function SideBars({ auth }) {
                               </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200 bg-lime-50">
-
                               {data.map((person) => (
                                 <tr key={person.member}>
-
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-light font-abc  text-gray-500 sm:pl-6">
                                     <div className="flex -ml-5">
                                       <RiPhoneFill className="ml-2 text-cyan-600 " />
                                       <BsEnvelopeFill className="ml-2 text-cyan-600 bg-white " />
                                       <div className="ml-2 font-light">
-                                        {person.staffName}</div>
+                                        {person.staffName}
+                                      </div>
                                     </div>
-
                                   </td>
                                   <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-500  ">
                                     {person.companyName}
@@ -333,7 +319,8 @@ function SideBars({ auth }) {
 }
 export default withProtected(SideBars);
 
-{/*export async function getServerSideProps() {
+{
+  /*export async function getServerSideProps() {
   
   const staff = await fetch(`${apiUrl}/api/staff`);
   
@@ -347,4 +334,5 @@ export default withProtected(SideBars);
           // data:{}
       },
   };
-}*/}
+}*/
+}
