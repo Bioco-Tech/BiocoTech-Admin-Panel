@@ -148,9 +148,10 @@ function SideBars({ auth }) {
                     "/admin/dashboard"
                   )}  bg-lime-500 hover:bg-lime-500 group flex items-center w-52 h-9 px-2 py-2 text-sm  rounded-md `}
                 >
-                  <MdHome className="mr-1 text-xl text-white" />
                   <h3 className="text-base ml-2 text-white group-hover:text-white font-thin">
-                    <Link href="/">Dashboard</Link>
+                    <Link href="/" className="flex item-center justify-center">
+                      <MdHome className="mr-1 text-xl text-white" /> Dashboard
+                    </Link>
                   </h3>
                 </div>
                 <div className="flex ">
@@ -187,7 +188,7 @@ function SideBars({ auth }) {
                     </button>
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm -mt-4 font-thin text-white group-hover:text-white ">
+                    <p className="text-sm -mt-4  text-white group-hover:text-white ">
                       Log Out
                     </p>
                     {/*<p className="text-xs font-medium text-white group-hover:text-gray-700">(you will be loged out of your account)</p>*/}
