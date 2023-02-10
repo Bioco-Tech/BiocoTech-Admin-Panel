@@ -17,17 +17,15 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 
-
 //react-icon imports
 import { IoIosArrowBack } from "react-icons/io";
 import { apiUrl } from "../../constants";
-
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function Singlecompany({company}) {
+function Singlecompany({ company }) {
   // console.log(company)
 
   const [istoggled, setIstoggled] = useState(true);
@@ -35,15 +33,13 @@ function Singlecompany({company}) {
   const [unitdetails, setUnitdetails] = useState("");
   const [showform, setShowform] = useState(false);
   const [query, setQuery] = useState("");
-  const [staff,setStaff] = useState([])
-  const [unit,setUnit] = useState([])
+  const [staff, setStaff] = useState([]);
+  const [unit, setUnit] = useState([]);
   //const [company,setCompany] = useState([])
 
   //   console.log(query);
 
   const router = useRouter();
-
-  
 
   // Unit edit Check
   const [check_unit_edit, set_check_unit_edit] = useState({
@@ -86,7 +82,6 @@ function Singlecompany({company}) {
     set_check_unit_edit({ unitId: unitId, edit: false });
   }
 
-
   // Unit edit fields
   const [get_unit_after_edit, set_unit_after_edit] = useState(unit.unit);
   const [get_unit_id_after_edit, set_unit_id_after_edit] = useState(unit.id);
@@ -94,13 +89,13 @@ function Singlecompany({company}) {
     unit.unit_details
   );
   // Company edit fields
-  const [get_companyName_after_edit, set_companyName_after_edit] = useState(company.companyName);
+  const [get_companyName_after_edit, set_companyName_after_edit] = useState(
+    company.companyName
+  );
   const [get_id_after_edit, set_id_after_edit] = useState(company.id);
   const [get_pin_after_edit, set_pin_after_edit] = useState(company.pin);
   const [get_web_after_edit, set_web_after_edit] = useState(company.website);
   const [get_about_after_edit, set_about_after_edit] = useState(company.about);
-
- 
 
   //Post Request unit
 
@@ -113,7 +108,6 @@ function Singlecompany({company}) {
         id: unitid,
         unit_details: unitdetails,
         company: company._id,
-        
       })
       .then((res) => {
         // console.log(res);
@@ -139,34 +133,34 @@ function Singlecompany({company}) {
     // console.log(id);
   };
   //fetch units&staff
- 
+
   const fetch = async () => {
-    
-    await axios.get(`${apiUrl}/api/staff?company=${company._id}`).then((res) => {
-      setStaff(res.data.staff);
-      // setChange(res.data.reverse())
-    });
+    await axios
+      .get(`${apiUrl}/api/staff?company=${company._id}`)
+      .then((res) => {
+        setStaff(res.data.staff);
+        // setChange(res.data.reverse())
+      });
     await axios.get(`${apiUrl}/api/units/${company._id}`).then((res) => {
       //console.log(res.data);
       setUnit(res.data);
       // setChange(res.data.reverse())
     });
-   
   };
-  useEffect(()=>{
-    fetch()
-  })
+  useEffect(() => {
+    fetch();
+  });
 
   //Delete Request unit
   const DeleteRequest = (id) => {
     axios.delete(`${apiUrl}/api/units/${id}`).then((res) => {
-         console.log(res);
+      console.log(res);
     });
   };
   //Delete Request company
   const Delete = (id) => {
     axios.delete(`${apiUrl}/api/companies/${id}`).then((res) => {
-        console.log(res);
+      console.log(res);
     });
     router.push("/admin/companies");
   };
@@ -176,21 +170,11 @@ function Singlecompany({company}) {
     // console.log(event.target.innerHTML);
   };
 
-  function unit_type_change_value(value) {
-    // console.log(value);
-  }
-
   // new unity
   const unit_type_change_new = (event) => {
     // console.log("changenew ", event.target.innerHTML);
     set_new_unit({ unit: event.target.innerHTML });
   };
-
-  function unit_type_change_value_new(value) {
-    // console.log("Change ", value);
-  }
-
-  ////////////////////////////////////////////////////////////////////
 
   const notify = () =>
     toast.success("checklist deleted!", {
@@ -231,72 +215,75 @@ function Singlecompany({company}) {
                       Company Name
                     </dt>
                     <dd className="mt-1 flex text-sm text-gray-600 sm:col-span-2 sm:mt-0 ">
-                    <span className="flex-grow font-light ">
-                      {check_companyName_edit.companyName === null ? (
-                        `${company.companyName}`
-                      ) : check_companyName_edit.companyName !== company.companyName ? (
-                        `${company.companyName}`
-                      ) : check_companyName_edit.companyName === company.companyName &&
-                        !check_companyName_edit.edit ? (
-                        `${company.companyName}`
-                      ) : (
-                        <input
-                          type="email"
-                          className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
-                          value={get_companyName_after_edit}
-                          onChange={(e) => set_companyName_after_edit(e.target.value)}
-                        />
-                      )}
-                    </span>
-                    <span className="ml-4 flex-shrink-0">
-                      <button
-                        id={company.companyName}
-                        key={company.companyName}
-                        onClick={(s) => {
-                         
-                          if (check_companyName_edit.companyName == null) {
-                           
-                            set_check_companyName_edit({
-                              companyName: company.companyName,
-                              edit: true,
-                            });
-                          } else if (check_companyName_edit.companyName === company.companyName) {
-                           
-                            set_check_companyName_edit({
-                              companyName: null,
-                              edit: false,
-                            });
-                          } else {
-                          
-                            set_check_companyName_edit({
-                              companyName: null,
-                              edit: false,
-                            });
-                          }
+                      <span className="flex-grow font-light ">
+                        {check_companyName_edit.companyName === null ? (
+                          `${company.companyName}`
+                        ) : check_companyName_edit.companyName !==
+                          company.companyName ? (
+                          `${company.companyName}`
+                        ) : check_companyName_edit.companyName ===
+                            company.companyName &&
+                          !check_companyName_edit.edit ? (
+                          `${company.companyName}`
+                        ) : (
+                          <input
+                            type="email"
+                            className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
+                            value={get_companyName_after_edit}
+                            onChange={(e) =>
+                              set_companyName_after_edit(e.target.value)
+                            }
+                          />
+                        )}
+                      </span>
+                      <span className="ml-4 flex-shrink-0">
+                        <button
+                          id={company.companyName}
+                          key={company.companyName}
+                          onClick={(s) => {
+                            if (check_companyName_edit.companyName == null) {
+                              set_check_companyName_edit({
+                                companyName: company.companyName,
+                                edit: true,
+                              });
+                            } else if (
+                              check_companyName_edit.companyName ===
+                              company.companyName
+                            ) {
+                              set_check_companyName_edit({
+                                companyName: null,
+                                edit: false,
+                              });
+                            } else {
+                              set_check_companyName_edit({
+                                companyName: null,
+                                edit: false,
+                              });
+                            }
 
-                          // focusUid();
-                        }}
-                        type="button"
-                        className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
-                      >
-                        <div>
-                          {check_companyName_edit.companyName=== null ? (
-                            "Edit"
-                          ) : check_companyName_edit.companyName === company.companyName &&
-                            check_companyName_edit.edit ? (
-                            <button
-                              type="button"
-                              onClick={() => sendPutRequest()}
-                            >
-                              Update
-                            </button>
-                          ) : (
-                            "Edit"
-                          )}
-                        </div>
-                      </button>
-                    </span>
-                     
+                            // focusUid();
+                          }}
+                          type="button"
+                          className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
+                        >
+                          <div>
+                            {check_companyName_edit.companyName === null ? (
+                              "Edit"
+                            ) : check_companyName_edit.companyName ===
+                                company.companyName &&
+                              check_companyName_edit.edit ? (
+                              <button
+                                type="button"
+                                onClick={() => sendPutRequest()}
+                              >
+                                Update
+                              </button>
+                            ) : (
+                              "Edit"
+                            )}
+                          </div>
+                        </button>
+                      </span>
                     </dd>
                   </>
                 </div>
@@ -327,44 +314,22 @@ function Singlecompany({company}) {
                         id={company.id}
                         key={company.id}
                         onClick={(s) => {
-                          // console.log(s);
-
-                          // setOpenMenu(!openMenu);
-                          // console.log(check_unit_edit);
-                          // if (check_unit_edit.unitId == null) {
-                          //   handleEdit(unit.id)
-                          // } else if (check) { }
-                          // set_check_unit_edit({
-                          //   unitId:
-                          //     // s.target.innerHTML == "Edit" ? unit.id : null,
-                          //     unit.id,
-                          //   edit: !check_unit_edit.edit,
-                          // });
-
-                          //   console.log(company.id);
                           if (check_id_edit.id == null) {
-                            // console.log("1");
-                            // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
                             set_check_id_edit({
                               id: company.id,
                               edit: true,
                             });
                           } else if (check_id_edit.id === company.id) {
-                            // console.log("2");
-                            // If the unitId is not null and it matches the current unit's id, set the edit mode to false
                             set_check_id_edit({
                               id: null,
                               edit: false,
                             });
                           } else {
-                            // console.log("3");
                             set_check_id_edit({
                               id: null,
                               edit: false,
                             });
                           }
-
-                          // focusUid();
                         }}
                         type="button"
                         className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
@@ -415,24 +380,7 @@ function Singlecompany({company}) {
                         id={company.pin}
                         key={company.pin}
                         onClick={(s) => {
-                          // console.log(s);
-
-                          // setOpenMenu(!openMenu);
-                          // console.log(check_unit_edit);
-                          // if (check_unit_edit.unitId == null) {
-                          //   handleEdit(unit.id)
-                          // } else if (check) { }
-                          // set_check_unit_edit({
-                          //   unitId:
-                          //     // s.target.innerHTML == "Edit" ? unit.id : null,
-                          //     unit.id,
-                          //   edit: !check_unit_edit.edit,
-                          // });
-
-                          //   console.log(company.pin);
                           if (check_pin_edit.pin == null) {
-                            // console.log("1");
-                            // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
                             set_check_pin_edit({
                               pin: company.pin,
                               edit: true,
@@ -477,9 +425,7 @@ function Singlecompany({company}) {
                   </dd>
                 </div>
                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                  <dt className="text-sm font-light  text-gray-500">
-                    Status
-                  </dt>
+                  <dt className="text-sm font-light  text-gray-500">Status</dt>
                   <dd className="mt-1 flex text-sm text-gray-500 sm:col-span-2 sm:mt-0">
                     {istoggled && (
                       <span className="flex-grow font-light ">Active</span>
@@ -535,31 +481,12 @@ function Singlecompany({company}) {
                         id={company.website}
                         key={company.website}
                         onClick={(s) => {
-                          // console.log(s);
-
-                          // setOpenMenu(!openMenu);
-                          // console.log(check_unit_edit);
-                          // if (check_unit_edit.unitId == null) {
-                          //   handleEdit(unit.id)
-                          // } else if (check) { }
-                          // set_check_unit_edit({
-                          //   unitId:
-                          //     // s.target.innerHTML == "Edit" ? unit.id : null,
-                          //     unit.id,
-                          //   edit: !check_unit_edit.edit,
-                          // });
-
-                          //   console.log(company.website);
                           if (check_web_edit.web == null) {
-                            // console.log("1");
-                            // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
                             set_check_web_edit({
                               web: company.website,
                               edit: true,
                             });
                           } else if (check_web_edit.web === company.website) {
-                            // console.log("2");
-                            // If the unitId is not null and it matches the current unit's id, set the edit mode to false
                             set_check_web_edit({
                               web: null,
                               edit: false,
@@ -623,31 +550,12 @@ function Singlecompany({company}) {
                         id={company.about}
                         key={company.about}
                         onClick={(s) => {
-                          // console.log(s);
-
-                          // setOpenMenu(!openMenu);
-                          // console.log(check_unit_edit);
-                          // if (check_unit_edit.unitId == null) {
-                          //   handleEdit(unit.id)
-                          // } else if (check) { }
-                          // set_check_unit_edit({
-                          //   unitId:
-                          //     // s.target.innerHTML == "Edit" ? unit.id : null,
-                          //     unit.id,
-                          //   edit: !check_unit_edit.edit,
-                          // });
-
-                          //   console.log(company.about);
                           if (check_about_edit.about == null) {
-                            // console.log("1");
-                            // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
                             set_check_about_edit({
                               about: company.about,
                               edit: true,
                             });
                           } else if (check_about_edit.about === company.about) {
-                            // console.log("2");
-                            // If the unitId is not null and it matches the current unit's id, set the edit mode to false
                             set_check_about_edit({
                               about: null,
                               edit: false,
@@ -779,7 +687,6 @@ function Singlecompany({company}) {
                                       : "hidden"
                                   )}
                                   aria-hidden="true"
-                                  
                                 />
                               </Menu.Button>
                             </div>
@@ -822,47 +729,23 @@ function Singlecompany({company}) {
                         </span>
                         <span className="flex flex-shrink-0 space-x-4">
                           <button
-                            // id={unit.id}
-                            // key={unit.id}
                             onClick={(s) => {
-                              // console.log(s);
-
-                              // setOpenMenu(!openMenu);
-                              // console.log(check_unit_edit);
-                              // if (check_unit_edit.unitId == null) {
-                              //   handleEdit(unit.id)
-                              // } else if (check) { }
-                              // set_check_unit_edit({
-                              //   unitId:
-                              //     // s.target.innerHTML == "Edit" ? unit.id : null,
-                              //     unit.id,
-                              //   edit: !check_unit_edit.edit,
-                              // });
-
-                              //   console.log(unit.id);
                               if (check_unit_edit.unitId == null) {
-                                // console.log("1");
-                                // If the unitId is null, set the unitId to the current unit's id and set the edit mode to true
                                 set_check_unit_edit({
                                   unitId: unit.id,
                                   edit: true,
                                 });
                               } else if (check_unit_edit.unitId === unit.id) {
-                                // console.log("2");
-                                // If the unitId is not null and it matches the current unit's id, set the edit mode to false
                                 set_check_unit_edit({
                                   unitId: null,
                                   edit: false,
                                 });
                               } else {
-                                // console.log("3");
                                 set_check_unit_edit({
                                   unitId: null,
                                   edit: false,
                                 });
                               }
-
-                              // focusUid();
                             }}
                             type="button"
                             className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 font-abc"
@@ -892,9 +775,9 @@ function Singlecompany({company}) {
                           <button
                             type="button"
                             className="rounded-md bg-white font-thin text-sm text-cyan-600 hover:text-cyan-500 focus:outline-none  font-abc  "
-                            onClick={() => {DeleteRequest(unit._id),notify()}
-                              
-                            }
+                            onClick={() => {
+                              DeleteRequest(unit._id), notify();
+                            }}
                           >
                             Remove
                           </button>
@@ -906,34 +789,7 @@ function Singlecompany({company}) {
                         Unit ID
                       </dt>
 
-                      {/* <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0 font-abc">
-                        <input
-                          disabled={!check_unit_edit}
-                          className="outline-none w-full disabled:bg-white"
-                          ref={inputElement_5}
-                          value={
-                            check_unit_edit ? get_unit_id_after_edit : unit.id
-                          }
-                          onChange={(e) => {
-                            set_unit_id_after_edit(e.target.value);
-                          }}
-                        />
-                      </dd> */}
                       <dd className="mt-1 flex text-sm text-black sm:col-span-2 sm:mt-0 font-thin">
-                        {/* <input
-                          disabled={!check_unit_edit}
-                          className="outline-none w-full disabled:bg-white"
-                          ref={inputElement_6}
-                          value={
-                            check_unit_edit
-                              ? get_unit_details_after_edit
-                              : unit.unit_details
-                          }
-                          onChange={(e) => {
-                            set_unit_details_after_edit(e.target.value);
-                          }}
-                        /> */}
-
                         {check_unit_edit.unitId === null ? (
                           `${unit.id}`
                         ) : check_unit_edit.unitId !== unit.id ? (
@@ -961,19 +817,6 @@ function Singlecompany({company}) {
                       </dt>
 
                       <dd className="mt-1 flex text-sm text-gray-700 sm:col-span-2 sm:mt-0 font-light">
-                        {/* <input
-                          disabled={!check_unit_edit}
-                          className="outline-none w-full disabled:bg-white"
-                          ref={inputElement_6}
-                          value={
-                            check_unit_edit
-                              ? get_unit_details_after_edit
-                              : unit.unit_details
-                          }
-                          onChange={(e) => {
-                            set_unit_details_after_edit(e.target.value);
-                          }}
-                        /> */}
                         {check_unit_edit.unitId === null ? (
                           `${unit.unit_details}`
                         ) : check_unit_edit.unitId !== unit.id ? (
@@ -987,7 +830,9 @@ function Singlecompany({company}) {
                             name="comment"
                             defaultValue={unit.unit_details}
                             value={get_unit_details_after_edit}
-                            onChange={(e)=>set_unit_details_after_edit(e.target.value)}
+                            onChange={(e) =>
+                              set_unit_details_after_edit(e.target.value)
+                            }
                             id="comment"
                             placeholder="  Add unit details"
                             className="block w-full rounded-md -mt-2.5 border-gray-300 shadow-sm focus:border-lime-500 focus:ring-lime-500 sm:text-sm"
@@ -1163,7 +1008,7 @@ function Singlecompany({company}) {
                   </p>
                 </div>
                 <div className="mt-4 sm:mt-0 font-abc  sm:ml-16 sm:flex-none">
-                  <button onClick={()=>Delete(company._id)}>
+                  <button onClick={() => Delete(company._id)}>
                     <RiDeleteBin5Line />
                   </button>
                 </div>
@@ -1179,7 +1024,7 @@ function Singlecompany({company}) {
                               scope="col"
                               className="py-3.5 pl-4 pr-3 text-left text-sm font-light text-white sm:pl-6 font-abc "
                             >
-                              Staff 
+                              Staff
                             </th>
                             <th
                               scope="col"
@@ -1191,13 +1036,13 @@ function Singlecompany({company}) {
                               scope="col"
                               className="px-3 py-3.5 text-left text-sm font-light text-white"
                             >
-                              Ibs Processes 
+                              Ibs Processes
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-left text-sm font-light text-white"
                             >
-                              MTCO 
+                              MTCO
                             </th>
                           </tr>
                         </thead>
@@ -1240,13 +1085,13 @@ export default Singlecompany;
 
 export async function getServerSideProps(context) {
   const { _id } = context.query;
-  
+
   const company = await fetch(`${apiUrl}/api/companies/${_id}`);
   //const units = await fetch(`${apiUrl}/api/units/${_id}`); // by params id
   //const staff = await fetch(`${apiUrl}/api/staff?company=${_id}`); // by query company
   console.log(company);
   //console.log(units);
- 
+
   const companyData = await company.json();
   //const unitsData = await units.json();
   //const staffData = await staff.json();
@@ -1259,20 +1104,4 @@ export async function getServerSideProps(context) {
       // data:{}
     },
   };
-}
-
-{
-  /*export async function getServerSideProps(context) {
-      const { _id } = context.query;
-      console.log(context.query._id)
-      const res = await fetch(`${apiUrl}/api/companies/units/${_id}`)
-      const data = await res.json();
-  
-      return {
-          props: {
-              data: data
-              // data:{}
-          }
-      }
-  }*/
 }
