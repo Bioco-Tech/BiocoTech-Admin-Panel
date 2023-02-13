@@ -10,19 +10,19 @@ import { apiUrl } from "../../constants";
 
 function addCompany() {
   const [name, setName] = useState("");
-  const [id, setId] = useState("");
-  const [pin, setPin] = useState("");
+  const [id, setId] = useState();
+  const [pin, setPin] = useState();
   const [website, setWebsite] = useState("");
   const [about, setAbout] = useState("");
-  const [uploading, setUploading] = useState(false)
+  const [uploading, setUploading] = useState(false);
   //const [selectedFile, setSelectedFile] = useState<File>('');
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   if (router.isFallback) {
     return <h3>Loading...</h3>;
   }
-//notify
+  //notify
   const notify = () =>
     toast.success("add company!", {
       position: "top-right",
@@ -35,45 +35,46 @@ function addCompany() {
       theme: "colored",
     });
 
-   //file uploading
-
-
+  //file uploading
 
   const hiddenFileInput = React.useRef(null);
 
-
   const handleClick = () => {
     hiddenFileInput.current.click();
-    
   };
 
-  const uploadFile =(e)=>{
+  const uploadFile = (e) => {
     //console.log(files[0]);
-     Formdata = new FormData();
-    Formdata.append('attachments',e.target.files[0])
-    axios.post(`${apiUrl}/api/file`,Formdata).then((res)=>{
-      console.log('file',res.data)
-    })
-  }
+    Formdata = new FormData();
+    Formdata.append("attachments", e.target.files[0]);
+    axios.post(`${apiUrl}/api/file`, Formdata).then((res) => {
+      console.log("file", res.data);
+    });
+  };
 
-   
-    //Post Request companies
+  //Post Request companies
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-  
-
-
     axios
-      .post(`${apiUrl}/api/companies`, { companyName:name, id:id, pin:pin, website:website, about:about })
+      .post(`${apiUrl}/api/companies`, {
+        companyName: name,
+        id: id,
+        pin: pin,
+        website: website,
+        about: about,
+      })
       .then((res) => {
-        
-        setLoading(true)
-      });
+        res.json();
+        console.log(res);
+        setLoading(true);
+      })
+      .catch((err) => console.log(err));
 
     router.push("/admin/companies");
   };
+
   return (
     <>
       <button className="text-lg ml-5 mt-5 font-light leading-6 text-gray-900">
@@ -203,18 +204,17 @@ function addCompany() {
                         Attachments(optional)
                       </label>
                       <div className="flex ">
-                       
                         <button
-                         onClick={handleClick}
-                        // disabled={uploading}
+                          onClick={handleClick}
+                          // disabled={uploading}
                           className="flex w-32 p-1 lg:w-32 justify-center rounded-lg border border-gray-300 bg-white  text-sm  text-gray-700 shadow-sm hover:bg-gray-50 
                          focus:outline-none focus:ring-2 font-light focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2"
                         >
                           Upload
                         </button>
                         <button
-                         onClick={handleClick}
-                        // disabled={uploading}
+                          onClick={handleClick}
+                          // disabled={uploading}
                           className="flex w-32 ml-2 p-1 lg:w-32 justify-center border rounded-lg border-gray-300 bg-white  text-sm font-light text-gray-700 shadow-sm hover:bg-gray-50 
                          focus:outline-none focus:ring-2  focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2"
                         >
@@ -222,10 +222,9 @@ function addCompany() {
                         </button>
                         <input
                           type="file"
-
                           ref={hiddenFileInput}
                           onChange={uploadFile}
-                          style={{ display: 'none' }}
+                          style={{ display: "none" }}
                         />
                       </div>
                     </div>

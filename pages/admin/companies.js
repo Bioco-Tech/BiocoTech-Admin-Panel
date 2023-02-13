@@ -33,24 +33,19 @@ import { useAuth } from "../../context/AuthContext";
 import { withProtected } from "../../context/Route";
 import { apiUrl } from "../../constants";
 
-
-
 function companies() {
   const [company, setCompany] = useState([]);
-  const [staff, setStaff] = useState([])
-  const [totalCompany, setTotalCompany] = useState([])
-  const [totalStaff, setTotalStaff] = useState([])
-  const [totalUnits, setTotalUnits] = useState([])
-  const [totalSingleStaff, setTotalSingleStaff] = useState([])
-  const [totalSingleUnit, setTotalSingleUnit] = useState([])
+  const [staff, setStaff] = useState([]);
+  const [totalCompany, setTotalCompany] = useState([]);
+  const [totalStaff, setTotalStaff] = useState([]);
+  const [totalUnits, setTotalUnits] = useState([]);
+  const [totalSingleStaff, setTotalSingleStaff] = useState([]);
+  const [totalSingleUnit, setTotalSingleUnit] = useState([]);
   const [query, setQuery] = useState("");
   //console.log(totalCompany.results);
 
-
   const router = useRouter();
   const sideBarRef = useRef();
-
-
 
   const { logout } = useAuth();
 
@@ -65,42 +60,33 @@ function companies() {
   const fetchData = async () => {
     await axios.get(`${apiUrl}/api/companies`).then((res) => {
       setCompany(res.data.companies);
-      setTotalCompany(res.data)
-
+      setTotalCompany(res.data);
+      setTotalSingleStaff(res.data.companies.totalStaff);
+      console.log(res.data);
     });
     await axios.get(`${apiUrl}/api/staff`).then((res) => {
-
-      setTotalStaff(res.data)
-
+      setTotalStaff(res.data);
     });
     await axios.get(`${apiUrl}/api/units`).then((res) => {
-
-      setTotalUnits(res.data)
-
+      setTotalUnits(res.data);
     });
-    await axios.get(`${apiUrl}/api/staff?company=${company._id}`).then((res) => {
-
-      setTotalSingleStaff(res.data)
-      console.log(res.data)
-
-    });
-    await axios.get(`${apiUrl}/api/units?company=${company._id}`).then((res) => {
-
-      setTotalSingleUnit(res.data)
-      //console.log(res.data)
-
-    });
+    // await axios
+    //   .get(`${apiUrl}/api/staff?company=${company._id}`)
+    //   .then((res) => {
+    //     setTotalSingleStaff(res.data);
+    //     console.log(res.data);
+    //   });
+    await axios
+      .get(`${apiUrl}/api/units?company=${company._id}`)
+      .then((res) => {
+        setTotalSingleUnit(res.data);
+        //console.log(res.data)
+      });
   };
 
   useEffect(() => {
     fetchData();
-
   }, []);
-
-
-
-
-
 
   async function signOut() {
     try {
@@ -119,8 +105,6 @@ function companies() {
     }
   }
 
-
-
   return (
     <>
       <div className="max-h-screen md:sticky md:top-0 z-50 text-white">
@@ -135,7 +119,7 @@ function companies() {
           {/* MAIN SIDEBAR */}
           <div
             ref={sideBarRef}
-            style={{ position: 'fixed' }}
+            style={{ position: "fixed" }}
             className="bg-cyan-600  w-64 space-y-10 px-5 py-7  absolute inset-y-0 left-0 transform -translate-x-full
             md:translate-x-0 z-50 transition duration-200 ease-in-out flex flex-col child:transition-all md:max-h-screen md:min-h-screen  md:top-0"
           >
@@ -161,7 +145,6 @@ function companies() {
                   <MdHome className="mr-1 ml-2 text-white text-xl" />
                   <Link href="/" legacyBehavior>
                     <a className="text-white font-thin  hover:text-white group flex items-center px-2 py-2 text-sm -mt-2  rounded-md">
-
                       Dashboard
                     </a>
                   </Link>
@@ -177,21 +160,21 @@ function companies() {
                   </h3>
                 </div>
                 <div className="flex">
-                  < TbCheckbox className="mr-1 ml-2 text-white text-xl" />
+                  <TbCheckbox className="mr-1 ml-2 text-white text-xl" />
                   <Link href="/admin/checklist" legacyBehavior>
                     <a className="text-white font-thin  hover:text-white group flex items-center px-2 py-2 text-sm -mt-2  rounded-md">
-
                       Checklists
                     </a>
-                  </Link></div>
+                  </Link>
+                </div>
                 <div className="flex">
                   <ImLink className="mr-1 ml-2 text-white text-xl" />
                   <Link href="/admin/links" legacyBehavior>
                     <a className="text-white font-thin  hover:text-white group flex items-center px-2 py-2 text-sm -mt-2  rounded-md">
-
                       Links
                     </a>
-                  </Link></div>
+                  </Link>
+                </div>
               </nav>
 
               <div className="flex flex-shrink-0   border-t  border-lime-500 p-4 ">
@@ -205,8 +188,8 @@ function companies() {
                     <p className="text-sm font-thin text-white group-hover:text-white ">
                       Log Out
                     </p>
-
-                  </div> {/*<p className="text-xs font-light  text-white group-hover:text-gray-700">(you will be loged out of your account)</p>*/}
+                  </div>{" "}
+                  {/*<p className="text-xs font-light  text-white group-hover:text-gray-700">(you will be loged out of your account)</p>*/}
                 </div>
               </div>
             </div>
@@ -247,9 +230,7 @@ function companies() {
                               name="search"
                             />
                           </div>
-
                         </form>
-
                       </div>
                     </div>
                     <div className="ml-4 flex items-center  md:ml-6">
@@ -259,7 +240,6 @@ function companies() {
                       >
                         <Link href={"/admin/addCompany"}>Add New Company</Link>
                       </button>
-
                     </div>
                   </div>
 
@@ -291,26 +271,39 @@ function companies() {
                                 <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                                   <table className="min-w-full divide-y divide-gray-300 ">
                                     <thead className="bg-lime-500 font-light">
-
                                       <tr>
                                         <th
                                           scope="col"
                                           className=" py-3.5 pl-4 pr-3 text-left text-sm   text-white sm:pl-6 font-light"
                                         >
-                                          Company     {<span className="ml-5">({totalCompany.results})</span>}
-
+                                          Company{" "}
+                                          {
+                                            <span className="ml-5">
+                                              ({totalCompany.totalCompanies})
+                                            </span>
+                                          }
                                         </th>
                                         <th
                                           scope="col"
                                           className=" px-3 py-3.5 font-abc text-left text-sm  text-white font-light"
                                         >
-                                          Staff Member {<span className="ml-5">({totalStaff.results})</span>}
+                                          Staff Member{" "}
+                                          {
+                                            <span className="ml-5">
+                                              ({totalCompany.totalStaff})
+                                            </span>
+                                          }
                                         </th>
                                         <th
                                           scope="col"
                                           className="px-3 py-3.5 font-abc text-left text-sm  text-white font-light"
                                         >
-                                          Total Units {<span className="ml-5">({totalUnits.results})</span>}
+                                          Total Units{" "}
+                                          {
+                                            <span className="ml-5">
+                                              ({totalCompany.totalUnits})
+                                            </span>
+                                          }
                                         </th>
 
                                         <th
@@ -322,21 +315,16 @@ function companies() {
                                       </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200 bg-lime-50">
-
                                       {company
-                                        .filter((user) =>
-                                          user.companyName
+                                        // .filter((user) =>
+                                        //   user.companyName
 
-                                            .toLowerCase()
-                                            .includes(query)
-
-                                        )
+                                        //     .toLowerCase()
+                                        //     .includes(query)
+                                        // )
                                         .map((company) => (
-
                                           <tr key={company.companyName}>
-
                                             <td className="whitespace-nowrap font-light py-4 pl-4 pr-3 text-sm font-light text-gray-500 sm:pl-6">
-
                                               <Link
                                                 href={`/companies/${company._id}`}
                                               >
@@ -347,17 +335,15 @@ function companies() {
                                               <Link
                                                 href={`/companies/${company._id}`}
                                               >
-                                                {totalSingleStaff.results}
+                                                {company.totalStaff}
                                               </Link>
-
                                             </td>
                                             <td className="whitespace-nowrap px-3 font-light py-4 text-sm  w-[560] h-[55] text-gray-900">
                                               <Link
                                                 href={`/companies/${company._id}`}
                                               >
-                                                {totalSingleUnit.results}
+                                                {company.totalUnits}
                                               </Link>
-
                                             </td>
                                             <td className="font-light relative whitespace-nowrap py-4 font-abc pl-3 pr-4 text-cyan-600  text-right text-sm  sm:pr-6">
                                               <Link
