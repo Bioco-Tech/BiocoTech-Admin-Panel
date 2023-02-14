@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { apiUrl } from "../../constants";
 
 function addCompany() {
-  const [name, setName] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [id, setId] = useState();
   const [pin, setPin] = useState();
   const [website, setWebsite] = useState("");
@@ -59,11 +59,11 @@ function addCompany() {
 
     axios
       .post(`${apiUrl}/api/companies`, {
-        companyName: name,
-        id: id,
-        pin: pin,
-        website: website,
-        about: about,
+        companyName,
+        id,
+        pin,
+        website,
+        about,
       })
       .then((res) => {
         res.json();
@@ -116,8 +116,8 @@ function addCompany() {
                       <input
                         type="text"
                         name="email-address"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={companyName}
+                        onChange={(e) => setCompanyName(e.target.value)}
                         id="email-address"
                         autoComplete="email"
                         className="mt-1 block border lg:w-64 w-full p-2 rounded-md border-gray-300 shadow-sm   sm:text-sm focus:outline-none focus:ring-2 focus:border-cyan-500 focus:ring-cyan-500 focus:ring-offset-2"
